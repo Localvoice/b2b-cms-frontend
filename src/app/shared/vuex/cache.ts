@@ -52,7 +52,7 @@ export function createCachedAction<S, R>(action: Action<S, R>, options: VuexCach
     const timeout = resolveTimeout(payload, options);
     const record = {
       expiresIn: timeout ? Date.now() + timeout : undefined,
-      value: 'handler' in action ? action.handler.call(this, context, payload) : action.call(this, context, payload),
+      value: 'handler' in action ? action.handler.call(this, context, payload) : action.call(this, context, payload)
     };
 
     cache[key] = record;

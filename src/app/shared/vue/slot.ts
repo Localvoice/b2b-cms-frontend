@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { NormalizedScopedSlot, VNode } from 'vue/types/vnode';
 import { coerceArray } from '../helpers';
 
@@ -12,10 +11,10 @@ export function normalizeSlot(
   $slots: { [key: string]: VNode[] | undefined } = {}
 ): VNode[] | undefined {
   // Ensure names is an array without "falsy" values
-  names = coerceArray(names);
+  const coerceNames = coerceArray(names);
   let slot;
   for (let i = 0; i < names.length && !slot; i += 1) {
-    const name = names[i];
+    const name = coerceNames[i];
     slot = $scopedSlots[name] || $slots[name];
   }
   // Note: in Vue 2.6.x, all named slots are also scoped slots

@@ -15,7 +15,7 @@ export const themeConfig = {
 
   isDark: false,
   verticalSidebarDrawerColor: 'white', // primary,white,sucsess,warning,etc
-  appBarColor: 'white', // primary,white,sucsess,warning,etc
+  appBarColor: 'white' // primary,white,sucsess,warning,etc
 };
 
 const mq = window.matchMedia('(prefers-color-scheme: light)');
@@ -38,8 +38,8 @@ export const themePreset = {
       xs: 600,
       sm: 960,
       md: 1280,
-      lg: 1920,
-    },
+      lg: 1920
+    }
   },
 
   rtl: false,
@@ -51,7 +51,7 @@ export const themePreset = {
       cspNonce: undefined,
       customProperties: true,
       minifyTheme: undefined,
-      themeCache: undefined,
+      themeCache: undefined
     },
     themes: {
       light: {
@@ -64,7 +64,7 @@ export const themePreset = {
 
         dark: '#242939',
 
-        background: '#f2f3f8',
+        background: '#f2f3f8'
       },
       dark: {
         primary: colors.blue,
@@ -72,8 +72,8 @@ export const themePreset = {
         success: colors.green,
         danger: colors.red,
         warning: colors.deepOrange,
-        info: colors.indigo,
-      },
-    },
-  },
+        info: colors.indigo
+      }
+    }
+  }
 };
