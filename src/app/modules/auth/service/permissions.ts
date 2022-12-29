@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 import { store } from '~app/core/store';
-import { coerceArray } from '~app/shared';
+import { coerceArray } from '~app/shared/helpers';
 import { AuthPermission } from '../model';
 import { authGetters } from '../store';
 

@@ -1,4 +1,4 @@
-import { JsonProperty } from '~app/shared';
+import { JsonProperty } from '~app/shared/json-mapper';
 
 export class AuthUserPreferences {
   id: number | undefined = undefined;

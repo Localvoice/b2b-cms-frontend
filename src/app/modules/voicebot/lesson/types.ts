@@ -33,7 +33,7 @@ export type ExampleExercises = {
   exampleExercises: [SentenceExampleExercisesDto];
 };
 
-export type SentenceExampleExercisesDto = [string, string, string, string, null | string, null | string, boolean];
+export type SentenceExampleExercisesDto = [string, string, string, string, null | string, undefined | string, boolean];
 
 export type SentenceExampleStructure = {
   example?: string;
@@ -44,7 +44,7 @@ export type SentenceExampleStructure = {
 export enum SentenceExampleStructureFields {
   EXAMPLE = 'example',
   TRANSLATED_EXAMPLE = 'translatedExample',
-  IMAGE_SRC = 'imageSrc',
+  IMAGE_SRC = 'imageSrc'
 }
 
 export type LessonValidationForm<T> = {
@@ -71,5 +71,5 @@ export type LessonDescription = {
 
 export enum LessonValidationType {
   SENTENCE = 'sentence',
-  SENTENCE_EXAMPLE = 'sentenceExample',
+  SENTENCE_EXAMPLE = 'sentenceExample'
 }

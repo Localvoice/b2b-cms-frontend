@@ -12,7 +12,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { api } from '~app/core/api';
-import { version } from '../../../../package.json';
+import info from '../../../../package.json';
 
 export interface VersionInfo {
   version: string;
@@ -21,8 +21,8 @@ export interface VersionInfo {
 export default Vue.extend({
   name: 'AppVersion',
   data: () => ({
-    frontend: { version },
-    backend: {},
+    frontend: { version: info.version },
+    backend: {}
   }),
 
   created(): void {
@@ -34,7 +34,7 @@ export default Vue.extend({
           this.backend = res.data;
         }
       });
-  },
+  }
 });
 </script>
 

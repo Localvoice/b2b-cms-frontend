@@ -1,9 +1,5 @@
-/* eslint-disable import/no-cycle */
-/* eslint-disable consistent-return */
-/* eslint-disable array-callback-return */
-
 import { RootState } from '~app/core/store';
-import { coerceArray } from '~app/shared';
+import { coerceArray } from '~app/shared/helpers';
 import { createGetterFactory, createGetterMap } from '~app/shared/vuex';
 import { StructureIndexes, StructureOperation } from '../types';
 import { NAMESPACE, StructureState } from './state';

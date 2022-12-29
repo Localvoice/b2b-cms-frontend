@@ -113,11 +113,13 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue';
+import { VRow, VCol, VBtn, VIcon, VTextField, VImg, VFileInput, VTooltip } from 'vuetify/lib';
 import { FormGroup, FormControlState } from '~app/shared/form';
-import { ValidationTarget } from '~app/shared';
+import { ValidationTarget } from '~app/shared/types';
+import lesson from '../../lesson/models/lesson';
 import { LessonStructureModel } from '../models';
 import { createLessonForm } from '../validation/forms';
-import { FormValidationMixin } from '../validation/formValidation.mixin';
+import FormValidationMixin from '../validation/formValidation.mixin';
 
 export default Vue.extend({
   name: 'TheLesson',
@@ -127,7 +129,7 @@ export default Vue.extend({
   mixins: [FormValidationMixin],
   props: {
     lesson: {
-      type: Object as PropType<FormGroup<LessonStructureModel>>,
+      type: Object as PropType<LessonStructureModel>,
       required: true
     },
     courseIndex: {
@@ -176,7 +178,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    updatePicture($event: File | null = null, imageSrc: string) {
+    updatePicture($event: File | null = null, imageSrc: string | undefined) {
       console.log('removePicture');
       let emitterName: string;
       if ($event && $event.name.startsWith('https')) return;

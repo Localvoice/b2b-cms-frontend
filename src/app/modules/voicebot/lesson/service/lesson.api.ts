@@ -1,13 +1,13 @@
 /* eslint-disable class-methods-use-this */
 import { api } from '~app/core/api';
 import { router } from '~app/core/router';
-import { deserialize } from '~app/shared';
+import { deserialize } from '~app/shared/json-mapper';
 import LessonModel from '../models/lesson';
 
 const lessonApi = {
   getLesson(key: string): Promise<LessonModel | void> {
     const params = {
-      key,
+      key
     };
     return api
       .get<LessonModel>('/api/voicebot/lesson', { params })
@@ -15,7 +15,7 @@ const lessonApi = {
       .catch((errorMessage) => {
         router.app.$toast.success('There was a problem with lesson fetching');
       });
-  },
+  }
 };
 
 export default lessonApi;

@@ -2,7 +2,7 @@
 import { DirectiveFunction } from 'vue';
 import { NavigationGuard } from 'vue-router';
 import { store } from '~app/core/store';
-import { commentNode } from '~app/shared';
+import { commentNode } from '~app/shared/vue';
 import { configGetters } from './store';
 import { FeatureName } from './types';
 

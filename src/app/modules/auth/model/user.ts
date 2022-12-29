@@ -1,4 +1,4 @@
-import { JsonProperty } from '~app/shared';
+import { JsonProperty } from '~app/shared/json-mapper';
 import { AuthPermission, AuthPermissionConverter } from './permission';
 
 export class AuthUser {
@@ -16,7 +16,7 @@ export class AuthUser {
 
   @JsonProperty({
     converter: { fromJson: AuthPermissionConverter.fromJson },
-    excludeToJson: true,
+    excludeToJson: true
   })
   permissions: AuthPermission[] | [] = [];
 

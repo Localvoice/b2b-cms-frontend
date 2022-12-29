@@ -144,7 +144,7 @@ import { ValidationTarget } from '~app/shared/types';
 import TheLesson from './TheLesson.vue';
 import { CategoryStructureModel } from '../models/categoryStructure';
 import { createCategoryForm, createNumberOfLesssonsForm } from '../validation/forms';
-import { FormValidationMixin } from '../validation/formValidation.mixin';
+import FormValidationMixin from '../validation/formValidation.mixin';
 
 export default Vue.extend({
   components: {
@@ -217,7 +217,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    updatePicture($event: File | null = null, imageSrc: string) {
+    updatePicture($event: File | null = null, imageSrc: string | undefined) {
       console.log('removePicture');
       let emitterName: string;
       if ($event && $event.name.startsWith('https')) return;

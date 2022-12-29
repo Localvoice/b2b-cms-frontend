@@ -1,7 +1,5 @@
-/* eslint-disable import/no-cycle */
-/* eslint-disable array-callback-return */
-/* eslint-disable no-nested-ternary */
-import { coerceArray, Converter, objectKeys } from '~app/shared';
+import { coerceArray, objectKeys } from '~app/shared/helpers';
+import { Converter } from '~app/shared/json-mapper';
 import { StructureLessonDto, StructureCategoryDto, StructureCourseDto } from '../types';
 
 export const voicebotStructureConverter: Converter = {
@@ -18,16 +16,16 @@ export const voicebotStructureConverter: Converter = {
         list: value[categoryTitle].list!.map((lesson: StructureLessonDto) => ({
           subject: lesson.title || undefined,
           translatedSubject: lesson.description || undefined,
-          imageSrc: lesson.image || undefined,
+          imageSrc: lesson.image || undefined
         })),
         subject: category.title,
         translatedSubject: category.description,
-        imageSrc: category.image,
+        imageSrc: category.image
       });
     });
     return listOfCategories;
   },
   toJson(date: Date): number | null {
     return date && date.getTime ? date.getTime() : null;
-  },
+  }
 };

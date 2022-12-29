@@ -52,7 +52,6 @@ import Vue from 'vue';
 import { mapActions, mapGetters } from 'vuex';
 import { v4 as uuid } from 'uuid';
 import { router } from '~app/core/router';
-import { coerceArray, QueryParams, VoicebotButtonsText, ValidationForm, ValidationTarget } from '~app/shared';
 import { areExampleCorrect, fillUpValidationForm, deleteValidationFields } from '~app/shared/validation';
 import { FormGroup } from '~app/shared/form';
 import { getQueryParameters } from '~app/shared/helpers/query';
@@ -64,6 +63,10 @@ import { LessonExercisesModel } from '../models/lessonExercises';
 import { lessonGetters } from '../store';
 import { lessonActions } from '../store/actions';
 import { LessonQuery } from '../types';
+import { VBtn } from 'vuetify/lib';
+import { coerceArray } from '~app/shared/helpers';
+import { ValidationForm, VoicebotButtonsText, QueryParams, ValidationTarget } from '~app/shared/types';
+import lesson from '../models/lesson';
 
 export default Vue.extend({
   components: {

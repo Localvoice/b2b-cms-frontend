@@ -2,9 +2,9 @@
 import { CrossStorageClient } from 'cross-storage';
 import { Config } from '~app/core/config';
 import { store } from '~app/core/store';
-import { createUrl } from '~app/shared';
 import { configGetters } from '~app/core/config/store';
 import { AuthToken, exportAuthToken, importAuthToken } from './token';
+import { createUrl } from '~app/shared/helpers';
 
 export const TOKEN_STORAGE_KEY = 'Localvoice@%DOMAIN%';
 export const TOKEN_STORAGE_PATH = 'token.html';
@@ -31,9 +31,8 @@ export class TokenStorage {
   }
 
   private action<T = void>(action: (storage: CrossStorageClient) => Promise<T>): Promise<T> {
-
     const storage = new CrossStorageClient(createUrl('/', TOKEN_STORAGE_PATH), {
-      timeout: 30000,
+      timeout: 30000
     });
     return storage
       .onConnect()

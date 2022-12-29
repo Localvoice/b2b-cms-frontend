@@ -1,6 +1,5 @@
-/* eslint-disable import/no-cycle */
-/* eslint-disable array-callback-return */
-import { coerceObject, Converter, objectKeys } from '~app/shared';
+import { objectKeys, coerceObject } from '~app/shared/helpers';
+import { Converter } from '~app/shared/json-mapper';
 import ChatExerciseModel from '../models/chatExerciseModel';
 import { LessonExercisesModel } from '../models/lessonExercises';
 import SentenceExampleExercisesModel from '../models/sentenceExampleExerciseModel';

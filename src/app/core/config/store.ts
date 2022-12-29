@@ -1,15 +1,14 @@
 import axios from 'axios';
 import { Module } from 'vuex';
 import { RootState } from '~app/core/store';
-// import { CompanyConfig } from '~app/modules/auth';
-import { coerceArray } from '~app/shared';
+import { coerceArray } from '~app/shared/helpers';
 import {
   createActionFactory,
   createActionMap,
   createGetterFactory,
   createGetterMap,
   createMutationFactory,
-  createMutationMap,
+  createMutationMap
 } from '~app/shared/vuex';
 import { PUBLIC_PATH } from '../env';
 import { Config, FeatureName, Features } from './types';
@@ -31,7 +30,7 @@ const actions = {
         .then((res) => commit(configMutations.setConfig.local, res.data));
     }
     return configRequest;
-  }),
+  })
 };
 
 const createMutation = createMutationFactory<Config>();
@@ -41,11 +40,11 @@ const mutations = {
   }),
   setCompany: createMutation((state, config: any) => {
     const update: Partial<Config> = {
-      companyLogo: config.logoFile,
+      companyLogo: config.logoFile
     };
 
     Object.assign(state, update);
-  }),
+  })
 };
 
 const createGetter = createGetterFactory<Config, RootState>();
@@ -57,14 +56,14 @@ const getters = {
     const arrayOfFeatures = coerceArray(feature);
     const features: Partial<Features> = state.features || {};
     return arrayOfFeatures.length ? arrayOfFeatures.every((current) => features[current]) : false;
-  }),
+  })
 };
 
 export const configStore: Module<Config, RootState> = {
   namespaced: true,
   actions,
   mutations,
-  getters,
+  getters
 };
 
 export const configActions = createActionMap<typeof actions, Config, RootState>(NAMESPACE, actions);

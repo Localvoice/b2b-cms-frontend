@@ -1,6 +1,4 @@
-/* eslint-disable import/no-cycle */
-import { ObjectAttribute } from '~app/shared';
-import { FormGroup } from '~app/shared/form';
+import { ObjectAttribute } from '~app/shared/types';
 import { StructureState } from './store';
 
 /* eslint-disable no-shadow */
@@ -38,7 +36,7 @@ export type StructureLessonDto = {
 export enum StructureOperation {
   COURSE = 'course',
   CATEGORY = 'category',
-  LESSON = 'lesson',
+  LESSON = 'lesson'
 }
 
 export type StructureDetailsToUpdate = {
@@ -79,7 +77,7 @@ export enum StructureUnit {
   IMAGE_SRC = 'imageSrc',
   COURSE_INDEX = 'courseIndex',
   CATEGORY_INDEX = 'categoryIndex',
-  LESSON_INDEX = 'lessonIndex',
+  LESSON_INDEX = 'lessonIndex'
 }
 
 export type LessonListHeaders = {
