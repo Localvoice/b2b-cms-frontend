@@ -76,7 +76,7 @@ export function createMutationMap<K extends Record<string, unknown>, S>(
   return Object.keys(mutations).reduce((acc, key) => {
     acc[key as keyof K] = {
       namespaced: `${namespace}/${key}`,
-      local: `${key}`,
+      local: `${key}`
     };
     return acc;
   }, {} as { [key in keyof K]: MutationName });

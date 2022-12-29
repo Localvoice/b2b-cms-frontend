@@ -2,7 +2,8 @@
 import axios, { AxiosError } from 'axios';
 import { api } from '~app/core/api';
 import { RootState } from '~app/core/store';
-import { deserialize, PictureTarget, S3Credentials } from '~app/shared';
+import { deserialize } from '~app/shared/json-mapper';
+import { PictureTarget, S3Credentials } from '~app/shared/types';
 import { createActionFactory, createActionMap } from '~app/shared/vuex';
 import { AuthUser } from '../model';
 import { authMutations } from './mutations';
@@ -32,7 +33,7 @@ export const actions = {
     ({ commit }, { pictureTarget, type }: { pictureTarget: PictureTarget; type: string }) => {
       const params = {
         target: pictureTarget,
-        type,
+        type
       };
       return api
         .get<{ credentials: S3Credentials; fullPath: string }>('/api/s3Credentials', { params })
@@ -53,7 +54,7 @@ export const actions = {
     return new Promise((resolve, reject) => {
       fetch(credentials.url, {
         method: 'POST',
-        body: formData,
+        body: formData
       })
         .then((data) => resolve(data))
         .catch((error) => reject(error));
@@ -66,11 +67,11 @@ export const actions = {
         const filename = pictureTargetArray[pictureTargetArray.length - 1];
         const params = {
           filename,
-          target: pictureTarget,
+          target: pictureTarget
         };
         return api.delete('/api/images', { params }).then((response) => response.data);
       });
     }
-  ),
+  )
 };
 export const authActions = createActionMap<typeof actions, AuthState, RootState>(NAMESPACE, actions);

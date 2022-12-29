@@ -1,9 +1,15 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
-import Vue from 'vue';
-import { ValidationTarget } from '~app/shared';
+import { defineComponent } from 'vue';
+import { ValidationTarget } from '~app/shared/types';
 
-export const FormValidationMixin = Vue.extend({
+export default defineComponent({
+  data() {
+    return {
+      form: {},
+      courseIndex: 0,
+      validationId: '',
+      targets: []
+    };
+  },
   watch: {
     'form.data': {
       deep: true,
@@ -12,9 +18,9 @@ export const FormValidationMixin = Vue.extend({
           data: this.form,
           courseIndex: this.courseIndex,
           id: this.validationId,
-          targets: [ValidationTarget.TEST],
+          targets: [ValidationTarget.TEST]
         });
-      },
-    },
-  },
+      }
+    }
+  }
 });

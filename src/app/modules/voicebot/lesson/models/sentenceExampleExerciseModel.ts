@@ -3,7 +3,7 @@ export default class SentenceExampleExercisesModel {
 
   translatedExample: string | undefined = undefined;
 
-  imageSrc: string | null = null;
+  imageSrc: string | undefined = undefined;
 
   isImage: boolean | undefined = undefined;
 

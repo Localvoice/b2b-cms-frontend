@@ -43,7 +43,7 @@ describe('lessonConverter', () => {
             {
               example: 'when have you been in cinema?',
               translatedExample: 'kiedy byłeś w kinie?',
-              imageSrc: null,
+              imageSrc: undefined,
               isImage: false,
               typeOfExample: 'Rzeczownik',
               something: null
@@ -56,7 +56,7 @@ describe('lessonConverter', () => {
             {
               example: 'do you work today?',
               translatedExample: 'pracujesz dzisiaj?',
-              imageSrc: null,
+              imageSrc: undefined,
               isImage: false,
               typeOfExample: 'Czasownik',
               something: null
@@ -87,7 +87,7 @@ describe('lessonConverter', () => {
             {
               example: 'when have you been in cinema?',
               translatedExample: 'kiedy byłeś w kinie?',
-              imageSrc: null,
+              imageSrc: undefined,
               isImage: false,
               typeOfExample: 'Rzeczownik',
               something: null
@@ -100,7 +100,7 @@ describe('lessonConverter', () => {
             {
               example: '',
               translatedExample: 'pracujesz dzisiaj?',
-              imageSrc: null,
+              imageSrc: undefined,
               isImage: false,
               typeOfExample: 'Czasownik',
               something: null

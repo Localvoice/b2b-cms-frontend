@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 import Vue from 'vue';
-import { ObjectAttribute } from '~app/shared';
+import { ObjectAttribute } from '~app/shared/types';
 import { createMutationFactory, createMutationMap } from '~app/shared/vuex';
 import LessonModel from '../models/lesson';
 import SentenceExampleExercisesModel from '../models/sentenceExampleExerciseModel';

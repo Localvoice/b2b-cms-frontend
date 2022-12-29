@@ -5,7 +5,7 @@ import { Comparer, EntityState, EntityStateAdapter, IdSelector, Predicate, selec
 export function getInitialEntityState<V>(): EntityState<V> {
   return {
     ids: [],
-    entities: {},
+    entities: {}
   };
 }
 
@@ -182,6 +182,6 @@ export function createStateAdapter<T>(selectId: any, sort: any): any {
     updateOne,
     updateMany,
     upsertOne,
-    upsertMany,
+    upsertMany
   };
 }

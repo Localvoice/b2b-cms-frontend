@@ -14,20 +14,16 @@
     "outDir": "./dist/out-tsc",
     "baseUrl": ".",
     "typeRoots": ["./node_modules/@types", "./typings"],
-    "types": [
-      "webpack-env",
-      "jest"
-    ],
+    "types": ["webpack-env", "jest"],
     "paths": {
       "~app/*": ["src/app/*"],
       "@/*": ["src/*"]
     },
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+  },
+  "vueCompilerOptions": {
+    "target": 2.7,
+    "extensions": [".vue"]
   },
   "include": [
     "index.d.ts",
@@ -35,9 +31,8 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx", 
-    "src/app/core/i18n/languages.ts" ],
-  "exclude": [
-    "node_modules"
-  ]
+    "tests/**/*.tsx",
+    "src/app/core/i18n/languages.ts"
+  ],
+  "exclude": ["node_modules"]
 }

@@ -1,7 +1,5 @@
-/* eslint-disable import/no-cycle */
-/* eslint-disable class-methods-use-this */
 import { api, ApiCollectionResponse } from '~app/core/api';
-import { deserialize } from '~app/shared';
+import { deserialize } from '~app/shared/json-mapper';
 import { CourseStructureModel } from '../models/courseStructure';
 
 const structureApi = {

@@ -2,13 +2,13 @@ import { RootState, store } from '~app/core/store';
 import { createActionFactory, createActionMap } from '~app/shared/vuex';
 import { authActions } from '~app/modules/auth/store';
 import LessonModel from '~app/modules/voicebot/lesson/models/lesson';
-import { PictureTarget, S3Credentials } from '~app/shared';
 import { arePositiveNumbers } from '~app/shared/helpers/numbers';
 import { getAttributeToUpdate } from '~app/shared/helpers/attributesToUpdate';
 import { NAMESPACE, LessonState } from './state';
 import { lessonMutations } from './mutation';
 import lessonApi from '../service/lesson.api';
 import { SentenceExampleStructure, SentenceExampleStructureFields } from '../types';
+import { PictureTarget, S3Credentials } from '~app/shared/types';
 
 const createAction = createActionFactory<LessonState, RootState>();
 
@@ -37,7 +37,7 @@ export const actions = {
       { commit },
       {
         sentence,
-        sentenceIndex,
+        sentenceIndex
       }: {
         sentence: string;
         sentenceIndex: number;
@@ -46,7 +46,7 @@ export const actions = {
       if (arePositiveNumbers(sentenceIndex))
         commit(lessonMutations.changeSentence.local, {
           sentenceIndex,
-          sentence,
+          sentence
         });
     }
   ),
@@ -56,13 +56,13 @@ export const actions = {
       {
         sentenceIndex,
         sentenceExampleIndex,
-        sentenceExampleStructure,
+        sentenceExampleStructure
       }: { sentenceIndex: number; sentenceExampleIndex: number; sentenceExampleStructure: SentenceExampleStructure }
     ) => {
       console.log('updateSentenceExample', {
         sentenceIndex,
         sentenceExampleIndex,
-        sentenceExampleStructure,
+        sentenceExampleStructure
       });
       if (arePositiveNumbers(sentenceIndex, sentenceExampleIndex)) {
         const attributeToUpdate = getAttributeToUpdate<SentenceExampleStructure, SentenceExampleStructureFields>(
@@ -70,13 +70,13 @@ export const actions = {
           [
             SentenceExampleStructureFields.EXAMPLE,
             SentenceExampleStructureFields.TRANSLATED_EXAMPLE,
-            SentenceExampleStructureFields.IMAGE_SRC,
+            SentenceExampleStructureFields.IMAGE_SRC
           ]
         );
         commit(lessonMutations.changeSentenceExample.local, {
           sentenceIndex,
           sentenceExampleIndex,
-          attributeToUpdate,
+          attributeToUpdate
         });
       }
     }
@@ -88,7 +88,7 @@ export const actions = {
         sentenceIndex,
         sentenceExampleIndex,
         file,
-        sentenceExampleStructure,
+        sentenceExampleStructure
       }: {
         file: File;
         sentenceIndex: number;
@@ -112,14 +112,14 @@ export const actions = {
               [
                 SentenceExampleStructureFields.EXAMPLE,
                 SentenceExampleStructureFields.TRANSLATED_EXAMPLE,
-                SentenceExampleStructureFields.IMAGE_SRC,
+                SentenceExampleStructureFields.IMAGE_SRC
               ]
             );
             console.log('attributeToUpdate=savePicture', attributeToUpdate);
             commit(lessonMutations.changeSentenceExample.local, {
               sentenceIndex,
               sentenceExampleIndex,
-              attributeToUpdate: { key: 'imageSrc', value: fullPath },
+              attributeToUpdate: { key: 'imageSrc', value: fullPath }
             });
           })
         );
@@ -131,7 +131,7 @@ export const actions = {
       {
         sentenceIndex,
         sentenceExampleIndex,
-        sentenceExampleStructure,
+        sentenceExampleStructure
       }: {
         sentenceIndex: number;
         sentenceExampleIndex: number;
@@ -147,7 +147,7 @@ export const actions = {
           dispatch(updateStructureAction, {
             sentenceIndex,
             sentenceExampleIndex,
-            sentenceExampleStructure: { imageSrc: '' },
+            sentenceExampleStructure: { imageSrc: '' }
           });
         });
     }
@@ -176,7 +176,7 @@ export const actions = {
       if (arePositiveNumbers(sentenceIndex, sentenceExampleIndex))
         commit(lessonMutations.removeSentenceExample.local, { sentenceIndex, sentenceExampleIndex });
     }
-  ),
+  )
 };
 
 export const lessonActions = createActionMap<typeof actions, LessonState, RootState>(NAMESPACE, actions);

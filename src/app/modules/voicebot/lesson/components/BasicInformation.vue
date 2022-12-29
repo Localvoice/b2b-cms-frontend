@@ -92,12 +92,15 @@
 import Vue, { PropType } from 'vue';
 import { mapGetters } from 'vuex';
 import FixedButton from '~app/shared/fixedButton/fixedButton.vue';
-import { objectKeys, ValidationTarget, VoicebotButtonsText } from '~app/shared';
 import { FormControlState } from '~app/shared/form';
 import { emitValidation } from '~app/shared/validation';
 import { voicebotGetters } from '~app/modules/voicebot/structure/store';
 import { createBasicInfoForm, createLessonDescriptionForm } from '../validation/forms';
 import { LessonBasicInformation, LessonDescription } from '../types';
+import { RouterLink } from 'vue-router';
+import { VCol, VCardTitle, VBtn, VIcon, VCardText, VSelect, VTextarea } from 'vuetify/lib';
+import { objectKeys } from '~app/shared/helpers';
+import { VoicebotButtonsText, ValidationTarget } from '~app/shared/types';
 
 export default Vue.extend({
   components: {

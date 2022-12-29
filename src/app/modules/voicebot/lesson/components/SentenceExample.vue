@@ -97,8 +97,9 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue';
+import { VCol, VCardTitle, VBtn, VIcon, VCardText, VTextField, VImg, VFileInput } from 'vuetify/lib';
 import { FormControlState } from '~app/shared/form';
-import { ValidationTarget } from '~app/shared';
+import { ValidationTarget } from '~app/shared/types';
 import SentenceExampleExercisesModel from '../models/sentenceExampleExerciseModel';
 import { createSentenceExampleForm } from '../validation/forms';
 
@@ -167,7 +168,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    updatePicture($event: File | null = null, imageSrc: string) {
+    updatePicture($event: File | null = null, imageSrc: string | undefined) {
       console.log('updatePicture event', $event);
       console.log('imageSrc', imageSrc);
       let emitterName: string;

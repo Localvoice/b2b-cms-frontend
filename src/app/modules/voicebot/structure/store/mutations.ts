@@ -9,7 +9,8 @@ import { LessonStructureModel } from '../models';
 import { CourseStructureModel } from '../models/courseStructure';
 import { CategoryIndexes, CourseIndexes, LessonIndexes, StructureIndexes, UpdateStructureOperation } from '../types';
 import { CategoryStructureModel } from '../models/categoryStructure';
-import { coerceArray, ObjectAttribute } from '~app/shared';
+import { coerceArray } from '~app/shared/helpers';
+import { ObjectAttribute } from '~app/shared/types';
 
 const createMutation = createMutationFactory<StructureState>();
 
@@ -24,7 +25,7 @@ export const mutations = {
       {
         indexes,
         attributesToUpdate,
-        operation,
+        operation
       }: {
         indexes: StructureIndexes;
         attributesToUpdate: ObjectAttribute;
@@ -43,7 +44,7 @@ export const mutations = {
       subject: '',
       translatedSubject: '',
       imageSrc: '',
-      categories: [],
+      categories: []
     };
     state.structure.coursesList.push(newCourse);
   }),
@@ -58,7 +59,7 @@ export const mutations = {
       translatedSubject: '',
       alt: '',
       imageSrc: '',
-      list: [],
+      list: []
     };
     if (state.structure.coursesList[indexes.courseIndex].categories) {
       state.structure.coursesList[indexes.courseIndex].categories!.splice(indexes.categoryIndex + 1, 0, newCategory);
@@ -71,7 +72,7 @@ export const mutations = {
       translatedSubject: '',
       alt: '',
       imageSrc: '',
-      list: [],
+      list: []
     };
     if (indexes.courseIndex && state.structure.coursesList[indexes.courseIndex].categories)
       state.structure.coursesList[indexes.courseIndex].categories!.push(newCategory);
@@ -87,7 +88,7 @@ export const mutations = {
       subject: '',
       translatedSubject: '',
       alt: '',
-      imageSrc: '',
+      imageSrc: ''
     };
     if (state.structure.coursesList[indexes.courseIndex].categories![indexes.categoryIndex].list!) {
       state.structure.coursesList[indexes.courseIndex].categories![indexes.categoryIndex].list!.splice(
@@ -111,7 +112,7 @@ export const mutations = {
       subject: '',
       translatedSubject: '',
       alt: '',
-      imageSrc: '',
+      imageSrc: ''
     };
     if (state.structure.coursesList[indexes.courseIndex].categories![indexes.categoryIndex!].list) {
       coerceArray(state.structure.coursesList[indexes.courseIndex].categories![indexes.categoryIndex].list!).push(
@@ -160,7 +161,7 @@ export const mutations = {
       });
     });
     state.subjects.subjectsList[courseName] = categories;
-  }),
+  })
 };
 
 export const voicebotMutations = createMutationMap<typeof mutations, StructureState>(NAMESPACE, mutations);
@@ -188,5 +189,5 @@ const updateStructureOperation: UpdateStructureOperation = {
         attributeToUpdate.value
       );
     }
-  },
+  }
 };

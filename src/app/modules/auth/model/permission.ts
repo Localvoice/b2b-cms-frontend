@@ -1,9 +1,9 @@
-/* eslint-disable no-shadow */
-import { coerceArray, Converter } from '~app/shared';
+import { coerceArray } from '~app/shared/helpers';
+import { Converter } from '~app/shared/json-mapper';
 
 export enum AuthPermission {
   VOICEBOT = 1,
-  CHATBOT,
+  CHATBOT
 }
 
 export const AuthPermissionConverter: Converter = {
@@ -23,5 +23,5 @@ export const AuthPermissionConverter: Converter = {
       }
       return acc;
     }, [] as string[]);
-  },
+  }
 };

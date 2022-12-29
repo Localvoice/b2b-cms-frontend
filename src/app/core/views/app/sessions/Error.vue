@@ -22,8 +22,8 @@ export default {
   name: 'Error',
   metaInfo: {
     // title will be injected into parent titleTemplate
-    title: 'Error',
-  },
+    title: 'Error'
+  }
 };
 </script>
 <style lang="scss" scoped>

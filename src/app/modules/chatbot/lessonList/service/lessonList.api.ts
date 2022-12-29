@@ -1,7 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { api, ApiCollectionResponse } from '~app/core/api';
 import LessonSummaryModel from '../models/lessonSummary';
-import { deserialize } from '~app/shared';
 import { router } from '~app/core/router';
 import chatbotLessonListSummary from '../dummyData/chatbotLessonListSummary.json';
 
@@ -13,7 +12,7 @@ const lessonListApi = {
   },
   removeLesson(key: string): Promise<void | AxiosResponse<string>> {
     const params = {
-      key,
+      key
     };
     return api
       .delete('/api/voicebot/lesson', { params })
@@ -24,7 +23,7 @@ const lessonListApi = {
         console.log('errorMessage', errorMessage);
         router.app.$toast.success('There was a problem to delete the lesson');
       });
-  },
+  }
 };
 
 export default lessonListApi;
