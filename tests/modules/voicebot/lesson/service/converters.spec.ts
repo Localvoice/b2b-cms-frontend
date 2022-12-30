@@ -1,7 +1,6 @@
 import { lessonConverter } from '~app/modules/voicebot/lesson/service/converters';
 import { LessonExercisesDto } from '~app/modules/voicebot/lesson/types';
 import { LessonExercisesModel } from '~app/modules/voicebot/lesson/models/lessonExercises';
-import { FormGroup } from '~app/shared/form';
 
 describe('lessonConverter', () => {
   const fullInput: LessonExercisesDto = {
@@ -13,12 +12,12 @@ describe('lessonConverter', () => {
     words: {
       wordOne: {
         examplesForWord: [
-          ['Rzeczownik', 'cinema', 'when have you been in cinema?', 'kiedy byłeś w kinie?', null, null, false]
+          ['Rzeczownik', 'cinema', 'when have you been in cinema?', 'kiedy byłeś w kinie?', null, undefined, false]
         ],
         sentences: ['df']
       },
       wordTwo: {
-        examplesForWord: [['Czasownik', 'work', 'do you work today?', 'pracujesz dzisiaj?', null, null, false]],
+        examplesForWord: [['Czasownik', 'work', 'do you work today?', 'pracujesz dzisiaj?', null, undefined, false]],
         sentences: ['df']
       },
       lesson_description: 'lesson description',
