@@ -1,15 +1,13 @@
-/* eslint-disable no-useless-constructor */
-/* eslint-disable no-shadow */
 import { AxiosResponse } from 'axios';
-import { api, ApiClient } from '~app/core/api';
+import { ApiClient, api } from '~app/core/api/client';
 
 export class PasswordService {
-  constructor(private api: ApiClient) {}
+  constructor(private apiClient: ApiClient) {}
 
   change(current: string, password: string): Promise<AxiosResponse> {
-    return this.api.put<void>('/api/account/me/password', {
+    return this.apiClient.put<void>('/api/account/me/password', {
       oldPassword: current,
-      newPassword: password,
+      newPassword: password
     });
   }
 }

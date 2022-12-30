@@ -5,5 +5,5 @@ import { themePreset } from '@/themeConfig';
 Vue.use(Vuetify);
 export default new Vuetify({
   theme: themePreset.theme,
-  rtl: themePreset.rtl,
+  rtl: themePreset.rtl
 });

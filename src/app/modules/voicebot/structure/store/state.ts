@@ -25,10 +25,10 @@ export function initialState(): StructureState {
   return {
     structure: {
       coursesList: [],
-      indexes: structureEntityAdapter.getInitialState({ total: 0 }),
+      indexes: structureEntityAdapter.getInitialState({ total: 0 })
     },
     subjects: {
-      subjectsList: {},
-    },
+      subjectsList: {}
+    }
   };
 }

@@ -75,10 +75,10 @@ import { PasswordFormData } from './wrapper';
 
 export default Vue.extend({
   components: {
-    FormControlState,
+    FormControlState
   },
   props: {
-    form: { type: Object as PropType<FormGroup<PasswordFormData>>, required: true },
-  },
+    form: { type: Object as PropType<FormGroup<PasswordFormData>>, required: true }
+  }
 });
 </script>

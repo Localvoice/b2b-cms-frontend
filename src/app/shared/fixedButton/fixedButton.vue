@@ -56,31 +56,31 @@ export default Vue.extend({
   props: {
     saveFn: {
       type: Function,
-      default: () => '',
+      default: () => ''
     },
     testFn: {
       type: Function,
-      default: () => '',
+      default: () => ''
     },
     prodFn: {
       type: Function,
-      default: () => '',
+      default: () => ''
     },
     buttonsText: {
       type: Object as PropType<VoicebotButtonsText>,
       default: () => ({
         save: '',
         test: '',
-        production: '',
-      }),
+        production: ''
+      })
     },
     isFixedButton: {
       type: Boolean,
-      default: () => true,
-    },
+      default: () => true
+    }
   },
   data: () => ({
-    fab: false,
-  }),
+    fab: false
+  })
 });
 </script>

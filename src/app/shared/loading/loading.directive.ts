@@ -17,7 +17,7 @@ export const SysLoading: DirectiveOptions = {
     const bindingElement: any = element;
     bindingElement.instance = loadingService.create({
       name,
-      target: element,
+      target: element
     });
 
     if (binding.value) {
@@ -33,5 +33,5 @@ export const SysLoading: DirectiveOptions = {
   unbind(element) {
     const bindingElement: any = element;
     bindingElement.instance.remove();
-  },
+  }
 };

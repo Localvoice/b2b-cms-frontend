@@ -1,5 +1,5 @@
 @function get-contrast-color($color) {
-  @if(lightness($color) < 40) {
+  @if (lightness($color) < 40) {
     @return $gray-900;
   } @else {
     @return $white;
@@ -17,7 +17,7 @@
     600: darken($color, 10),
     700: darken($color, 20),
     800: darken($color, 30),
-    900: darken($color, 40),
+    900: darken($color, 40)
   );
   @return $map;
 }
@@ -26,7 +26,12 @@
   $full-color-map: ();
   @each $name, $value in $color-map {
     $map: ();
-    $map: map-merge($map, ($name: gen-color-opacity-map($value)) );
+    $map: map-merge(
+      $map,
+      (
+        $name: gen-color-opacity-map($value)
+      )
+    );
     $full-color-map: map-merge($full-color-map, $map);
   }
   @return $full-color-map;

@@ -11,7 +11,7 @@ export const authStore: Module<AuthState, RootState> = {
   state: initialState,
   actions,
   mutations,
-  getters,
+  getters
 };
 
 export * from './state';

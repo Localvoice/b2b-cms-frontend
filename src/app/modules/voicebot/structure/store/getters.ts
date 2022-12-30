@@ -1,5 +1,6 @@
+/* eslint-disable import/no-cycle */
 import { RootState } from '~app/core/store';
-import { coerceArray } from '~app/shared/helpers';
+import { coerceArray } from '~app/shared/helpers/coerce';
 import { createGetterFactory, createGetterMap } from '~app/shared/vuex';
 import { StructureIndexes, StructureOperation } from '../types';
 import { NAMESPACE, StructureState } from './state';
@@ -33,6 +34,7 @@ const getImageSrc = {
     const categoryImagesSrc = coerceArray(state.structure.coursesList[indexes.courseIndex].categories).map(
       (category) => {
         if (category && category.imageSrc !== '') return category.imageSrc;
+        return '';
       }
     );
     const lessonImagesSrc: string[] = [];

@@ -14,6 +14,6 @@ export function initialState(): LayoutState {
     backgroundColor: BackgroundColor.WHITE,
     isSidebarVisible: true,
     isDarkMode: false,
-    isSidebarMinimized: false,
+    isSidebarMinimized: false
   };
 }

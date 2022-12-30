@@ -1,7 +1,6 @@
-/* eslint-disable import/no-cycle */
 import { PluginObject } from 'vue';
 import { Store } from 'vuex';
-import { api } from '~app/core/api';
+import { api } from '../api/client';
 import { FeatureDirective } from './features';
 import { configActions, configGetters, configStore, NAMESPACE } from './store';
 import { Config } from './types';

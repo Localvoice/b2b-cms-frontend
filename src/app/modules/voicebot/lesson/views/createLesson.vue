@@ -56,17 +56,16 @@ import { areExampleCorrect, fillUpValidationForm, deleteValidationFields } from 
 import { FormGroup } from '~app/shared/form';
 import { getQueryParameters } from '~app/shared/helpers/query';
 import FixedButton from '~app/shared/fixedButton/fixedButton.vue';
-import { translate } from '~app/core/i18n';
+import { VBtn } from 'vuetify/lib';
+import { ValidationForm, VoicebotButtonsText, QueryParams, ValidationTarget } from '~app/shared/types';
+import { translate } from '~app/core/i18n/i18n';
+import { coerceArray } from '~app/shared/helpers/coerce';
 import BasicInformation from '../components/BasicInformation.vue';
 import TheSentence from '../components/TheSentence.vue';
 import { LessonExercisesModel } from '../models/lessonExercises';
 import { lessonGetters } from '../store';
 import { lessonActions } from '../store/actions';
 import { LessonQuery } from '../types';
-import { VBtn } from 'vuetify/lib';
-import { coerceArray } from '~app/shared/helpers';
-import { ValidationForm, VoicebotButtonsText, QueryParams, ValidationTarget } from '~app/shared/types';
-import lesson from '../models/lesson';
 
 export default Vue.extend({
   components: {

@@ -38,17 +38,17 @@ export default {
         subtitle: undefined,
         title: undefined,
         to: undefined,
-        dark: true,
-      }),
+        dark: true
+      })
     },
     text: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
-      isDark: true,
+      isDark: true
     };
   },
 
@@ -66,8 +66,8 @@ export default {
     },
     href() {
       return this.item.href || (!this.item.to ? '#' : undefined);
-    },
-  },
+    }
+  }
 };
 </script>
 <style>

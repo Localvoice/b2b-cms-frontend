@@ -5,7 +5,7 @@ import { FormGroup } from './form';
 /* eslint-disable no-shadow */
 export enum PictureTarget {
   STRUCTURE_ICONS = 'structure-icons',
-  LESSON_ICONS = 'lesson-icons',
+  LESSON_ICONS = 'lesson-icons'
 }
 
 export type ObjectAttribute = {
@@ -26,7 +26,7 @@ export type QueryParams = {
 
 export enum ValidationTarget {
   SAVE = 'save',
-  TEST = 'test',
+  TEST = 'test'
 }
 
 export type ValidationForm<T> = {

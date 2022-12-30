@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-shadow */
-import { translate } from '~app/core/i18n';
 
+import { translate } from '~app/core/i18n/i18n';
 import { ErrorTranscription, ErrorType, ValidatorFactory, ValidatorFn } from '../types';
 
 export const defaultMessages: ErrorTranscription = {
@@ -106,7 +106,7 @@ export const matchWith: ValidatorFactory<string> =
 // https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address
 // eslint-disable-next-line no-useless-escape
 const EMAIL_REGEXP =
-  /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 export const email: ValidatorFn = (value: string) => {
   if (isEmpty(value)) {
@@ -115,81 +115,29 @@ export const email: ValidatorFn = (value: string) => {
   return EMAIL_REGEXP.test(value) ? null : { type: 'email', arg: '' };
 };
 
-export const min: ValidatorFactory<number> = (min: number, type: ErrorType) => (value: any) => {
+export const min: ValidatorFactory<number> = (minNumber: number, type: ErrorType) => (value: any) => {
   if (isEmpty(value)) {
     return null;
   }
   const number = parseFloat(value);
-  return !Number.isNaN(Number(number)) && number < min ? { type, arg: min.toString() } : null;
+  return !Number.isNaN(Number(number)) && number < minNumber ? { type, arg: min.toString() } : null;
 };
 
-export const max: ValidatorFactory<number> = (max: number, type: ErrorType) => (value: any) => {
+export const max: ValidatorFactory<number> = (maxNumber: number, type: ErrorType) => (value: any) => {
   if (isEmpty(value)) {
     return null;
   }
 
   const number = parseFloat(value);
-  return !Number.isNaN(Number(number)) && value > max ? { type, arg: max.toString() } : null;
+  return !Number.isNaN(Number(number)) && value > maxNumber ? { type, arg: max.toString() } : null;
 };
 
-export const minLength: ValidatorFactory<number> = (min: number, type: ErrorType) => (value: string) => {
+export const minLength: ValidatorFactory<number> = (minNumber: number, type: ErrorType) => (value: string) => {
   const number = value.length;
-  return !Number.isNaN(Number(number)) && number < min ? { type, arg: min.toString() } : null;
+  return !Number.isNaN(Number(number)) && number < minNumber ? { type, arg: min.toString() } : null;
 };
 
 // TODO equal
 // TODO minLength
 // TODO maxLength
 // TODO pattern
-
-// https://github.com/nodejs/node/blob/b023d61716ddc9cd97cc148bb8d237ec8d894d2b/lib/internal/net.js#L12
-export const { isIPv4, isIPv6, isIP } = (() => {
-  const v4Seg = '(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])';
-  const v4Str = `(${v4Seg}[.]){3}${v4Seg}`;
-  const IPv4Reg = new RegExp(`^${v4Str}$`);
-
-  const v6Seg = '(?:[0-9a-fA-F]{1,4})';
-  const IPv6Reg = new RegExp(
-    '^(' +
-      `(?:${v6Seg}:){7}(?:${v6Seg}|:)|` +
-      `(?:${v6Seg}:){6}(?:${v4Str}|:${v6Seg}|:)|` +
-      `(?:${v6Seg}:){5}(?::${v4Str}|(:${v6Seg}){1,2}|:)|` +
-      `(?:${v6Seg}:){4}(?:(:${v6Seg}){0,1}:${v4Str}|(:${v6Seg}){1,3}|:)|` +
-      `(?:${v6Seg}:){3}(?:(:${v6Seg}){0,2}:${v4Str}|(:${v6Seg}){1,4}|:)|` +
-      `(?:${v6Seg}:){2}(?:(:${v6Seg}){0,3}:${v4Str}|(:${v6Seg}){1,5}|:)|` +
-      `(?:${v6Seg}:){1}(?:(:${v6Seg}){0,4}:${v4Str}|(:${v6Seg}){1,6}|:)|` +
-      `(?::((?::${v6Seg}){0,5}:${v4Str}|(?::${v6Seg}){1,7}|:))` +
-      ')(%[0-9a-zA-Z]{1,})?$'
-  );
-
-  function isIPv4(s: string): boolean {
-    return IPv4Reg.test(s);
-  }
-
-  function isIPv6(s: string): boolean {
-    return IPv6Reg.test(s);
-  }
-
-  function isIP(s: string): number {
-    if (isIPv4(s)) return 4;
-    if (isIPv6(s)) return 6;
-    return 0;
-  }
-
-  return { isIPv4, isIPv6, isIP };
-})();
-
-// export const ipAddress: ValidatorFactory = (version?: 4 | 6) => (value: string) => {
-//   if (isEmpty(value)) {
-//     return null;
-//   }
-
-//   const type = 'ipAddress';
-//   const res = isIP(value);
-
-//   if (version && res !== version) {
-//     return { type, args: { version } };
-//   }
-
-//   return res > 0 ? null : { type };
-// };

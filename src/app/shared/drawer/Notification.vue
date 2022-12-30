@@ -63,7 +63,7 @@ export default {
           // eslint-disable-next-line global-require
           file: require('@/assets/images/file-types/001-pdf.svg'),
           fileName: 'progress_report.pdf',
-          time: '15 min ago',
+          time: '15 min ago'
         },
         {
           iconName: 'mdi-file-document',
@@ -73,7 +73,7 @@ export default {
           // eslint-disable-next-line global-require
           file: require('@/assets/images/file-types/001-pdf.svg'),
           fileName: 'progress_report.pdf',
-          time: '5 min ago',
+          time: '5 min ago'
         },
         {
           iconName: 'mdi-comment-alert',
@@ -81,7 +81,7 @@ export default {
           iconColorText: 'warning--text',
           title: 'jhon Commented on task',
 
-          time: '45 min ago',
+          time: '45 min ago'
         },
         {
           iconName: 'mdi-cloud-upload',
@@ -91,7 +91,7 @@ export default {
           // eslint-disable-next-line global-require
           file: require('@/assets/images/file-types/004-xlsx.svg'),
           fileName: 'budget_report.xlsx',
-          time: '15 min ago',
+          time: '15 min ago'
         },
         {
           iconName: 'mdi-comment-alert',
@@ -99,10 +99,10 @@ export default {
           iconColorText: 'warning--text',
           title: 'jhon Commented on task',
 
-          time: '45 min ago',
-        },
-      ],
+          time: '45 min ago'
+        }
+      ]
     };
-  },
+  }
 };
 </script>

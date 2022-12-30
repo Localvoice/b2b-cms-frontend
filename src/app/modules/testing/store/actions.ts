@@ -17,7 +17,7 @@ export const actions = {
   }),
   processValidation: createAction(({ commit }, validationForm: FormGroup<any>) => {
     commit(ValidationMutations.validate.local, validationForm);
-  }),
+  })
 };
 
 export const validationActions = createActionMap<typeof actions, ValidationState, RootState>(NAMESPACE, actions);

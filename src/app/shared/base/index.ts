@@ -10,5 +10,5 @@ export const BaseComponentsPlugin: PluginObject<void> = {
     Vue.component(BaseItemGroup.name, BaseItemGroup);
     Vue.component(BaseHoverButton.name, BaseHoverButton);
     Vue.component(BaseItem.name, BaseItem);
-  },
+  }
 };

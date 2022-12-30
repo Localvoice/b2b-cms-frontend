@@ -1,5 +1,5 @@
 import { NormalizedScopedSlot, VNode } from 'vue/types/vnode';
-import { coerceArray } from '../helpers';
+import { coerceArray } from '../helpers/coerce';
 
 /**
  * Returns VNodes for named slot either scoped or unscoped

@@ -7,7 +7,7 @@ const VARIANT_ICON: { [key: string]: string } = {
   success: 'fas fa-check-circle',
   info: 'fas fa-info-circle',
   warning: 'fas fa-exclamation-circle',
-  danger: 'fas fa-times-circle',
+  danger: 'fas fa-times-circle'
 };
 
 export const SysToastFactory = (): SysToast => {
@@ -21,8 +21,8 @@ export const SysToastFactory = (): SysToast => {
       new ToastComponent({
         propsData: {
           message,
-          color: options.color,
-        },
+          color: options.color
+        }
       }).$mount('#toast-node');
     }
   };
@@ -39,7 +39,7 @@ export const SysToastFactory = (): SysToast => {
     },
     warning(message): void {
       showToast(message, { color: 'warning' });
-    },
+    }
   };
 };
 
@@ -47,6 +47,6 @@ export const SysToastPlugin: PluginFunction<void> = (Vue) => {
   Object.defineProperty(Vue.prototype, '$toast', {
     get() {
       return SysToastFactory();
-    },
+    }
   });
 };

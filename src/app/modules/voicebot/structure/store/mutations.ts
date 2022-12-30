@@ -4,13 +4,13 @@
 import Vue from 'vue';
 import { v4 as uuidv4 } from 'uuid';
 import { createMutationFactory, createMutationMap } from '~app/shared/vuex';
+import { ObjectAttribute } from '~app/shared/types';
+import { coerceArray } from '~app/shared/helpers/coerce';
 import { structureEntityAdapter, NAMESPACE, StructureState } from './state';
-import { LessonStructureModel } from '../models';
 import { CourseStructureModel } from '../models/courseStructure';
 import { CategoryIndexes, CourseIndexes, LessonIndexes, StructureIndexes, UpdateStructureOperation } from '../types';
 import { CategoryStructureModel } from '../models/categoryStructure';
-import { coerceArray } from '~app/shared/helpers';
-import { ObjectAttribute } from '~app/shared/types';
+import { LessonStructureModel } from '../models/lessonStructure';
 
 const createMutation = createMutationFactory<StructureState>();
 

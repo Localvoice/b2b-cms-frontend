@@ -473,7 +473,7 @@
 export default {
   metaInfo: {
     // title will be injected into parent titleTemplate
-    title: 'Validation',
+    title: 'Validation'
   },
   data() {
     return {
@@ -488,7 +488,7 @@ export default {
       name: '',
       nameRules2: [
         (v) => !!v || 'Name is required',
-        (v) => (v && v.length <= 50) || 'Name must be less than 10 characters',
+        (v) => (v && v.length <= 50) || 'Name must be less than 10 characters'
       ],
       email2: '',
       emailRules2: [(v) => !!v || 'E-mail is required', (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid'],
@@ -500,7 +500,7 @@ export default {
       match: 'Foobar',
       max: 0,
       model: '',
-      currentFile: undefined,
+      currentFile: undefined
     };
   },
   // creating rules
@@ -527,13 +527,13 @@ export default {
       }
 
       return rules;
-    },
+    }
   },
 
   watch: {
     match: 'validateField',
     max: 'validateField',
-    model: 'validateField',
+    model: 'validateField'
   },
   created() {
     console.log('created');
@@ -587,8 +587,8 @@ export default {
     // creating rules
     validateField() {
       this.$refs.form.validate();
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -28,7 +28,7 @@ export const FacebookSDKPlugin: PluginObject<void> = {
         appId: '1358537151286274',
         cookie: true,
         xfbml: true,
-        version: 'v3.2',
+        version: 'v3.2'
       });
 
       //   FB.getLoginStatus((response) => {
@@ -41,5 +41,5 @@ export const FacebookSDKPlugin: PluginObject<void> = {
       // };
       // Vue.FB = undefined;
     };
-  },
+  }
 };

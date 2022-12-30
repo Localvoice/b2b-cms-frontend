@@ -1,5 +1,4 @@
 import { RouteConfig } from 'vue-router';
-import { featureGuard } from '~app/core/config';
 import { RouterView } from '~app/core/router';
 
 export const voicebotRoutes: RouteConfig[] = [

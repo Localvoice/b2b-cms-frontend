@@ -28,18 +28,18 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapGetters } from 'vuex';
-import { layoutGetters } from '../store';
 import AppVersion from '~app/shared/version/AppVersion.vue';
+import { layoutGetters } from '../store';
 
 export default Vue.extend({
   components: {
-    AppVersion,
+    AppVersion
   },
   computed: {
     ...mapGetters({
-      layoutState: layoutGetters.getState,
-    }),
-  },
+      layoutState: layoutGetters.getState
+    })
+  }
 });
 </script>
 

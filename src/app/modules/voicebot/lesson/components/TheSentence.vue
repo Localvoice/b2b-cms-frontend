@@ -67,11 +67,10 @@
 <script lang="ts">
 import Vue, { PropType } from 'vue';
 import { FormControlState } from '~app/shared/form';
+import { ValidationTarget } from '~app/shared/types';
 import SentenceExample from './SentenceExample.vue';
 import SentenceExercisesModel from '../models/sentenceExerciseModel';
 import { createSentenceForm } from '../validation/forms';
-import { VCol, VCardTitle, VBtn, VIcon, VCardText, VTextField } from 'vuetify/lib';
-import { ValidationTarget } from '~app/shared/types';
 
 export default Vue.extend({
   components: {

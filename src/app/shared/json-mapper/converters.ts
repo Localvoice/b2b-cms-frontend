@@ -11,7 +11,7 @@ export const dateIsoConverter: Converter = {
   },
   toJson(date: Date): string | null {
     return date ? date.toISOString() : null;
-  },
+  }
 };
 
 export const timestampConverter: Converter = {
@@ -20,7 +20,7 @@ export const timestampConverter: Converter = {
   },
   toJson(date: Date): number | null {
     return date && date.getTime ? date.getTime() : null;
-  },
+  }
 };
 
 export const identityConverter = (key = 'id', property?: string): Converter => {
@@ -50,7 +50,7 @@ export const identityConverter = (key = 'id', property?: string): Converter => {
       }
 
       return extractedValue[key];
-    },
+    }
   };
 };
 
@@ -82,14 +82,14 @@ export const identityMapConverter = (key = 'id', property?: string): Converter =
         }
         return identityConverter(key).toJson!(v);
       });
-    },
+    }
   };
 };
 
 export const uidConverter: Converter = {
   fromJson() {
     return uuidv4();
-  },
+  }
 };
 
 export const negationConverter: Converter<boolean> = {
@@ -98,5 +98,5 @@ export const negationConverter: Converter<boolean> = {
   },
   toJson(value) {
     return !value;
-  },
+  }
 };

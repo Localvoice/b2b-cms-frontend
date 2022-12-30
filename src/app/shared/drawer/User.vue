@@ -108,7 +108,7 @@ export default {
           subTitle: 'Frontend framework',
           progressbarText: '90',
           progressvalue: 90,
-          progressColor: 'danger',
+          progressColor: 'danger'
         },
         {
           letter: 'V',
@@ -116,7 +116,7 @@ export default {
           subTitle: 'Frontend framework',
           progressbarText: '30',
           progressvalue: 30,
-          progressColor: 'green',
+          progressColor: 'green'
         },
         {
           letter: 'R',
@@ -124,7 +124,7 @@ export default {
           subTitle: 'Frontend framework',
           progressbarText: '50',
           progressvalue: 50,
-          progressColor: 'danger',
+          progressColor: 'danger'
         },
         {
           letter: 'W',
@@ -132,13 +132,13 @@ export default {
           subTitle: 'CMS',
           progressbarText: '30',
           progressvalue: 30,
-          progressColor: 'dark',
-        },
-      ],
+          progressColor: 'dark'
+        }
+      ]
     };
   },
   computed: {},
-  methods: {},
+  methods: {}
 };
 </script>
 

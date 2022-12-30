@@ -17,6 +17,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2020
   },
+
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
@@ -46,7 +47,12 @@ module.exports = {
       {
         enforceForRenamedProperties: false
       }
-    ]
+    ],
+    'no-multiple-empty-lines': 'error',
+    'array-callback-return': 'off',
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': ['error'],
+    'no-useless-constructor': 'off'
   },
   overrides: [
     {

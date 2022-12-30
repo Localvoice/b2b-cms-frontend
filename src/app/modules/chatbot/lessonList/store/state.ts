@@ -13,13 +13,14 @@ export interface ChatbotLessonListState {
   };
 }
 
-export const ChatbotLessonListEntityAdapter: EntityAdapter<LessonSummaryModel> = createEntityAdapter<LessonSummaryModel>();
+export const ChatbotLessonListEntityAdapter: EntityAdapter<LessonSummaryModel> =
+  createEntityAdapter<LessonSummaryModel>();
 
 export function initialState(): ChatbotLessonListState {
   return {
     lessons: {
       indexes: ChatbotLessonListEntityAdapter.getInitialState({ total: 0 }),
-      lessonList: [],
-    },
+      lessonList: []
+    }
   };
 }

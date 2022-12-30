@@ -28,17 +28,17 @@ export default Vue.extend({
   inheritAttrs: false,
   model: {
     prop: 'value',
-    event: 'update',
+    event: 'update'
   },
   props: {
     value: {
-      type: String,
+      type: String
     },
     autofocus: {
       type: Boolean,
-      default: true,
-    },
-  },
+      default: true
+    }
+  }
 });
 </script>
 

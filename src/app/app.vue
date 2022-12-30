@@ -10,9 +10,9 @@ export default {
   metaInfo() {
     return {
       title: 'Learn Your People',
-      titleTemplate: '%s | Localvoice',
+      titleTemplate: '%s | Localvoice'
     };
-  },
+  }
 };
 </script>
 
@@ -21,5 +21,3 @@ export default {
   max-width: 1385px !important;
 }
 </style>
-
-

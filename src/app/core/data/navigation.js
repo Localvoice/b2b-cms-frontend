@@ -7,24 +7,24 @@ export const items = [
       {
         title: 'List of Lessons',
         icon: 'mdi-circle-medium',
-        to: 'list-of-lessons',
+        to: 'list-of-lessons'
       },
       {
         title: 'Create Lesson',
         icon: 'mdi-circle-medium',
-        to: 'create-lesson',
+        to: 'create-lesson'
       },
       {
         title: 'Create Course',
         icon: 'mdi-circle-medium',
-        to: 'create-course',
+        to: 'create-course'
       },
       {
         title: 'Monthly Challenge',
         icon: 'mdi-circle-medium',
-        to: 'monthly-challenge',
-      },
-    ],
+        to: 'monthly-challenge'
+      }
+    ]
   },
   {
     title: 'Chatbot',
@@ -34,8 +34,8 @@ export const items = [
       {
         title: 'List of Lessons',
         icon: 'mdi-circle-medium',
-        to: 'list-of-lessons',
-      },
-    ],
-  },
+        to: 'list-of-lessons'
+      }
+    ]
+  }
 ];

@@ -36,16 +36,16 @@ export default {
   name: 'SignUp5',
   metaInfo: {
     // title will be injected into parent titleTemplate
-    title: 'SignUp 5',
+    title: 'SignUp 5'
   },
   data() {
     return {
       show: false,
       password: 'Password',
       checkbox1: true,
-      checkbox2: false,
+      checkbox2: false
     };
-  },
+  }
 };
 </script>
 <style lang="scss">

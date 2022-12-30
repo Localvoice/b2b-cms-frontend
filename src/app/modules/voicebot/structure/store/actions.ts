@@ -1,9 +1,11 @@
 /* eslint-disable import/no-cycle */
-/* eslint-disable no-shadow */
 import { RootState, store } from '~app/core/store';
 import { createActionFactory, createActionMap } from '~app/shared/vuex';
 import { PictureTarget, S3Credentials } from '~app/shared/types';
 import { authActions } from '~app/modules/auth/store';
+import { loadingActions } from '~app/modules/loading';
+import { arePositiveNumbers } from '~app/shared/helpers/numbers';
+import { getAttributesToUpdate, getAttributeToUpdate } from '~app/shared/helpers/attributesToUpdate';
 import { voicebotMutations } from './mutations';
 import { NAMESPACE, StructureState } from './state';
 import {
@@ -11,13 +13,10 @@ import {
   StructureDetailsToUpdate,
   StructureFields,
   StructureIndexes,
-  StructureOperation,
+  StructureOperation
 } from '../types';
 import structureApi from '../service/structure.api';
 import { voicebotGetters } from './getters';
-import { loadingActions } from '~app/modules/loading';
-import { arePositiveNumbers } from '~app/shared/helpers/numbers';
-import { getAttributesToUpdate, getAttributeToUpdate } from '~app/shared/helpers/attributesToUpdate';
 
 const createAction = createActionFactory<StructureState, RootState>();
 
@@ -35,13 +34,13 @@ export const actions = {
     const attributesToUpdate = getAttributeToUpdate<StructureFields, StructureUnit>(data, [
       StructureUnit.SUBJECT,
       StructureUnit.TRANSLATED_SUBJECT,
-      StructureUnit.IMAGE_SRC,
+      StructureUnit.IMAGE_SRC
     ]);
     console.log('attributesToUpdate', attributesToUpdate);
     const indexes = getAttributesToUpdate<StructureIndexes, StructureUnit>(data, [
       StructureUnit.COURSE_INDEX,
       StructureUnit.CATEGORY_INDEX,
-      StructureUnit.LESSON_INDEX,
+      StructureUnit.LESSON_INDEX
     ]);
     commit(voicebotMutations.changeStructure.local, { indexes, attributesToUpdate, operation: data.operation });
   }),
@@ -107,12 +106,12 @@ export const actions = {
           const indexes = getAttributesToUpdate<StructureIndexes, StructureUnit>(data, [
             StructureUnit.COURSE_INDEX,
             StructureUnit.CATEGORY_INDEX,
-            StructureUnit.LESSON_INDEX,
+            StructureUnit.LESSON_INDEX
           ]);
           commit(voicebotMutations.changeStructure.local, {
             indexes,
             attributesToUpdate: { key: 'imageSrc', value: fullPath },
-            operation: data.operation,
+            operation: data.operation
           });
         })
       );
@@ -134,7 +133,7 @@ export const actions = {
   linkCurrentCourseCategoriesAndLessons: createAction(({ commit }, courseIndex: number) => {
     console.log('linkCurrentCourseCategoriesAndLessons');
     commit(voicebotMutations.bindCurrentCourseCategoriesAndLessons.local, courseIndex);
-  }),
+  })
 };
 
 export const voicebotActions = createActionMap<typeof actions, StructureState, RootState>(NAMESPACE, actions);

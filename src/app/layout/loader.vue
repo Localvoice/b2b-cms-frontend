@@ -1,11 +1,11 @@
 <template>
   <v-app
     :style="{
-      background: layoutState.backgroundColor,
+      background: layoutState.backgroundColor
     }"
     :class="{
       'app-admin-wrap-layout-1 sidebar-mini': false,
-      'sidebar-close': !true,
+      'sidebar-close': !true
     }"
   >
     <the-header></the-header>
@@ -26,13 +26,13 @@ export default {
     DataContainer: () => import('./components/DataContainer.vue'),
     TheSidebar: () => import('./components/TheSidebar.vue'),
     TheFooter: () => import('./components/TheFooter.vue'),
-    TheHeader: () => import('./components/TheHeader.vue'),
+    TheHeader: () => import('./components/TheHeader.vue')
   },
   computed: {
     ...mapGetters({
-      layoutState: layoutGetters.getState,
-    }),
-  },
+      layoutState: layoutGetters.getState
+    })
+  }
 };
 </script>
 

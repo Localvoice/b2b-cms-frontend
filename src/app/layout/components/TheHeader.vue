@@ -3,7 +3,7 @@
     <v-sheet
       class="header-backup"
       :style="{
-        background: layoutState.backgroundColor,
+        background: layoutState.backgroundColor
       }"
     ></v-sheet>
     <v-app-bar
@@ -101,26 +101,26 @@ export default {
     return {
       userDrawer: false,
       notificationDrawer: false,
-      searchDrawer: false,
+      searchDrawer: false
     };
   },
   methods: {
     ...mapActions({
       changeBackgroundMode: layoutActions.changeBackgroundMode,
-      changeSidebarVisibility: layoutActions.changeSidebarVisibility,
+      changeSidebarVisibility: layoutActions.changeSidebarVisibility
     }),
 
     logoutUser() {
       this.signOut();
 
       this.$router.push('/app/sessions/sign-in-two');
-    },
+    }
   },
   computed: {
     ...mapGetters({
-      layoutState: layoutGetters.getState,
-    }),
-  },
+      layoutState: layoutGetters.getState
+    })
+  }
 };
 </script>
 

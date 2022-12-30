@@ -49,7 +49,7 @@ export default {
   name: 'Login',
   metaInfo: {
     // title will be injected into parent titleTemplate
-    title: 'SignIn Two',
+    title: 'SignIn Two'
   },
   data() {
     return {
@@ -61,11 +61,11 @@ export default {
       ePassword: '123456',
       loading: false,
       emailRules: [(v) => !!v || 'E-mail is required', (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid'],
-      nameRules: [(v) => !!v || 'Password is required'],
+      nameRules: [(v) => !!v || 'Password is required']
     };
   },
   computed: {
-    ...mapGetters(['loggedInUser', 'error']),
+    ...mapGetters(['loggedInUser', 'error'])
   },
   methods: {
     ...mapActions(['login']),
@@ -75,7 +75,7 @@ export default {
     googleSignIn() {
       localStorage.setItem('userInfo', JSON.stringify('newUser'));
       this.$router.push('/');
-    },
+    }
   },
   watch: {
     // loading (val) {
@@ -96,8 +96,8 @@ export default {
       if (val != null) {
         // this.makeToast("warning", val.message);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

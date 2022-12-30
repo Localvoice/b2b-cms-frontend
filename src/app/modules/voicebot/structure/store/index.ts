@@ -10,7 +10,7 @@ store.registerModule(NAMESPACE, {
   state: initialState,
   actions,
   mutations,
-  getters,
+  getters
 });
 
 export * from './state';

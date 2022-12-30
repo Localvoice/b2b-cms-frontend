@@ -9,13 +9,13 @@ const createGetter = createGetterFactory<NavigationState, RootState>();
 export const getters = {
   getOrderedSidebarItems: createGetter((state) => {
     return state.ids.reduce<MenuItem[]>((acc, id) => {
-      if(state.entities[id]) {
+      if (state.entities[id]) {
         acc.splice(Number(id), 0, state.entities[id]!);
         return acc;
       }
-      return acc
+      return acc;
     }, [] as MenuItem[]);
-  }),
+  })
 };
 
 export const navigationGetters = createGetterMap<typeof getters, NavigationState, RootState>(NAMESPACE, getters);

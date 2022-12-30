@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios, { AxiosError } from 'axios';
-import { api } from '~app/core/api';
+import { api } from '~app/core/api/client';
 import { RootState } from '~app/core/store';
 import { deserialize } from '~app/shared/json-mapper';
 import { PictureTarget, S3Credentials } from '~app/shared/types';

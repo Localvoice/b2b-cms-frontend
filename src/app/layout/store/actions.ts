@@ -16,7 +16,7 @@ export const actions = {
   changeBackgroundMode: createAction(({ commit }) => {
     console.log('changeBackgroundMode');
     commit(layoutMutations.SET_BACKGROUND_MODE.local);
-  }),
+  })
 };
 
 export const layoutActions = createActionMap<typeof actions, LayoutState, RootState>(NAMESPACE, actions);

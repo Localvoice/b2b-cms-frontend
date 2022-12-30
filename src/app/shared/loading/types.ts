@@ -3,7 +3,7 @@ export const SYS_LOADING_MAIN = 'sys-loading-main';
 
 export enum SysLoadingStyle {
   FullScreen = 'fullscreen',
-  Overlay = 'overlay',
+  Overlay = 'overlay'
 }
 
 export class SysLoadingConfig {

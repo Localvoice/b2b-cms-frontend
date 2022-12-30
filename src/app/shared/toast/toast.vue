@@ -16,19 +16,19 @@ export default Vue.extend({
   props: {
     message: {
       type: String,
-      required: true,
+      required: true
     },
     color: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       toast: true,
-      timeout: 10000,
+      timeout: 10000
     };
-  },
+  }
 });
 </script>
 

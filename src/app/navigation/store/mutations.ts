@@ -8,7 +8,7 @@ export const mutations = {
   setNavigation: createMutation((state, items: MenuItem[]) => {
     entityAdapter.addAll(items, state);
     state.loaded = true;
-  }),
+  })
 };
 
 export const navigationMutations = createMutationMap<typeof mutations, NavigationState>(NAMESPACE, mutations);

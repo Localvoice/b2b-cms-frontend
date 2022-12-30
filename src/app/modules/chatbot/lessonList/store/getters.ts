@@ -9,7 +9,7 @@ import { NAMESPACE, ChatbotLessonListState } from './state';
 const createGetter = createGetterFactory<ChatbotLessonListState, RootState>();
 
 export const getters = {
-  getLessonList: createGetter((state) => state.lessons.lessonList),
+  getLessonList: createGetter((state) => state.lessons.lessonList)
 };
 
 export const lessonListGetters = createGetterMap<typeof getters, ChatbotLessonListState, RootState>(NAMESPACE, getters);

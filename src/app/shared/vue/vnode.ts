@@ -11,7 +11,7 @@ export function commentNode(el: HTMLElement, vnode: VNode) {
   const comment = document.createComment(' ');
 
   Object.defineProperty(comment, 'setAttribute', {
-    value: (): void => undefined,
+    value: (): void => undefined
   });
 
   vnode.text = ' ';

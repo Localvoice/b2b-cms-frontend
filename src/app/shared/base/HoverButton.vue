@@ -13,74 +13,75 @@
     {{ text }}
   </v-btn>
 </template>
+
 <script>
 export default {
   name: 'BaseHoverButton',
   props: {
     text: {
       type: String,
-      default: '',
+      default: ''
     },
     color: {
       type: String,
-      default: '',
+      default: ''
     },
     bgColor: {
       type: String,
-      default: '',
+      default: ''
     },
     textColor: {
       type: String,
-      default: '',
+      default: ''
     },
     textHover: {
       type: String,
-      default: '',
+      default: ''
     },
     bgHover: {
       type: String,
-      default: '',
+      default: ''
     },
     block: {
       type: Boolean,
-      default: false,
+      default: false
     },
     depressed: {
       type: Boolean,
-      default: true,
+      default: true
     },
     small: {
       type: Boolean,
-      default: false,
+      default: false
     },
     iconName: {
       type: String,
-      default: '',
+      default: ''
     },
     customClass: {
       type: String,
-      default: '',
+      default: ''
     },
     large: {
       type: Boolean,
-      default: false,
+      default: false
     },
     xSmall: {
       type: Boolean,
-      default: false,
+      default: false
     },
     iconMr: {
       type: String,
-      default: '',
+      default: ''
     },
     smallIcon: {
       type: Boolean,
-      default: false,
+      default: false
     },
     clickEvent: {
       type: String,
-      default: '',
-    },
-  },
+      default: ''
+    }
+  }
 };
 </script>

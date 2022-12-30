@@ -23,16 +23,16 @@ export function initialState(): LessonState {
             chatDescription: '',
             translatedChatContent: [],
             chatContent: [],
-            translatedChatDescription: '',
+            translatedChatDescription: ''
           },
           sentenceExercise: [],
           lessonDescription: '',
           translatedLessonDescription: '',
-          sentenceList: [],
+          sentenceList: []
         },
         business: '',
-        tester: '',
-      },
-    },
+        tester: ''
+      }
+    }
   };
 }

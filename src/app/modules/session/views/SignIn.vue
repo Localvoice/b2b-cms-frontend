@@ -40,14 +40,14 @@ export default {
   name: 'SignFour',
   metaInfo: {
     // title will be injected into parent titleTemplate
-    title: 'Sign Four',
+    title: 'Sign Four'
   },
   data() {
     return {
       show: false,
       password: 'Password',
       checkbox1: true,
-      checkbox2: false,
+      checkbox2: false
     };
   },
   methods: {
@@ -68,7 +68,7 @@ export default {
       return this.$api
         .post('http://localhost:3000/user', {
           email: 'paweł',
-          business: 'localvoice',
+          business: 'localvoice'
         })
         .then((data) => {
           console.log('data', data);
@@ -76,7 +76,7 @@ export default {
         .catch((error) => {
           console.log(error.response.data.errorMessage);
         });
-    },
+    }
 
     // login() {
     //   console.log('login');
@@ -140,7 +140,7 @@ export default {
     //   console.log(error.response.data.errorMessage);
     // });
     // },
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>

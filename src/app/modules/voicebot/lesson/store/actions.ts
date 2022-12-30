@@ -4,11 +4,11 @@ import { authActions } from '~app/modules/auth/store';
 import LessonModel from '~app/modules/voicebot/lesson/models/lesson';
 import { arePositiveNumbers } from '~app/shared/helpers/numbers';
 import { getAttributeToUpdate } from '~app/shared/helpers/attributesToUpdate';
+import { PictureTarget, S3Credentials } from '~app/shared/types';
 import { NAMESPACE, LessonState } from './state';
 import { lessonMutations } from './mutation';
 import lessonApi from '../service/lesson.api';
 import { SentenceExampleStructure, SentenceExampleStructureFields } from '../types';
-import { PictureTarget, S3Credentials } from '~app/shared/types';
 
 const createAction = createActionFactory<LessonState, RootState>();
 

@@ -11,7 +11,7 @@ export const layoutStore: Module<LayoutState, RootState> = {
   state: initialState,
   actions,
   mutations,
-  getters,
+  getters
 };
 
 export * from './state';

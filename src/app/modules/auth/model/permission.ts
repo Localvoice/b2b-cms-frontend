@@ -1,4 +1,4 @@
-import { coerceArray } from '~app/shared/helpers';
+import { coerceArray } from '~app/shared/helpers/coerce';
 import { Converter } from '~app/shared/json-mapper';
 
 export enum AuthPermission {

@@ -31,14 +31,14 @@ export default {
   name: 'Lockscreen',
   metaInfo: {
     // title will be injected into parent titleTemplate
-    title: 'Lockscreen',
+    title: 'Lockscreen'
   },
   data() {
     return {
       show: false,
-      password: 'Password',
+      password: 'Password'
     };
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>

@@ -14,7 +14,7 @@ export function createGettersFactory<T>() {
         getIds,
         getEntities,
         getAll,
-        getTotal,
+        getTotal
       };
     }
 
@@ -22,7 +22,7 @@ export function createGettersFactory<T>() {
       getIds: (state) => getIds(entityStateGetter(state)),
       getEntities: (state) => getEntities(entityStateGetter(state)),
       getAll: (state) => getAll(entityStateGetter(state)),
-      getTotal: (state) => getTotal(entityStateGetter(state)),
+      getTotal: (state) => getTotal(entityStateGetter(state))
     };
   }
 

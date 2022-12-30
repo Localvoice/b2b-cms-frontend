@@ -1,6 +1,8 @@
-import { coerceArray, objectKeys } from '~app/shared/helpers';
+/* eslint-disable import/no-cycle */
+import { coerceArray } from '~app/shared/helpers/coerce';
+import { objectKeys } from '~app/shared/helpers/lang';
 import { Converter } from '~app/shared/json-mapper';
-import { StructureLessonDto, StructureCategoryDto, StructureCourseDto } from '../types';
+import { StructureCourseDto, StructureCategoryDto, StructureLessonDto } from '../types';
 
 export const voicebotStructureConverter: Converter = {
   fromJson(value: StructureCourseDto): any {

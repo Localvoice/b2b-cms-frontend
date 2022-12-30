@@ -1,7 +1,8 @@
 import { AxiosResponse } from 'axios';
-import { api, ApiCollectionResponse } from '~app/core/api';
-import LessonSummaryModel from '../models/lessonSummary';
 import { router } from '~app/core/router';
+import { api } from '~app/core/api/client';
+import { ApiCollectionResponse } from '~app/core/api/response';
+import LessonSummaryModel from '../models/lessonSummary';
 import chatbotLessonListSummary from '../dummyData/chatbotLessonListSummary.json';
 
 const lessonListApi = {

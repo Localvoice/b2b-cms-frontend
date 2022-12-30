@@ -1,10 +1,10 @@
 /* eslint-disable class-methods-use-this */
 import { CrossStorageClient } from 'cross-storage';
-import { Config } from '~app/core/config';
 import { store } from '~app/core/store';
 import { configGetters } from '~app/core/config/store';
+import { Config } from '~app/core/config';
+import { createUrl } from '~app/shared/helpers/url';
 import { AuthToken, exportAuthToken, importAuthToken } from './token';
-import { createUrl } from '~app/shared/helpers';
 
 export const TOKEN_STORAGE_KEY = 'Localvoice@%DOMAIN%';
 export const TOKEN_STORAGE_PATH = 'token.html';

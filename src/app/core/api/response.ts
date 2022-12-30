@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { AxiosResponse } from 'axios';
 
 export interface ApiCollectionResponse<T = any> {
