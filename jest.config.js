@@ -25,9 +25,9 @@ module.exports = deepmerge(preset, {
   // testMatch: ['**/src/**/*.spec.[jt]s?(x)'],
   testMatch: ['**/tests/**/*.spec.[jt]s?(x)'],
   moduleNameMapper: {
-    '^~app/(.*)$': '<rootDir>/src/app/$1',
+    '^~app/(.*)$': '<rootDir>/src/app/$1'
   },
-  setupFiles: ['./jest.setup'],
+  setupFiles: ['./jest.setup']
   // collectCoverage: true,
   // collectCoverageFrom: ['src/**/*.{ts,vue}', '!**/node_modules/**'],
   // coverageReporters: ['html', 'text-summary'],

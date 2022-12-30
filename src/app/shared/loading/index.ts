@@ -9,7 +9,7 @@ export const SysLoadingPlugin: PluginObject<void> = {
     Vue.prototype.$loading = loadingService;
   },
   directive: SysLoading,
-  service: loadingService,
+  service: loadingService
 };
 
 export * from './types';

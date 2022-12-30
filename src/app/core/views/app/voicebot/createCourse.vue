@@ -136,7 +136,7 @@ export default {
   /* eslint-disable global-require */
   metaInfo: {
     // title will be injected into parent titleTemplate
-    title: 'Table One',
+    title: 'Table One'
   },
   data() {
     return {
@@ -149,18 +149,18 @@ export default {
           text: 'Customer',
           align: 'start',
           sortable: false,
-          value: 'name',
+          value: 'name'
         },
         { text: 'Store Name', value: 'calories' },
         { text: 'Products', value: 'fat' },
         { text: 'Wallet Balance', value: 'carbs' },
         { text: 'Create Date', value: 'protein' },
         { text: 'Status', value: 'badge' },
-        { text: 'Action', value: 'action' },
-      ],
+        { text: 'Action', value: 'action' }
+      ]
     };
   },
-  methods: {},
+  methods: {}
 };
 </script>
 

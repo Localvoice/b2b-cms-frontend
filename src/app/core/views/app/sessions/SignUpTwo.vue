@@ -62,7 +62,7 @@ export default {
   name: 'Signup',
   metaInfo: {
     // title will be injected into parent titleTemplate
-    title: 'SignUp 2',
+    title: 'SignUp 2'
   },
   data() {
     return {
@@ -77,8 +77,8 @@ export default {
       emailRules: [(v) => !!v || 'E-mail is required', (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid'],
       nameRules: [
         (v) => !!v || 'Password is required',
-        (v) => (v && v.length >= 6) || 'Name must be greater than 6 characters',
-      ],
+        (v) => (v && v.length >= 6) || 'Name must be greater than 6 characters'
+      ]
     };
   },
 
@@ -94,8 +94,8 @@ export default {
       } else {
         this.snackbar = true;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

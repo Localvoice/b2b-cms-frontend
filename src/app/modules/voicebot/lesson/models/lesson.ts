@@ -5,7 +5,7 @@ import { lessonConverter } from '../service/converters';
 export default class LessonModel {
   @JsonProperty({
     converter: lessonConverter,
-    name: 'todaysLesson',
+    name: 'todaysLesson'
   })
   exercises: LessonExercisesModel | undefined = undefined;
 

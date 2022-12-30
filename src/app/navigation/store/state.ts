@@ -10,6 +10,6 @@ export const entityAdapter = createEntityAdapter<MenuItem>();
 
 export function initialState(): NavigationState {
   return entityAdapter.getInitialState({
-    loaded: false,
+    loaded: false
   });
 }

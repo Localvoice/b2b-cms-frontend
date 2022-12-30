@@ -1,5 +1,4 @@
-/* eslint-disable class-methods-use-this */
-import { api } from '~app/core/api';
+import { api } from '~app/core/api/client';
 import { router } from '~app/core/router';
 import { deserialize } from '~app/shared/json-mapper';
 import LessonModel from '../models/lesson';
@@ -12,7 +11,7 @@ const lessonApi = {
     return api
       .get<LessonModel>('/api/voicebot/lesson', { params })
       .then((response) => deserialize(LessonModel, response.data))
-      .catch((errorMessage) => {
+      .catch(() => {
         router.app.$toast.success('There was a problem with lesson fetching');
       });
   }

@@ -9,7 +9,7 @@ export interface LoadingState {
 export function initialState(): LoadingState {
   return {
     loading: {
-      structure: false,
-    },
+      structure: false
+    }
   };
 }

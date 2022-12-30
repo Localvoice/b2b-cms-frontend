@@ -8,7 +8,7 @@ export class CourseStructureModel {
   id: string = uuidv4();
 
   @JsonProperty({
-    converter: voicebotStructureConverter,
+    converter: voicebotStructureConverter
   })
   categories: CategoryStructureModel[] | undefined = undefined;
 

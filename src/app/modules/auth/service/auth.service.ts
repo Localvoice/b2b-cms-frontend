@@ -3,8 +3,8 @@
 /* eslint-disable class-methods-use-this */
 import { AxiosError, AxiosRequestConfig } from 'axios';
 import { InjectKey } from 'vue/types/options';
-import { ApiClient } from '~app/core/api';
-import { createUrl } from '~app/shared/helpers';
+import { ApiClient } from '~app/core/api/client';
+import { createUrl } from '~app/shared/helpers/url';
 import { AuthToken, importAuthToken, TokenStorage } from '../model';
 
 const LOGIN_PATH = '/signin.html';

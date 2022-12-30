@@ -9,7 +9,7 @@ store.registerModule(NAMESPACE, {
   state: initialState,
   actions,
   mutations,
-  getters,
+  getters
 });
 
 console.log('hello from create lesson!!!!!!!!!!');

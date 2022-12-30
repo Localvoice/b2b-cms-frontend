@@ -1,4 +1,6 @@
-import { api, ApiCollectionResponse } from '~app/core/api';
+/* eslint-disable import/no-cycle */
+import { api } from '~app/core/api/client';
+import { ApiCollectionResponse } from '~app/core/api/response';
 import { deserialize } from '~app/shared/json-mapper';
 import { CourseStructureModel } from '../models/courseStructure';
 

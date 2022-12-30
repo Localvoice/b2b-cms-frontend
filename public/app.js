@@ -4,13 +4,13 @@ const app = Vue.createApp({
     return {
       boxASelected: false,
       boxBSelected: false,
-      boxCSelected: false,
+      boxCSelected: false
     };
   },
   computed: {
     boxAClasses() {
       return { active: this.boxASelected };
-    },
+    }
   },
   created() {
     console.log('dupa');
@@ -27,8 +27,8 @@ const app = Vue.createApp({
     },
     login() {
       console.log('lognin');
-    },
-  },
+    }
+  }
 });
 
 app.mount('#app');

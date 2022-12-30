@@ -1,11 +1,17 @@
 @mixin hover {
-  &:hover { @content; }
+  &:hover {
+    @content;
+  }
 }
 @mixin active {
-  &:active { @content; }
+  &:active {
+    @content;
+  }
 }
 @mixin focus {
-  &:focus { @content; }
+  &:focus {
+    @content;
+  }
 }
 
 @mixin hover-focus {
@@ -39,7 +45,7 @@
 }
 
 @mixin hover-scale {
-  &:hover { 
+  &:hover {
     transform: scale(1.1);
   }
 }

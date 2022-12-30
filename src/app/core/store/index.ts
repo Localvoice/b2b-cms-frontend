@@ -8,7 +8,7 @@ import { RootState } from './state';
 Vue.use(Vuex);
 
 export const store = new Vuex.Store<RootState>({
-  strict: IS_DEV,
+  strict: IS_DEV
 });
 
 sync(store, router);

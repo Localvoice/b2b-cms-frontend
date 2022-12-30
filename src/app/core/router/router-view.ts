@@ -5,5 +5,5 @@ export const RouterView = Vue.extend({
   name: 'empty-router-view',
   render(h): VNode {
     return h('router-view');
-  },
+  }
 });

@@ -8,6 +8,6 @@ export interface AuthState {
 
 export function initialState(): AuthState {
   return {
-    user: null,
+    user: null
   };
 }

@@ -24,27 +24,27 @@ export default {
   props: {
     color: {
       type: String,
-      default: 'white',
+      default: 'white'
     },
     cardClass: {
       type: String,
-      default: '',
+      default: ''
     },
 
     padding: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
-      loading: false,
+      loading: false
     };
   },
   computed: {
     ...mapGetters({
-      layoutState: layoutGetters.getState,
-    }),
-  },
+      layoutState: layoutGetters.getState
+    })
+  }
 };
 </script>

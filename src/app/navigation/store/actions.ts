@@ -1,5 +1,4 @@
-import { hasFeature } from '~app/core/config';
-import { i18n } from '~app/core/i18n';
+import { hasFeature } from '~app/core/config/features';
 import { RootState } from '~app/core/store';
 import { userHasAccess } from '~app/modules/auth/service/permissions';
 import { createActionFactory, createActionMap } from '~app/shared/vuex';
@@ -21,7 +20,7 @@ export const actions = {
       }
       commit(navigationMutations.setNavigation.local, accessedItems);
     });
-  }),
+  })
 };
 
 export const navigationActions = createActionMap<typeof actions, NavigationState, RootState>(NAMESPACE, actions);

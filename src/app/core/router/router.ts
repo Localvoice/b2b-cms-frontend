@@ -12,7 +12,7 @@ export const router = new VueRouter({
   scrollBehavior(to, from, savedPosition) {
     if (to.hash) {
       return {
-        selector: to.hash,
+        selector: to.hash
       };
     }
 
@@ -21,5 +21,5 @@ export const router = new VueRouter({
     }
 
     return { x: 0, y: 0 };
-  },
+  }
 });

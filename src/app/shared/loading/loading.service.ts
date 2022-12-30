@@ -3,7 +3,7 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-underscore-dangle */
 import Vue from 'vue';
-import { getStyle } from '../helpers';
+import { getStyle } from '../helpers/dom';
 import { SPINNER_BASE_SIZE, SPINNER_BASE_SIZE_REDUCED, SPINNER_SIZE_HOST_REDUCE_RATIO } from '../spinner';
 import SysLoadingComponent from './loading.vue';
 import { SYS_LOADING_MAIN, SysLoadingConfig, SysLoadingNamespace, SysLoadingStyle } from './types';

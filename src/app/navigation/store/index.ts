@@ -10,7 +10,7 @@ export const navigationStore: Module<NavigationState, RootState> = {
   state: initialState,
   actions,
   mutations,
-  getters,
+  getters
 };
 
 export * from './state';

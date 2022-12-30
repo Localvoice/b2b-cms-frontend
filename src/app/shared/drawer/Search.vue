@@ -112,7 +112,7 @@
 
 <script>
 export default {
-  name: 'SearchDrawer',
+  name: 'SearchDrawer'
 };
 </script>
 

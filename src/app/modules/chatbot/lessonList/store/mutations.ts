@@ -17,7 +17,7 @@ export const mutations = {
       if (lesson.id !== lessonToRemove.id) acc.push(lesson);
       return acc;
     }, [] as LessonSummaryModel[]);
-  }),
+  })
 };
 
 export const lessonListMutations = createMutationMap<typeof mutations, ChatbotLessonListState>(NAMESPACE, mutations);

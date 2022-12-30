@@ -6,64 +6,64 @@ import { LessonBasicInformation, LessonDescription } from '../types';
 export function createSentenceForm() {
   return new FormGroup<SentenceExercisesModel & { total: number }>({
     sentence: {
-      validators: [required],
+      validators: [required]
     },
     sentenceExample: {
-      validators: [minLength(2, 'minLengthOfSentenceExample')],
+      validators: [minLength(2, 'minLengthOfSentenceExample')]
     },
     total: {
-      validators: [],
-    },
+      validators: []
+    }
   });
 }
 
 export function createSentenceExampleForm() {
   return new FormGroup<SentenceExampleExercisesModel>({
     example: {
-      validators: [required],
+      validators: [required]
     },
     translatedExample: {
-      validators: [required],
+      validators: [required]
     },
     imageSrc: {
-      validators: [required],
+      validators: [required]
     },
     something: {
-      validators: [],
+      validators: []
     },
     isImage: {
-      validators: [],
+      validators: []
     },
     typeOfExample: {
-      validators: [],
-    },
+      validators: []
+    }
   });
 }
 
 export function createBasicInfoForm() {
   return new FormGroup<LessonBasicInformation>({
     selectedCourseName: {
-      validators: [required],
+      validators: [required]
     },
     selectedCategoryName: {
-      validators: [required],
+      validators: [required]
     },
     selectedLessonName: {
-      validators: [required],
-    },
+      validators: [required]
+    }
   });
 }
 
 export function createLessonDescriptionForm() {
   return new FormGroup<LessonDescription>({
     lessonDescription: {
-      validators: [required],
+      validators: [required]
     },
     translatedLessonDescription: {
-      validators: [required],
+      validators: [required]
     },
     numberOfSentences: {
-      validators: [min(1, 'minNumberOfSentences')],
-    },
+      validators: [min(1, 'minNumberOfSentences')]
+    }
   });
 }

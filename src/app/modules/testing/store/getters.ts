@@ -10,7 +10,7 @@ export const getters = {
     state.structure.validationList.map((item) => {
       return item.validate();
     });
-  }),
+  })
 };
 
 export const validationGetters = createGetterMap<typeof getters, ValidationState, RootState>(NAMESPACE, getters);

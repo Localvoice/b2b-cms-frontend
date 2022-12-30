@@ -11,7 +11,7 @@ export function createEntityAdapter<T>(
   const { selectId, sortComparer }: EntityDefinition<T> = {
     sortComparer: false,
     selectId: (instance: any) => instance.id,
-    ...options,
+    ...options
   };
   const stateFactory = createInitialStateFactory<T>();
   const gettersFactory = createGettersFactory<T>();
@@ -22,6 +22,6 @@ export function createEntityAdapter<T>(
     sortComparer,
     ...stateFactory,
     ...gettersFactory,
-    ...stateAdapter,
+    ...stateAdapter
   };
 }

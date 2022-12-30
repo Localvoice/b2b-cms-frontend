@@ -137,36 +137,36 @@ type PasswordChangeError = 'EMAIL_UNDEFINED' | 'ACCOUNT_NOT_EXIST' | 'TOKEN_EXPI
 
 export default Vue.extend({
   components: {
-    FormControlState,
+    FormControlState
   },
   inject: {
-    auth: AuthInjectKey,
+    auth: AuthInjectKey
   },
   data() {
     return {
       requestForm: new FormGroup<PasswordRequestData>({
         login: {
-          validators: [required],
-        },
+          validators: [required]
+        }
       }),
 
       changeForm: new FormGroup<PasswordChangeData>({
         password: {
-          validators: [required],
+          validators: [required]
         },
         confirm: {
-          validators: [required, matchWith('password', 'matchWith')],
-        },
+          validators: [required, matchWith('password', 'matchWith')]
+        }
       }),
 
       error: '',
       messages: {
         EMAIL_UNDEFINED: i18n.t('Sorry, your account has no email address defined. Please contact administrator.'),
         ACCOUNT_NOT_EXIST: i18n.t('Sorry, there is no account with given username.'),
-        TOKEN_EXPIRED: i18n.t('Sorry, your password reset link has expired.'),
+        TOKEN_EXPIRED: i18n.t('Sorry, your password reset link has expired.')
       },
       loading: false,
-      success: false,
+      success: false
     };
   },
   watch: {
@@ -174,7 +174,7 @@ export default Vue.extend({
       handler() {
         this.error = '';
         this.success = false;
-      },
+      }
     },
     'requestForm.data': {
       deep: true,
@@ -183,7 +183,7 @@ export default Vue.extend({
         if (this.requestForm.validated) {
           this.requestForm.validate();
         }
-      },
+      }
     },
     'changeForm.data': {
       deep: true,
@@ -194,20 +194,20 @@ export default Vue.extend({
         if (this.changeForm.validated) {
           this.changeForm.validate();
         }
-      },
+      }
     },
     changeForm: {
       deep: true,
       handler() {
         console.log('changeForm watch');
-      },
+      }
     },
     state: {
       deep: true,
       handler(value) {
         console.log('jaki mamy state', value);
-      },
-    },
+      }
+    }
   },
   methods: {
     requestLink(): any {
@@ -272,8 +272,8 @@ export default Vue.extend({
       // .finally(() => {
       //   this.loading = false;
       // })
-    },
-  },
+    }
+  }
 });
 </script>
 

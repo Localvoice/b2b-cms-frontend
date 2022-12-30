@@ -51,17 +51,17 @@ import { layoutGetters } from '~app/layout/store';
 import { loadingActions, loadingGetters } from '~app/modules/loading';
 import FixedButton from '~app/shared/fixedButton/fixedButton.vue';
 import { FormGroup } from '~app/shared/form';
-import { translate } from '~app/core/i18n';
 import { areExampleCorrect, fillUpValidationForm, deleteValidationFields } from '~app/shared/validation';
 import { router } from '~app/core/router';
+import { VSheet } from 'vuetify/lib';
+import { StructureValidationForm, VoicebotButtonsText, ValidationForm, ValidationTarget } from '~app/shared/types';
+import { translate } from '~app/core/i18n/i18n';
+import { coerceArray } from '~app/shared/helpers/coerce';
+import { objectKeys } from '~app/shared/helpers/lang';
 import { voicebotActions, voicebotGetters } from '../store';
 import CategoryGroup from '../components/CategoryGroup.vue';
 import CourseCarousel from '../components/CourseCarousel.vue';
-
 import { CourseStructureModel } from '../models/courseStructure';
-import { VSheet } from 'vuetify/lib';
-import { objectKeys, coerceArray } from '~app/shared/helpers';
-import { StructureValidationForm, VoicebotButtonsText, ValidationForm, ValidationTarget } from '~app/shared/types';
 
 export default Vue.extend({
   metaInfo: {

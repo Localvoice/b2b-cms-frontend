@@ -1,7 +1,7 @@
 import Vue from 'vue';
-import { ApiClient } from '~app/core/api';
+import { ApiClient } from '~app/core/api/client';
 import { Config } from '~app/core/config';
-import { setLanguage } from '~app/core/i18n';
+import { setLanguage } from '~app/core/i18n/i18n';
 import { router } from '~app/core/router';
 import { store } from '~app/core/store';
 import { voicebotActions } from '../voicebot/structure/store';
@@ -20,14 +20,14 @@ export function AuthModule(config: Config, api: ApiClient): Promise<any> {
     Object.defineProperty(Vue.prototype, '$permission', {
       get() {
         return AuthPermission;
-      },
+      }
     });
     Object.defineProperty(Vue.prototype, '$auth', {
       get() {
         return {
-          hasAccess: userHasAccess,
+          hasAccess: userHasAccess
         };
-      },
+      }
     });
 
     Vue.mixin({ provide: { [AuthInjectKey]: authService } });

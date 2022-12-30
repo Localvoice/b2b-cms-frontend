@@ -8,5 +8,5 @@ export const DrawerComponentsPlugin: PluginObject<void> = {
     Vue.component(Notification.name, Notification);
     Vue.component(Search.name, Search);
     Vue.component(User.name, User);
-  },
+  }
 };

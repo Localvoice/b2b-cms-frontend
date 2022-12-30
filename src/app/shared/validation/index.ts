@@ -2,7 +2,7 @@
 import VueI18n from 'vue-i18n';
 import { CombinedVueInstance } from 'vue/types/vue';
 import { FormGroup } from '../form/group';
-import { objectKeys } from '../helpers';
+import { objectKeys } from '../helpers/lang';
 import { ValidationForm, ValidationTarget } from '../types';
 
 export function fillUpValidationForm<T>(data: {
@@ -18,15 +18,15 @@ export function fillUpValidationForm<T>(data: {
   });
 }
 
-export function areExampleCorrect<T>(data: {
-  validationForm: ValidationForm<T>;
-  target: ValidationTarget;
-}): { isCorrect: boolean; errorMessages: VueI18n.TranslateResult[] } {
+export function areExampleCorrect<T>(data: { validationForm: ValidationForm<T>; target: ValidationTarget }): {
+  isCorrect: boolean;
+  errorMessages: VueI18n.TranslateResult[];
+} {
   console.log('data', data);
   const lessons = data.validationForm[data.target];
   const result: { isCorrect: boolean; errorMessages: VueI18n.TranslateResult[] } = {
     isCorrect: true,
-    errorMessages: [],
+    errorMessages: []
   };
   let id: FormGroup<T>;
   objectKeys(lessons).forEach((key) => {
@@ -58,7 +58,7 @@ export function emitValidation<T = any>(
     form,
     instance,
     validationId,
-    targets,
+    targets
   }: {
     form: FormGroup<T>;
     instance: CombinedVueInstance<Vue, any, any, any, any>;
@@ -71,6 +71,6 @@ export function emitValidation<T = any>(
   instance.$emit('validation', {
     data: formCopy,
     id: validationId,
-    targets,
+    targets
   });
 }

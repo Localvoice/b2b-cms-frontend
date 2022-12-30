@@ -92,7 +92,7 @@ export default {
   /* eslint-disable global-require */
   metaInfo: {
     // title will be injected into parent titleTemplate
-    title: 'Table One',
+    title: 'Table One'
   },
   data() {
     return {
@@ -103,14 +103,14 @@ export default {
           text: 'Customer',
           align: 'start',
           sortable: false,
-          value: 'name',
+          value: 'name'
         },
         { text: 'Store Name', value: 'calories' },
         { text: 'Products', value: 'fat' },
         { text: 'Wallet Balance', value: 'carbs' },
         { text: 'Create Date', value: 'protein' },
         { text: 'Status', value: 'badge' },
-        { text: 'Action', value: 'action' },
+        { text: 'Action', value: 'action' }
       ],
       desserts: [
         {
@@ -120,7 +120,7 @@ export default {
           fat: '95',
           carbs: '$14,384',
           protein: '03/24/2020',
-          badge: 'Active',
+          badge: 'Active'
         },
         {
           img: require('@/assets/images/avatars/002-woman.svg'),
@@ -129,7 +129,7 @@ export default {
           fat: '876',
           carbs: '$38,384',
           protein: '03/24/2020',
-          badge: 'Deactive',
+          badge: 'Deactive'
         },
         {
           img: require('@/assets/images/avatars/003-man-1.svg'),
@@ -138,7 +138,7 @@ export default {
           fat: '300',
           carbs: '$78,384',
           protein: '03/24/2020',
-          badge: 'Active',
+          badge: 'Active'
         },
         {
           img: require('@/assets/images/avatars/004-bald.svg'),
@@ -147,7 +147,7 @@ export default {
           fat: '700',
           carbs: '$78,384',
           protein: '03/24/2020',
-          badge: 'Deactive',
+          badge: 'Deactive'
         },
         {
           img: require('@/assets/images/avatars/007-woman-2.svg'),
@@ -156,7 +156,7 @@ export default {
           fat: '700',
           carbs: '$78,384',
           protein: '03/24/2020',
-          badge: 'Active',
+          badge: 'Active'
         },
         {
           img: require('@/assets/images/avatars/001-man.svg'),
@@ -165,7 +165,7 @@ export default {
           fat: '95',
           carbs: '$14,384',
           protein: '03/24/2020',
-          badge: 'Active',
+          badge: 'Active'
         },
         {
           img: require('@/assets/images/avatars/002-woman.svg'),
@@ -174,7 +174,7 @@ export default {
           fat: '876',
           carbs: '$38,384',
           protein: '03/24/2020',
-          badge: 'Active',
+          badge: 'Active'
         },
         {
           img: require('@/assets/images/avatars/003-man-1.svg'),
@@ -183,7 +183,7 @@ export default {
           fat: '300',
           carbs: '$78,384',
           protein: '03/24/2020',
-          badge: 'Active',
+          badge: 'Active'
         },
         {
           img: require('@/assets/images/avatars/004-bald.svg'),
@@ -192,7 +192,7 @@ export default {
           fat: '700',
           carbs: '$78,384',
           protein: '03/24/2020',
-          badge: 'Deactive',
+          badge: 'Deactive'
         },
         {
           img: require('@/assets/images/avatars/007-woman-2.svg'),
@@ -201,7 +201,7 @@ export default {
           fat: '700',
           carbs: '$78,384',
           protein: '03/24/2020',
-          badge: 'Active',
+          badge: 'Active'
         },
         {
           img: require('@/assets/images/avatars/002-woman.svg'),
@@ -210,7 +210,7 @@ export default {
           fat: '876',
           carbs: '$38,384',
           protein: '03/24/2020',
-          badge: 'Deactive',
+          badge: 'Deactive'
         },
         {
           img: require('@/assets/images/avatars/003-man-1.svg'),
@@ -219,7 +219,7 @@ export default {
           fat: '300',
           carbs: '$78,384',
           protein: '03/24/2020',
-          badge: 'Deactive',
+          badge: 'Deactive'
         },
         {
           img: require('@/assets/images/avatars/004-bald.svg'),
@@ -228,7 +228,7 @@ export default {
           fat: '700',
           carbs: '$78,384',
           protein: '03/24/2020',
-          badge: 'Active',
+          badge: 'Active'
         },
         {
           img: require('@/assets/images/avatars/007-woman-2.svg'),
@@ -237,7 +237,7 @@ export default {
           fat: '700',
           carbs: '$78,384',
           protein: '03/24/2020',
-          badge: 'Deactive',
+          badge: 'Deactive'
         },
         {
           img: require('@/assets/images/avatars/001-man.svg'),
@@ -246,7 +246,7 @@ export default {
           fat: '95',
           carbs: '$14,384',
           protein: '03/24/2020',
-          badge: 'Active',
+          badge: 'Active'
         },
         {
           img: require('@/assets/images/avatars/002-woman.svg'),
@@ -255,7 +255,7 @@ export default {
           fat: '876',
           carbs: '$38,384',
           protein: '03/24/2020',
-          badge: 'Deactive',
+          badge: 'Deactive'
         },
         {
           img: require('@/assets/images/avatars/003-man-1.svg'),
@@ -264,7 +264,7 @@ export default {
           fat: '300',
           carbs: '$78,384',
           protein: '03/24/2020',
-          badge: 'Deactive',
+          badge: 'Deactive'
         },
         {
           img: require('@/assets/images/avatars/004-bald.svg'),
@@ -273,11 +273,11 @@ export default {
           fat: '700',
           carbs: '$78,384',
           protein: '03/24/2020',
-          badge: 'Active',
-        },
-      ],
+          badge: 'Active'
+        }
+      ]
     };
-  },
+  }
 };
 </script>
 

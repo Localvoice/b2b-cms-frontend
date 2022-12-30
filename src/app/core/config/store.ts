@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Module } from 'vuex';
 import { RootState } from '~app/core/store';
-import { coerceArray } from '~app/shared/helpers';
+import { coerceArray } from '~app/shared/helpers/coerce';
 import {
   createActionFactory,
   createActionMap,

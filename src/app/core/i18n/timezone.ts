@@ -1,8 +1,8 @@
 import Vue from 'vue';
-import { api } from '../api';
+import { api } from '../api/client';
 
 export const timezone: { current: string | null } = Vue.observable({
-  current: null,
+  current: null
 });
 
 export function setTimezone(value: string) {

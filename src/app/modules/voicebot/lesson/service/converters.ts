@@ -1,4 +1,5 @@
-import { objectKeys, coerceObject } from '~app/shared/helpers';
+import { coerceObject } from '~app/shared/helpers/coerce';
+import { objectKeys } from '~app/shared/helpers/lang';
 import { Converter } from '~app/shared/json-mapper';
 import ChatExerciseModel from '../models/chatExerciseModel';
 import { LessonExercisesModel } from '../models/lessonExercises';

@@ -29,9 +29,9 @@
 </template>
 
 <script lang="ts">
-import { BModal } from 'bootstrap-vue/src';
+import { BAlert, BModal } from 'bootstrap-vue/src';
 import Vue from 'vue';
-import { i18n } from '~app/core/i18n';
+import { i18n } from '~app/core/i18n/i18n';
 import { store } from '~app/core/store';
 import PasswordForm from './form.vue';
 import PasswordFormWrapper, { VPasswordFormWrapper } from './wrapper';
@@ -41,10 +41,10 @@ export default Vue.extend({
   store,
   components: {
     PasswordFormWrapper,
-    PasswordForm,
+    PasswordForm
   },
   props: {
-    force: { type: Boolean, default: false },
+    force: { type: Boolean, default: false }
   },
   computed: {
     modal(): BModal {
@@ -52,7 +52,7 @@ export default Vue.extend({
     },
     form(): VPasswordFormWrapper {
       return this.$refs.form as VPasswordFormWrapper;
-    },
+    }
   },
   mounted() {
     this.modal.show();
@@ -71,7 +71,7 @@ export default Vue.extend({
 
     onSuccess() {
       this.modal.hide();
-    },
-  },
+    }
+  }
 });
 </script>

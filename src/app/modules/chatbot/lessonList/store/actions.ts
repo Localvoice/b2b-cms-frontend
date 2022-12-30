@@ -23,7 +23,7 @@ export const actions = {
     lessonListApi.removeLesson(key).then(() => {
       commit(lessonListMutations.removeLesson.local, lesson);
     });
-  }),
+  })
 };
 
 export const lessonListActions = createActionMap<typeof actions, ChatbotLessonListState, RootState>(NAMESPACE, actions);

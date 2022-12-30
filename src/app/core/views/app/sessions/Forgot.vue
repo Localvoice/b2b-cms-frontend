@@ -23,8 +23,8 @@ export default {
   name: 'Forgot',
   metaInfo: {
     // title will be injected into parent titleTemplate
-    title: 'Forgot',
-  },
+    title: 'Forgot'
+  }
 };
 </script>
 <style lang="scss" scoped>

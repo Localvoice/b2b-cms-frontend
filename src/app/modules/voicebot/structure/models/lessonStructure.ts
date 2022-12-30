@@ -1,4 +1,3 @@
-/* eslint-disable max-classes-per-file */
 import { JsonProperty } from '~app/shared/json-mapper';
 
 export class LessonStructureModel {

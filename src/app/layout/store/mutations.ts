@@ -23,7 +23,7 @@ export const mutations = {
     state.backgroundColor = backgroundColor;
     state.isDarkMode = isDarkMode;
     localStorage.setItem(LAYOUT_STORAGE_KEY, JSON.stringify(state));
-  }),
+  })
 };
 
 export const layoutMutations = createMutationMap<typeof mutations, LayoutState>(NAMESPACE, mutations);

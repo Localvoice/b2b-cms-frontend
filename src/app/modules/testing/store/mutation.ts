@@ -17,7 +17,7 @@ export const mutations = {
   validate: createMutation((state) => {
     console.log('validate mutation');
     state.structure.validationList.map((el) => el.validate());
-  }),
+  })
 };
 
 export const ValidationMutations = createMutationMap<typeof mutations, ValidationState>(NAMESPACE, mutations);

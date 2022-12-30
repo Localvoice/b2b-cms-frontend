@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* istanbul ignore file */
 import 'focus-visible';
 import 'reflect-metadata';
 import Vue from 'vue';

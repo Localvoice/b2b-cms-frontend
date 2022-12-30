@@ -8,7 +8,7 @@ const createAction = createActionFactory<LoadingState, RootState>();
 export const actions = {
   addVoicebotStructureLoadingStatus: createAction(({ commit }, loadingStatus: boolean) => {
     commit(structureMutations.setStructureLoading.local, loadingStatus);
-  }),
+  })
 };
 
 export const loadingActions = createActionMap<typeof actions, LoadingState, RootState>(NAMESPACE, actions);

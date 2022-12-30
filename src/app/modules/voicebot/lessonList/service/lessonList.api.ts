@@ -1,8 +1,9 @@
 import { AxiosResponse } from 'axios';
-import { api, ApiCollectionResponse } from '~app/core/api';
-import LessonSummaryModel from '../models/lessonSummary';
+import { api } from '~app/core/api/client';
+import { ApiCollectionResponse } from '~app/core/api/response';
 import { router } from '~app/core/router';
 import { deserialize } from '~app/shared/json-mapper';
+import LessonSummaryModel from '../models/lessonSummary';
 
 const structureApi = {
   getLessonsList(): Promise<ApiCollectionResponse<LessonSummaryModel>> {

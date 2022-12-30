@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 import VueI18n from 'vue-i18n';
-import { hasOwn, objectKeys } from '../helpers';
+import { objectKeys } from '../helpers/lang';
+import { hasOwn } from '../json-mapper/utils';
 import { ErrorTranscription, ValidationError, ValidatorFn } from '../types';
 import { defaultMessages } from './validators';
 
@@ -14,7 +15,7 @@ export type FormGroupValidators<T> = { [key in keyof T]?: ValidatorFn[] };
 export type FormGroupErrors<T> = { [key in keyof T]?: ValidationError[] | null };
 
 // TODO generic form group composition
-export class FormGroup<T extends unknown> {
+export class FormGroup<T> {
   data: T = {} as T;
 
   validators: FormGroupValidators<T> = {};

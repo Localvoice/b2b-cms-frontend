@@ -2,20 +2,21 @@ import Vue from 'vue';
 import '../modules/loading';
 import '../modules/voicebot/lesson';
 import { navigationInitializer } from '~app/navigation';
-// import { SysModalPlugin } from '~app/shared/modal';
 import { SysToastPlugin } from '~app/shared/toast';
 import vuetify from '~app/shared/vuetify';
 import { LayoutLoader } from '~app/layout';
 import { appRoutes } from '../app.routes';
 import App from '../app.vue';
-import { api, apiInitializer, ApiPlugin } from './api';
-import { ConfigPluginFactory } from './config';
+import { ConfigPluginFactory } from './config/plugin';
 import { IS_DEV } from './env';
-import { errorHandler } from './error';
-import { i18n, TimezonePlugin } from './i18n';
 import { appInitializer } from './initializer';
 import { router, RouterHistoryPlugin } from './router';
 import { store } from './store';
+import { TimezonePlugin } from './i18n/timezone.plugin';
+import { errorHandler } from './error/handler';
+import { ApiPlugin } from './api/plugin';
+import { api, apiInitializer } from './api/client';
+import { i18n } from './i18n/i18n';
 
 // configuration
 Vue.config.productionTip = !IS_DEV;
@@ -31,11 +32,11 @@ Vue.use(SysToastPlugin);
 // Vue.use(SysModalPlugin);
 
 // routes
-router.addRoutes(appRoutes);
-
+appRoutes.map((route) => {
+  router.addRoute(route);
+});
 // initialization process
 const configRequest = ConfigPlugin.init();
-// console.log('config po init', getConfig);
 
 const auth = configRequest.then((config) =>
   import(/* webpackChunkName: "auth" */ '~app/modules/auth/module').then((m) => m.AuthModule(config, api))
@@ -54,7 +55,7 @@ export function bootstrap(elementOrSelector?: Element | string): Promise<void> {
       store,
       vuetify,
       i18n,
-      render: (h) => h(App),
+      render: (h) => h(App)
     });
 
     // handle errors outside of Vue

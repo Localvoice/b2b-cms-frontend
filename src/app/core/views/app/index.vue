@@ -11,13 +11,13 @@ import { LayoutLoader } from '@/app/layout';
 
 export default {
   components: {
-    LayoutLoader,
+    LayoutLoader
   },
   data() {
     return {
-      layoutName: '',
+      layoutName: ''
     };
-  },
+  }
   // mounted() {
   //   if (this.$route.params.layout) {
   //     this.changeThemeLayout(this.$route.params.layout);

@@ -4,7 +4,7 @@ describe('coerceArray fn', () => {
   it('should return array', () => {
     const Person = {
       name: 'Paweł',
-      job: 'developer',
+      job: 'developer'
     };
     const undef = undefined;
     const nu = null;

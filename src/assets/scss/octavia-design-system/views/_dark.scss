@@ -8,7 +8,6 @@ div.theme--dark {
     background: #121212;
   }
   .card-title,
- 
   a.eg-white-tab {
     background-color: #1e1e1e !important;
   }
@@ -76,10 +75,10 @@ div.theme--dark {
       outline: none;
     }
     &:after {
-      content: "\F035C";
+      content: '\F035C';
       font-size: 25px;
       font-weight: 600;
-      font-family: "Material Design Icons";
+      font-family: 'Material Design Icons';
     }
     svg {
       display: none !important;

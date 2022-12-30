@@ -12,8 +12,8 @@ export const FormControlState = Vue.extend({
     image: { type: String },
     custom: {
       type: Object as PropType<{ [key: string]: string }>,
-      default: () => ({}),
-    },
+      default: () => ({})
+    }
   },
 
   render(h: CreateElement, context: RenderContext): VNode | VNode[] {
@@ -42,7 +42,7 @@ export const FormControlState = Vue.extend({
       // translated error message
       message: error ? error.message : null,
 
-      blobFile: blobFile || null,
+      blobFile: blobFile || null
     }) as VNode | VNode[];
-  },
+  }
 });

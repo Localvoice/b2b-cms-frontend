@@ -32,7 +32,7 @@ import PasswordFormWrapper from './wrapper';
 export default Vue.extend({
   components: {
     PasswordFormWrapper,
-    PasswordForm,
-  },
+    PasswordForm
+  }
 });
 </script>

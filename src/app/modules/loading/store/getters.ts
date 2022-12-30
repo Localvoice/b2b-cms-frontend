@@ -6,7 +6,7 @@ import { NAMESPACE, LoadingState } from './state';
 const createGetter = createGetterFactory<LoadingState, RootState>();
 
 export const getters = {
-  getStructureLoadingStatus: createGetter((state) => state.loading.structure),
+  getStructureLoadingStatus: createGetter((state) => state.loading.structure)
 };
 
 export const loadingGetters = createGetterMap<typeof getters, LoadingState, RootState>(NAMESPACE, getters);

@@ -12,12 +12,12 @@ import { SPINNER_BASE_SIZE, SysSpinnerPlugin } from '../spinner';
 
 export default Vue.extend({
   components: {
-    SysSpinner: SysSpinnerPlugin.component,
+    SysSpinner: SysSpinnerPlugin.component
   },
   props: {
     visible: { type: Boolean, default: false },
     spinnerDiameter: { type: Number, default: SPINNER_BASE_SIZE },
-    fullscreen: { type: Boolean, default: true },
+    fullscreen: { type: Boolean, default: true }
   },
   methods: {
     onAfterEnter() {
@@ -25,8 +25,8 @@ export default Vue.extend({
     },
     onAfterLeave() {
       this.$emit('after-leave');
-    },
-  },
+    }
+  }
 });
 </script>
 

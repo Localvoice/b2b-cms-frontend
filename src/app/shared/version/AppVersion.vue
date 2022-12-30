@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { api } from '~app/core/api';
+import { api } from '~app/core/api/client';
 import info from '../../../../package.json';
 
 export interface VersionInfo {

@@ -1,7 +1,7 @@
+/* eslint-disable import/no-cycle */
 import { ObjectAttribute } from '~app/shared/types';
 import { StructureState } from './store';
 
-/* eslint-disable no-shadow */
 export type Category = {
   imageAlt: string;
   translatedSubject: string;

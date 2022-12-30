@@ -77,15 +77,15 @@ export default {
   name: 'SignInThree',
   metaInfo: {
     // title will be injected into parent titleTemplate
-    title: 'SignIn Three',
+    title: 'SignIn Three'
   },
   data() {
     return {
       show: false,
       password: 'Password',
-      selected: ['John'],
+      selected: ['John']
     };
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>

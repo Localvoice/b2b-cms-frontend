@@ -7,7 +7,7 @@ const createMutation = createMutationFactory<AuthState>();
 export const mutations = {
   setUser: createMutation((state, user: AuthUser) => {
     state.user = user;
-  }),
+  })
 };
 
 export const authMutations = createMutationMap<typeof mutations, AuthState>(NAMESPACE, mutations);

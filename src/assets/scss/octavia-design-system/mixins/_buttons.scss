@@ -73,18 +73,28 @@
 
 // Default flat butotn
 @mixin button($color) {
-  $lighten: lighten($color, 5);      
+  $lighten: lighten($color, 5);
   @include button-variant(
-    $white,   // color
-    $white,   // focus-color
-    $white,   // active-color
-    $color,   // background
-    $lighten, // focus-background
-    $lighten, // active-background
-    $color,   // border
-    $lighten, // focus-border
-    $lighten, // active-border
-    none,      // shadow
+    $white,
+    // color
+    $white,
+    // focus-color
+    $white,
+    // active-color
+    $color,
+    // background
+    $lighten,
+    // focus-background
+    $lighten,
+    // active-background
+    $color,
+    // border
+    $lighten,
+    // focus-border
+    $lighten,
+    // active-border
+    none,
+    // shadow
     shadow-button-hover($shadow-button-color) // hover-shadow
   );
 }
@@ -92,16 +102,26 @@
 // Outline button
 @mixin button-outline($color) {
   @include button-variant(
-    $color, // color
-    $white, // focus-color
-    $white, // active-color
-    transparent, // background
-    $color, // focus-background
-    $color, // active-background
-    $color, // border
-    $color, // focus-border
-    $color,  // active-border
-    none,   // shadow
+    $color,
+    // color
+    $white,
+    // focus-color
+    $white,
+    // active-color
+    transparent,
+    // background
+    $color,
+    // focus-background
+    $color,
+    // active-background
+    $color,
+    // border
+    $color,
+    // focus-border
+    $color,
+    // active-border
+    none,
+    // shadow
     shadow-button-hover($shadow-button-color) // hover-shadow
   );
 }
@@ -109,48 +129,78 @@
 @mixin button-raised($color) {
   $lighten: lighten($color, 1);
   @include button-variant(
-    $white,   // color
-    $white,   // focus-color
-    $white,   // active-color
-    $color,   // background
-    $lighten, // focus-background
-    $lighten, // active-background
-    $color,   // border
-    $lighten, // focus-border
-    $lighten,  // active-border
-    shadow-button($shadow-button-color), // shadow
+    $white,
+    // color
+    $white,
+    // focus-color
+    $white,
+    // active-color
+    $color,
+    // background
+    $lighten,
+    // focus-background
+    $lighten,
+    // active-background
+    $color,
+    // border
+    $lighten,
+    // focus-border
+    $lighten,
+    // active-border
+    shadow-button($shadow-button-color),
+    // shadow
     shadow-button-hover($shadow-button-color) // hover-shadow
   );
 }
-@mixin button-opacity($color){
-  $lighten: rgba($color, .1);
+@mixin button-opacity($color) {
+  $lighten: rgba($color, 0.1);
   @include button-variant(
-    $color,   // color
-    $white,   // focus-color
-    $white,   // active-color
-    $lighten,   // background
-    $color, // focus-background
-    $color, // active-background
-    $color,   // border
-    $color, // focus-border
-    $color,  // active-border
-    none, // shadow
+    $color,
+    // color
+    $white,
+    // focus-color
+    $white,
+    // active-color
+    $lighten,
+    // background
+    $color,
+    // focus-background
+    $color,
+    // active-background
+    $color,
+    // border
+    $color,
+    // focus-border
+    $color,
+    // active-border
+    none,
+    // shadow
     shadow-button-hover($shadow-button-color) // hover-shadow
   );
 }
-@mixin button-flat($color){
+@mixin button-flat($color) {
   $lighten: lighten($color, 1);
   @include button-variant(
-    $white,   // color
-    $white,   // focus-color
-    $white,   // active-color
-    $color,   // background
-    $lighten, // focus-background
-    $lighten, // active-background
-    $color,   // border
-    $lighten, // focus-border
-    $lighten,  // active-border
-    none, // shadow
+    $white,
+    // color
+    $white,
+    // focus-color
+    $white,
+    // active-color
+    $color,
+    // background
+    $lighten,
+    // focus-background
+    $lighten,
+    // active-background
+    $color,
+    // border
+    $lighten,
+    // focus-border
+    $lighten,
+    // active-border
+    none,
+    // shadow
     shadow-button-hover($shadow-button-color) // hover-shadow
   );
 }
@@ -162,7 +212,7 @@
     padding: $button-link-padding;
     &::after {
       position: absolute;
-      content: "";
+      content: '';
       bottom: 0;
       width: 0;
       left: 0;
@@ -171,7 +221,7 @@
     }
     &:hover {
       text-decoration: none;
-      &::after{
+      &::after {
         width: 100%;
       }
     }
@@ -189,10 +239,10 @@
     &.btn-raised-#{$name} {
       @include button-raised($value);
     }
-    &.btn-opacity-#{$name}{
+    &.btn-opacity-#{$name} {
       @include button-opacity($value);
     }
-    &.btn-flat-#{$name}{
+    &.btn-flat-#{$name} {
       @include button-flat($value);
     }
     &.btn-link-#{$name} {
@@ -228,17 +278,11 @@
 }
 
 @mixin button-social-colors() {
-  
   @each $name, $value in $social-colors {
-
-    
-    &.btn-opacity-#{$name}{
+    &.btn-opacity-#{$name} {
       @include button-opacity($value);
     }
-    
   }
-  
-  
 }
 
 @mixin button-socials {
@@ -285,21 +329,18 @@
 }
 
 @mixin button-icon-style() {
-
   @include material-icons {
     font-size: calc(#{$button-icon-size} * 1.5);
   }
-  
+
   @include icons {
     font-size: $button-icon-size;
     margin-right: $button-icon-margin;
   }
-  
+
   .feather {
     height: 16px;
     width: 16px;
     margin-right: $button-icon-margin;
   }
 }
-
-
