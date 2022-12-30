@@ -95,8 +95,8 @@ import FixedButton from '~app/shared/fixedButton/fixedButton.vue';
 import { FormControlState } from '~app/shared/form';
 import { emitValidation } from '~app/shared/validation';
 import { voicebotGetters } from '~app/modules/voicebot/structure/store';
-import { VoicebotButtonsText, ValidationTarget } from '~app/shared/types';
 import { objectKeys } from '~app/shared/helpers/lang';
+import { VoicebotButtonsText, ValidationTarget } from '~app/shared/types';
 import { createBasicInfoForm, createLessonDescriptionForm } from '../validation/forms';
 import { LessonBasicInformation, LessonDescription } from '../types';
 

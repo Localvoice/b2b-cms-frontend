@@ -113,10 +113,8 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue';
-import { VRow, VCol, VBtn, VIcon, VTextField, VImg, VFileInput, VTooltip } from 'vuetify/lib';
-import { FormGroup, FormControlState } from '~app/shared/form';
+import { FormControlState } from '~app/shared/form';
 import { ValidationTarget } from '~app/shared/types';
-import lesson from '../../lesson/models/lesson';
 import { LessonStructureModel } from '../models/lessonStructure';
 import { createLessonForm } from '../validation/forms';
 import FormValidationMixin from '../validation/formValidation.mixin';

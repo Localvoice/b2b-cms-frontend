@@ -66,7 +66,6 @@ import { LessonExercisesModel } from '../models/lessonExercises';
 import { lessonGetters } from '../store';
 import { lessonActions } from '../store/actions';
 import { LessonQuery } from '../types';
-import lesson from '../models/lesson';
 
 export default Vue.extend({
   components: {
