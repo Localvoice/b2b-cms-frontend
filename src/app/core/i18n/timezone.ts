@@ -1,8 +1,9 @@
-import Vue from 'vue';
+import { reactive } from 'vue';
 import { api } from '../api/client';
 
-export const timezone: { current: string | null } = Vue.observable({
-  current: null
+// Reactive state using Vue 3's `reactive`
+export const timezone = reactive({
+  current: null as string | null
 });
 
 export function setTimezone(value: string) {

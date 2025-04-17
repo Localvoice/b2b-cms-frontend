@@ -1,11 +1,8 @@
-/* eslint-disable import/no-cycle */
-import { PluginFunction } from 'vue';
+import { App } from 'vue';
 import { api } from './client';
 
-export const ApiPlugin: PluginFunction<void> = (Vue) => {
-  Object.defineProperty(Vue.prototype, '$api', {
-    get() {
-      return api;
-    }
-  });
+export const ApiPlugin = {
+  install(app: App) {
+    app.config.globalProperties.$api = api;
+  }
 };

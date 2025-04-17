@@ -1,8 +1,5 @@
 import 'focus-visible';
 import 'reflect-metadata';
-import Vue from 'vue';
-
-Vue.config.productionTip = false;
 
 let timer = Date.now();
 import(/* webpackChunkName: "core" */ './app/core')

@@ -3,8 +3,16 @@
 
 const { defineConfig } = require('@vue/cli-service');
 const path = require('path');
+const { VuetifyPlugin } = require('webpack-plugin-vuetify');
 
 module.exports = defineConfig({
+  configureWebpack: {
+    plugins: [
+      new VuetifyPlugin({
+        autoImport: true
+      })
+    ]
+  },
   pages: {
     index: {
       entry: 'src/main.ts',
@@ -28,6 +36,20 @@ module.exports = defineConfig({
     if (process.argv.some((arg) => arg.includes('report'))) {
       config.optimization.concatenateModules(false);
     }
+
+    config.module
+      .rule('vue')
+      .use('vue-loader')
+      .tap((options) => {
+        return {
+          ...options,
+          compilerOptions: {
+            compatConfig: {
+              MODE: 2
+            }
+          }
+        };
+      });
   },
   lintOnSave: false,
   transpileDependencies: ['vuetify']

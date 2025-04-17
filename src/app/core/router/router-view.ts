@@ -1,9 +1,9 @@
-import Vue, { VNode } from 'vue';
+import { defineComponent, h } from 'vue';
+import { RouterView as RouterViewComponent } from 'vue-router';
 
-export const RouterView = Vue.extend({
-  // eslint-disable-next-line vue/name-property-casing
-  name: 'empty-router-view',
-  render(h): VNode {
-    return h('router-view');
+export const RouterView = defineComponent({
+  name: 'EmptyRouterView',
+  setup() {
+    return () => h(RouterViewComponent);
   }
 });

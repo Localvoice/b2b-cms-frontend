@@ -48,8 +48,8 @@ export const appRoutes: RouteConfig[] = [
     component: () => import(/* webpackChunkName: "session" */ '~app/modules/session/views/SignIn.vue')
   },
   {
-    path: '*',
-    name: 'not-found',
+    path: '/:catchAll(.*)',
+    name: 'NotFound',
     component: NotFound
   }
 ];

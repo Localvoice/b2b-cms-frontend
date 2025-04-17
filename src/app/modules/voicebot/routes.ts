@@ -1,7 +1,7 @@
-import { RouteConfig } from 'vue-router';
+import { RouteRecordRaw } from 'vue-router';
 import { RouterView } from '~app/core/router';
 
-export const voicebotRoutes: RouteConfig[] = [
+export const voicebotRoutes: RouteRecordRaw[] = [
   {
     path: '/app/voicebot',
     component: RouterView,

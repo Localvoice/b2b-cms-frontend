@@ -1,5 +1,5 @@
-import VueRouter, { RawLocation, Route } from 'vue-router';
-import { PluginFunction } from 'vue';
+import { App } from 'vue';
+import { Router } from 'vue-router';
 
 export interface RouterHistoryConfig {
   maxLength?: number;
@@ -7,10 +7,23 @@ export interface RouterHistoryConfig {
 
 export class RouterHistory {
   private history: string[] = [];
-
   private markers: { [key: string]: string } = {};
-
   private maxLength = 10;
+
+  constructor(
+    private router: Router,
+    config?: RouterHistoryConfig
+  ) {
+    if (config?.maxLength && config.maxLength > 0) {
+      this.maxLength = config.maxLength;
+    }
+
+    router.afterEach((to) => {
+      if (to && to.meta) {
+        this.addStep(to.fullPath, to.meta.historyMarker || to.name);
+      }
+    });
+  }
 
   get length(): number {
     return this.history.length;
@@ -20,18 +33,8 @@ export class RouterHistory {
     return [...this.history];
   }
 
-  constructor(private router: VueRouter, config?: RouterHistoryConfig) {
-    if (config && config.maxLength && config.maxLength > 0) {
-      this.maxLength = config.maxLength;
-    }
-
-    router.afterEach((to) => {
-      if (to && to.meta) this.addStep(to.fullPath, to.meta.historyMarker || to.name);
-    });
-  }
-
   addStep(url: string, marker?: string): RouterHistory {
-    this.history = [...this.history, url];
+    this.history.push(url);
 
     if (this.history.length > this.maxLength) {
       this.history.shift();
@@ -46,7 +49,7 @@ export class RouterHistory {
 
   getStep(offset: number): string {
     if (offset > 0) {
-      throw Error('Offset must be <= 0');
+      throw new Error('Offset must be <= 0');
     }
     const finalOffset = this.history.length + offset - 1;
     return this.history[finalOffset];
@@ -54,14 +57,14 @@ export class RouterHistory {
 
   hasStep(offset: number): boolean {
     if (offset > 0) {
-      throw Error('Offset must be <= 0');
+      throw new Error('Offset must be <= 0');
     }
 
     const finalOffset = this.history.length + offset - 1;
     return !!this.history[finalOffset];
   }
 
-  navigateToStep(offset: number, fallback?: RawLocation): Promise<Route> {
+  navigateToStep(offset: number, fallback?: string): Promise<void> {
     if (this.hasStep(offset)) {
       return this.router.push(this.getStep(offset));
     }
@@ -77,14 +80,13 @@ export class RouterHistory {
     return this;
   }
 
-  navigateToMarker(marker: string, fallback?: RawLocation): Promise<Route> {
+  navigateToMarker(marker: string, fallback?: string): Promise<void> {
     if (this.hasMarker(marker)) {
       return this.router.push(this.getMarker(marker));
     }
 
     if (!fallback) {
-      // eslint-disable-next-line no-param-reassign
-      fallback = this.router.resolve({ name: marker })?.location;
+      fallback = { name: marker } as unknown as string;
     }
 
     return this.router.push(fallback || '/');
@@ -106,13 +108,13 @@ export class RouterHistory {
   }
 }
 
-export const RouterHistoryPlugin: (router: VueRouter) => PluginFunction<RouterHistoryConfig> =
-  (router) => (Vue, options?) => {
-    const history = new RouterHistory(router, options);
+export function createRouterHistoryPlugin(router: Router, config?: RouterHistoryConfig) {
+  const history = new RouterHistory(router, config);
 
-    Object.defineProperty(Vue.prototype, '$history', {
-      get() {
-        return history;
-      }
-    });
+  return {
+    install(app: App) {
+      app.config.globalProperties.$history = history;
+      app.provide('routerHistory', history);
+    }
   };
+}

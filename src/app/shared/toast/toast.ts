@@ -1,5 +1,4 @@
-/* eslint-disable no-param-reassign */
-import { PluginFunction } from 'vue';
+import { App, createApp } from 'vue';
 import { SysToast } from './types';
 import ToastComponent from './toast.vue';
 
@@ -18,12 +17,13 @@ export const SysToastFactory = (): SysToast => {
     if (toastContainer) {
       toastContainer.appendChild(mountNode);
 
-      new ToastComponent({
-        propsData: {
-          message,
-          color: options.color
-        }
-      }).$mount('#toast-node');
+      const toastApp = createApp(ToastComponent, {
+        message,
+        color: options.color
+      });
+
+      // Optional: clean up after component unmounts
+      toastApp.mount(mountNode);
     }
   };
 
@@ -43,10 +43,8 @@ export const SysToastFactory = (): SysToast => {
   };
 };
 
-export const SysToastPlugin: PluginFunction<void> = (Vue) => {
-  Object.defineProperty(Vue.prototype, '$toast', {
-    get() {
-      return SysToastFactory();
-    }
-  });
+export const SysToastPlugin = {
+  install(app: App) {
+    app.config.globalProperties.$toast = SysToastFactory();
+  }
 };

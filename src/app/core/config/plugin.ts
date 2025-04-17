@@ -1,4 +1,4 @@
-import { PluginObject } from 'vue';
+import { App } from 'vue';
 import { Store } from 'vuex';
 import { api } from '../api/client';
 import { FeatureDirective } from './features';
@@ -9,13 +9,15 @@ export interface AppConfigPluginOptions {
   store: Store<any>;
 }
 
-type AppConfigPlugin = PluginObject<void> & {
+type AppConfigPlugin = {
+  install(app: App): void;
   init(): Promise<Config>;
 };
 
 export const ConfigPluginFactory = ({ store }: AppConfigPluginOptions): AppConfigPlugin => ({
-  install(Vue) {
+  install(app: App) {
     store.registerModule(NAMESPACE, configStore);
+
     store.watch(
       (state, getters) => getters[configGetters.getApiUrl],
       (apiUrl) => {
@@ -25,16 +27,15 @@ export const ConfigPluginFactory = ({ store }: AppConfigPluginOptions): AppConfi
       }
     );
 
-    Object.defineProperty(Vue.prototype, '$config', {
-      get() {
-        return store.getters[configGetters.getState];
-      }
-    });
+    // Add $config to global properties
+    app.config.globalProperties.$config = store.getters[configGetters.getState];
 
-    Vue.directive('feature', FeatureDirective);
+    // Register the directive globally
+    app.directive('feature', FeatureDirective);
   },
 
   async init() {
-    return store.dispatch(configActions.loadConfig).then(() => store.getters[configGetters.getState]);
+    // await store.dispatch(configActions.loadConfig);
+    return store.getters[configGetters.getState];
   }
 });

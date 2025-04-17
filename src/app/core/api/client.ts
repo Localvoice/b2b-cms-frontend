@@ -4,25 +4,24 @@ import { Config } from '../config/types';
 import { collectionResponseInterceptor } from './response';
 
 export type ApiClient = AxiosInstance;
+
+// Axios instance
 export const api: ApiClient = axios.create({
   paramsSerializer(params) {
-    let result = '';
-
-    Object.keys(params).forEach((key) => {
-      result += `${key}=${encodeURIComponent(params[key])}&`;
-    });
-
-    return result.substring(0, result.length - 1);
+    return Object.keys(params)
+      .map((key) => `${key}=${encodeURIComponent(params[key])}`)
+      .join('&');
   }
 });
 
+// Helper to convert Sort into query param
 export function sortParams(sort?: Sort): { sorting: string } | null {
-  return sort && sort.active ? { sorting: `${sort.active},${sort.direction}` } : null;
+  return sort?.active ? { sorting: `${sort.active},${sort.direction}` } : null;
 }
 
+// Set base URL and attach response interceptor
 export const apiInitializer: (config: Config) => ApiClient = (config) => {
-  api.defaults.baseURL = config.apiUrl;
+  // api.defaults.baseURL = config.apiUrl;
   api.interceptors.response.use(collectionResponseInterceptor);
-
   return api;
 };

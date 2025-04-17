@@ -1,6 +1,10 @@
-import Vue from 'vue';
+import Vue, { App } from 'vue';
 import { nl2br } from './filters';
 
-Vue.filter('nl2br', nl2br);
+export function registerGlobalFilters(app: App) {
+  app.config.globalProperties.$filters = {
+    nl2br
+  };
+}
 
 export * from './vnode';

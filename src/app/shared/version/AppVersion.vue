@@ -1,41 +1,35 @@
 <template>
   <div class="app-version text--disabled">
-    <strong>UI:</strong> v{{ frontend.version }}
+    <strong>UI:</strong>
+    v{{ frontend.version }}
 
-    <template v-if="backend">
+    <template v-if="backend.version">
       <strong>API:</strong>
-      v{{ backend }}
+      v{{ backend.version }}
     </template>
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
+<script lang="ts" setup>
+import { ref, onMounted } from 'vue';
 import { api } from '~app/core/api/client';
 import info from '../../../../package.json';
 
-export interface VersionInfo {
+interface VersionInfo {
   version: string;
 }
 
-export default Vue.extend({
-  name: 'AppVersion',
-  data: () => ({
-    frontend: { version: info.version },
-    backend: {}
-  }),
+const frontend = { version: info.version };
+const backend = ref<Partial<VersionInfo>>({});
 
-  created(): void {
-    api
-      .get<VersionInfo>('/api/version')
-      .catch(() => null)
-      .then((res) => {
-        if (res && res.data) {
-          this.backend = res.data;
-        }
-      });
+onMounted(async () => {
+  try {
+    const res = await api.get<VersionInfo>('/api/version');
+    if (res?.data) {
+      backend.value = res.data;
+    }
+  } catch (error) {
+    // Handle or log error silently
   }
 });
 </script>
-
-<style lang="scss"></style>

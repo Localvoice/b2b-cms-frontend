@@ -112,72 +112,77 @@
 </template>
 
 <script lang="ts">
-/* eslint-disable no-unused-expressions */
-import Vue from 'vue';
-import { mapGetters, mapActions } from 'vuex';
-import { router } from '~app/core/router';
-import { lessonActions } from '~app/modules/voicebot/lesson';
-import LessonSummaryModel from '../models/lessonSummary';
+import { ref, computed, onMounted } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 import { lessonListActions, lessonListGetters } from '../store';
+import LessonSummaryModel from '../models/lessonSummary';
 
-export default Vue.extend({
-  metaInfo: {
-    // title will be injected into parent titleTemplate
-    title: 'Table One'
-  },
-  data: () => ({
-    dialogDelete: false,
-    lessonToDelete: {} as LessonSummaryModel | Record<string, never>,
-    search: '',
-    selected: [],
-    loading: false,
-    headers: [
-      {
-        text: 'Lesson',
-        align: 'start',
-        value: 'lesson'
-      },
+export default {
+  setup() {
+    const store = useStore();
+    const router = useRouter();
+
+    const dialogDelete = ref(false);
+    const lessonToDelete = ref<LessonSummaryModel | null>(null);
+    const search = ref('');
+    const selected = ref([]);
+    const loading = ref(false);
+
+    const headers = [
+      { text: 'Lesson', align: 'start', value: 'lesson' },
       { text: 'Category', value: 'category' },
       { text: 'Course', value: 'course' },
       { text: 'Status', value: 'badge' },
       { text: 'Action', value: 'action' }
-    ]
-  }),
-  computed: {
-    ...mapGetters({
-      lessonList: lessonListGetters.getLessonList
-    })
-  },
-  created() {
-    this.fetchlessonsList();
-  },
-  methods: {
-    ...mapActions({
-      fetchlessonsList: lessonListActions.fetchLessonsList,
-      removeLesson: lessonListActions.removeLesson,
-      cleanLesson: lessonActions.cleanLesson
-    }),
-    deleteItemConfirmation() {
-      this.dialogDelete = false;
-      if (Object.keys(this.lessonToDelete).length > 0 && this.lessonToDelete.constructor !== Object)
-        this.removeLesson(this.lessonToDelete);
-      this.lessonToDelete = {};
-    },
-    closeDeleteDialog() {
-      this.lessonToDelete = {};
-      this.dialogDelete = false;
-    },
-    showDeleteDialogConfirmation(lesson: LessonSummaryModel) {
-      console.log('lesson', lesson);
-      this.lessonToDelete = lesson;
-      this.dialogDelete = true;
-    },
-    createLesson() {
-      this.cleanLesson();
+    ];
+
+    const lessonList = computed(() => store.getters[lessonListGetters.getLessonList]);
+
+    // Fetch lesson list on mount
+    onMounted(() => {
+      store.dispatch(lessonListActions.fetchLessonsList);
+      console.log('mounted');
+    });
+
+    const deleteItemConfirmation = () => {
+      dialogDelete.value = false;
+      if (lessonToDelete.value) {
+        store.dispatch(lessonListActions.removeLesson, lessonToDelete.value);
+        lessonToDelete.value = null;
+      }
+    };
+
+    const closeDeleteDialog = () => {
+      lessonToDelete.value = null;
+      dialogDelete.value = false;
+    };
+
+    const showDeleteDialogConfirmation = (lesson: LessonSummaryModel) => {
+      lessonToDelete.value = lesson;
+      dialogDelete.value = true;
+    };
+
+    const createLesson = () => {
+      store.dispatch('cleanLesson');
       router.push({ name: 'create-lesson' });
-    }
+    };
+
+    return {
+      dialogDelete,
+      lessonToDelete,
+      search,
+      selected,
+      loading,
+      headers,
+      lessonList,
+      deleteItemConfirmation,
+      closeDeleteDialog,
+      showDeleteDialogConfirmation,
+      createLesson
+    };
   }
-});
+};
 </script>
 
 <style lang="scss" scoped>
