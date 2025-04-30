@@ -11,6 +11,7 @@ export const appRoutes: RouteRecordRaw[] = [
     children: [
       {
         path: '/app',
+        meta: { title: 'Strona główna' },
         component: defineComponent({
           render: () => '/app page'
         })
@@ -26,6 +27,7 @@ export const appRoutes: RouteRecordRaw[] = [
       {
         path: 'sign-in',
         name: 'sign-in',
+        meta: { title: 'Zaloguj się' },
         component: () => import(/* webpackChunkName: "session" */ '~app/modules/session/views/SignIn.vue')
       }
     ]

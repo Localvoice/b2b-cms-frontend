@@ -1,37 +1,45 @@
 <template>
   <div class="page-wrap">
     <div class="session-form-hold">
-      <v-card class="localvoice-shadow p-10">
-        <v-card-text class="text-center">
-          <v-row class="mb-16">
-            <h5 class="mb-10 mx-auto localvoice-header">
-              <span class="localvoice-weight-header">Logowanie</span> do aplikacji Localvoice
-            </h5>
-            <img src="@/assets/images/alexa.png" align="center" justify="center" class="mx-auto" />
-          </v-row>
-
-          <v-text-field label="Email" color="#1C7AC3" light v-model="email" />
+      <v-form :submit="loginUser">
+        <v-card class="card">
+          <v-card-title class="card-title">Zaloguj się</v-card-title>
           <v-text-field
-            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-            :type="show ? 'text' : 'password'"
-            name="input-10-2"
-            label="Password"
-            v-model="password"
-            color="#1C7AC3"
-            light
-            @click:append="show = !show"
+            v-model="email"
+            placeholder="E-mail"
+            class="text-input"
+            :rules="[emailRules.required, emailRules.email]"
+            required
           ></v-text-field>
-          <v-btn class="mb-4 localvoice-sign-in-button" :loading="loading" block @click.prevent="loginUser"
+          <v-text-field
+            type="password"
+            v-model="password"
+            placeholder="Password"
+            class="text-input"
+            :rules="[passwordRules.required]"
+            required
+          ></v-text-field>
+          <div class="password-reset-wrapper">
+            <router-link to="/session/password" class="password-reset">Przypomnij hasło</router-link>
+          </div>
+          <v-btn type="submit" class="submit-button" :loading="loading" block @click.prevent="loginUser"
             >Zaloguj się</v-btn
           >
-          <v-row>
-            <h6 class="localvoice-sign-in-options mx-auto">
-              kliknij jeśli <router-link to="/session/reset">nie pamiętasz hasła</router-link> lub
-              <router-link to="/session/sign-up">nie masz konta </router-link>
-            </h6>
-          </v-row>
-        </v-card-text>
-      </v-card>
+          <p class="login-text">Lub zaloguj się poprzez</p>
+          <div class="socials-wrapper">
+            <button class="social-button">
+              <img :src="GoogleIcon" alt="google" />
+            </button>
+            <button class="social-button">
+              <img :src="FacebookIcon" alt="google" />
+            </button>
+          </div>
+          <p class="register-link-wrapper">
+            Nie masz konta?
+            <router-link to="/session/sign-up" class="register-link">Zarejestruj się tutaj</router-link>
+          </p>
+        </v-card>
+      </v-form>
     </div>
   </div>
 </template>
@@ -44,6 +52,8 @@ import { TokenStorage } from '~app/modules/auth/model/token/storage';
 import { importAuthToken } from '~app/modules/auth/model/token/token';
 import { configGetters } from '~app/core/config/store';
 import { useRouter, useRoute } from 'vue-router';
+import GoogleIcon from '../../../../assets/images/google.svg';
+import FacebookIcon from '../../../../assets/images/facebook.svg';
 
 const show = ref(false);
 const email = ref('');
@@ -53,6 +63,15 @@ const loading = ref(false);
 const router = useRouter();
 const route = useRoute();
 const store = useStore();
+
+const emailRules = {
+  required: (v) => !!v || 'E-mail is required',
+  email: (v) => /.+@.+/.test(v) || 'E-mail must be valid'
+};
+
+const passwordRules = {
+  required: (v) => !!v || 'Password is required'
+};
 
 const { proxy } = getCurrentInstance();
 
@@ -64,6 +83,8 @@ const loginUser = () => {
       password: password.value
     })
     .then(async ({ data }) => {
+      if (!data) return;
+
       console.log('userInfo', data);
 
       const tokenStorage = new TokenStorage();
@@ -78,7 +99,7 @@ const loginUser = () => {
       }
     })
     .catch((error) => {
-      console.log(error);
+      console.log('sign-in error', error);
     })
     .finally(() => {
       loading.value = false;
@@ -88,7 +109,7 @@ const loginUser = () => {
 
 <style lang="scss" scoped>
 .page-wrap {
-  background-color: #fff !important;
+  background-color: #f9f9fb !important;
   display: flex;
   align-items: center;
   padding: 40px 1rem;
@@ -96,47 +117,84 @@ const loginUser = () => {
   min-height: 100vh;
 }
 
-.localvoice-sign-in-button {
-  background-color: #086fbe !important;
-  color: #fff;
-  padding: 20px !important;
-}
-
 .session-form-hold {
   width: 100%;
-  max-width: 490px;
+  max-width: 620px;
   margin: 0 auto;
   padding: 10px;
 }
 
-.localvoice-shadow {
-  box-shadow:
-    rgba(47, 60, 74, 0.18) 0px 8px 32px,
-    rgba(47, 60, 74, 0.02) 0px 8px 16px !important;
+.card {
+  padding: 32px 16px;
+  border: 1px solid #f2f0ff;
+  border-radius: 16px;
+
+  @media screen and (min-width: 800px) {
+    padding: 48px 40px;
+  }
 }
 
-.session-form-hold img {
-  width: 230px;
-  margin-bottom: 25px;
+.card-title {
+  color: #161d40;
+  font-weight: 700;
+  font-size: 32px;
+  margin-bottom: 32px;
 }
 
-.localvoice-sign-in-options {
-  font-family: 'Source Sans Pro', sans-serif;
-  font-weight: 300;
-  font-size: 1.1rem;
-  margin-top: 20px;
-  margin-bottom: 30px;
+.password-reset-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
 }
 
-.localvoice-weight-header {
-  font-weight: 400;
+.password-reset {
+  color: #fe5b14;
+  font-size: 13px;
+  font-weight: 600;
 }
 
-.localvoice-header {
-  font-family: 'Source Sans Pro', sans-serif;
-  font-weight: 300;
-  font-size: 1.5rem;
-  margin-top: 10px;
-  margin-bottom: 20px;
+.submit-button {
+  background-color: #7b62fe;
+  padding: 14px 12px;
+  border-radius: 50px;
+  color: white;
+  text-transform: initial;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.login-text {
+  font-size: 14px;
+  color: #888eaa;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.socials-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.social-button {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #f2f0ff;
+}
+
+.register-link-wrapper {
+  text-align: center;
+  font-weight: 600;
+  color: #888eaa;
+  font-size: 14px;
+  & .register-link {
+    color: #fe5b14;
+  }
 }
 </style>

@@ -5,6 +5,7 @@ import { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { ApiClient } from '~app/core/api/client';
 import { createUrl } from '~app/shared/helpers/url';
 import { AuthToken, importAuthToken, TokenStorage } from '../model';
+import { toast } from 'vue3-toastify';
 
 const LOGIN_PATH = '/session/sign-in';
 
@@ -34,7 +35,7 @@ export class AuthService {
         this.api.interceptors.request.use((request) => this.tokenHeaderInterceptor(request));
         this.api.interceptors.response.use(
           (response) => response,
-          (error) => console.log(error)
+          (error) => toast.error(error.response.data.error.message)
         );
       }
 

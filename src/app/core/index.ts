@@ -17,6 +17,7 @@ import { ApiPlugin } from './api/plugin';
 import { api, apiInitializer } from './api/client';
 import { i18n } from './i18n/i18n';
 import { registerGlobalFilters } from '~app/shared/vue';
+import Vue3Toastify, { type ToastContainerOptions } from 'vue3-toastify';
 
 const ConfigPlugin = ConfigPluginFactory({ store });
 
@@ -53,11 +54,20 @@ export function bootstrap(elementOrSelector?: Element | string): Promise<void> {
     root.use(TimezonePlugin);
     root.use(SysToastPlugin);
     root.use(i18n);
+    root.use(Vue3Toastify, {
+      autoClose: 3000,
+      position: 'bottom-center'
+    } as ToastContainerOptions);
 
     import('../shared/vendors').then((m) => root.use(m.VendorsPlugin));
     import('../shared/facebook').then((m) => root.use(m.FacebookSDKPlugin));
 
     registerGlobalFilters(root);
+
+    router.beforeEach((to, from, next) => {
+      document.title = to.meta.title as string;
+      next();
+    });
 
     // handle errors outside of Vue
     window.addEventListener('error', (e) => {

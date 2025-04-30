@@ -14,6 +14,7 @@ body {
   // overflow-x: hidden;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
+  background-color: #f9f9fb;
 }
 // .v-application,
 // .v-application .headline,
@@ -48,7 +49,9 @@ body {
   flex-grow: 1;
 }
 .shadow-sm {
-  box-shadow: 0 8px 32px rgb(47 60 74 / 1%), 0 8px 16px rgb(47 60 74 / 2%) !important;
+  box-shadow:
+    0 8px 32px rgb(47 60 74 / 1%),
+    0 8px 16px rgb(47 60 74 / 2%) !important;
 }
 pre,
 code,
