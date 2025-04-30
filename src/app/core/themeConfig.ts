@@ -24,8 +24,6 @@ const mq = window.matchMedia('(prefers-color-scheme: light)');
 //   theme: { dark: mq.matches },
 // });
 
-// console.log(mq);
-
 // mq.addEventListener('change', (e) => {
 //   console.log(mq);
 //   this.$vuetify.theme.dark = e.matches;

@@ -1,5 +1,4 @@
-import { PluginObject } from 'vue';
-// import { LoginStatus } from 'facebook-sdk'
+import { App } from 'vue';
 
 type Script = 'script';
 
@@ -10,10 +9,9 @@ declare global {
   }
 }
 
-export const FacebookSDKPlugin: PluginObject<void> = {
-  install(Vue) {
+export const FacebookSDKPlugin = {
+  install(app: App) {
     (function (document: Document, script: Script, id: string) {
-      console.log('hello from facebook module ');
       const fjs = document.getElementsByTagName(script)[0];
       if (document.getElementById(id)) return;
       const js = document.createElement(script);
@@ -21,9 +19,7 @@ export const FacebookSDKPlugin: PluginObject<void> = {
       js.src = '//connect.facebook.net/en_US/sdk.js';
       if (fjs.parentNode) fjs.parentNode.insertBefore(js, fjs);
     })(document, 'script', 'facebook-jssdk');
-    console.log('windows', window);
     window.fbAsyncInit = function onSDKInit() {
-      console.log('hello from init');
       window.FB.init({
         appId: '1358537151286274',
         cookie: true,

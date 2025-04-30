@@ -1,7 +1,7 @@
-import { RouteConfig } from 'vue-router';
+import { RouteRecordRaw } from 'vue-router';
 import { RouterView } from '~app/core/router';
 
-export const chatbotRoutes: RouteConfig[] = [
+export const chatbotRoutes: RouteRecordRaw[] = [
   {
     path: '/app/chatbot',
     component: RouterView,

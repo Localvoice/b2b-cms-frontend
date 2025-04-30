@@ -1,24 +1,24 @@
 /* eslint-disable no-return-assign */
 /* eslint-disable no-param-reassign */
 /* eslint-disable class-methods-use-this */
-import { AxiosError, AxiosRequestConfig } from 'axios';
-import { InjectKey } from 'vue/types/options';
+import { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { ApiClient } from '~app/core/api/client';
 import { createUrl } from '~app/shared/helpers/url';
 import { AuthToken, importAuthToken, TokenStorage } from '../model';
 
-const LOGIN_PATH = '/signin.html';
+const LOGIN_PATH = '/session/sign-in';
 
-export const AuthInjectKey: InjectKey = 'authService';
+export const AuthInjectKey: string = 'authService';
 
 export class AuthService {
   private token: Promise<AuthToken | null> | undefined;
 
   private tokenRefreshRequest: Promise<void> | undefined;
 
-  constructor(private storage: TokenStorage, private api: ApiClient) {
-    console.log('AuthService fn - constructor');
-  }
+  constructor(
+    private storage: TokenStorage,
+    private api: ApiClient
+  ) {}
 
   get loginUrl(): string {
     return createUrl(window.location.host, LOGIN_PATH);
@@ -34,7 +34,7 @@ export class AuthService {
         this.api.interceptors.request.use((request) => this.tokenHeaderInterceptor(request));
         this.api.interceptors.response.use(
           (response) => response,
-          (error) => this.refreshTokenInterceptor(error)
+          (error) => console.log(error)
         );
       }
 
@@ -48,9 +48,7 @@ export class AuthService {
   }
 
   redirectToLogin() {
-    const returnUrl = `?ReturnUrl=${encodeURIComponent(window.location.pathname + window.location.search)}`;
-    window.location.href = this.loginUrl + returnUrl;
-    // router.push({ name: 'create-lesson' });
+    window.location.href = this.loginUrl;
   }
 
   private refreshToken(): Promise<void> {
@@ -74,7 +72,9 @@ export class AuthService {
     });
   }
 
-  private tokenHeaderInterceptor(request: AxiosRequestConfig): Promise<AxiosRequestConfig> {
+  private tokenHeaderInterceptor(
+    request: InternalAxiosRequestConfig
+  ): InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig> {
     if (request.url?.includes('authentication')) {
       return Promise.resolve(request);
     }
@@ -86,13 +86,13 @@ export class AuthService {
   }
 
   private refreshTokenInterceptor(error: AxiosError): Promise<any> {
-    if (error.response?.status === 401 && !error.config.url?.includes('authentication')) {
+    if (error.response?.status === 401 && error.config && !error.config.url?.includes('authentication')) {
       if (!this.tokenRefreshRequest) {
         this.tokenRefreshRequest = this.refreshToken();
       }
 
       return this.tokenRefreshRequest
-        .then(() => this.api.request(error.config))
+        .then(() => this.api.request(error.config!))
         .finally(() => (this.tokenRefreshRequest = undefined));
     }
 

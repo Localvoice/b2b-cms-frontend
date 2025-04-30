@@ -168,26 +168,26 @@ export const voicebotMutations = createMutationMap<typeof mutations, StructureSt
 
 const updateStructureOperation: UpdateStructureOperation = {
   course(state: StructureState, indexes: CourseIndexes, attributeToUpdate: ObjectAttribute) {
-    Vue.set(state.structure.coursesList[indexes.courseIndex], attributeToUpdate.key, attributeToUpdate.value);
+    // Vue.set(state.structure.coursesList[indexes.courseIndex], attributeToUpdate.key, attributeToUpdate.value);
   },
   category(state: StructureState, indexes: CategoryIndexes, attributeToUpdate: ObjectAttribute) {
     if (state.structure.coursesList[indexes.courseIndex].categories![indexes.categoryIndex]) {
-      Vue.set(
-        state.structure.coursesList[indexes.courseIndex].categories![indexes.categoryIndex],
-        attributeToUpdate.key,
-        attributeToUpdate.value
-      );
+      // Vue.set(
+      //   state.structure.coursesList[indexes.courseIndex].categories![indexes.categoryIndex],
+      //   attributeToUpdate.key,
+      //   attributeToUpdate.value
+      // );
     }
   },
   lesson(state: StructureState, indexes: LessonIndexes, attributeToUpdate: ObjectAttribute) {
     if (
       state.structure.coursesList[indexes.courseIndex].categories![indexes.categoryIndex].list![indexes.lessonIndex]
     ) {
-      Vue.set(
-        state.structure.coursesList[indexes.courseIndex].categories![indexes.categoryIndex].list![indexes.lessonIndex],
-        attributeToUpdate.key,
-        attributeToUpdate.value
-      );
+      // Vue.set(
+      //   state.structure.coursesList[indexes.courseIndex].categories![indexes.categoryIndex].list![indexes.lessonIndex],
+      //   attributeToUpdate.key,
+      //   attributeToUpdate.value
+      // );
     }
   }
 };

@@ -11,15 +11,15 @@
     @ok="onSubmit"
   >
     <password-form-wrapper v-slot="{ form }" ref="form" autocomplete="off" novalidate @success="onSuccess">
-      <b-alert v-t="'Your password has expired and must be changed.'" variant="info" :show="force"></b-alert>
+      <b-alert v-t="'Your password has expired and must be changed.'" variant="info" :show="force" />
 
-      <password-form :form="form"></password-form>
+      <password-form :form="form" />
 
       <button type="submit" class="d-none"></button>
     </password-form-wrapper>
 
-    <template v-slot:modal-footer="{ ok, close }">
-      <button v-if="!force" v-t="'Close'" type="button" class="btn btn-sm btn-secondary" @click="close"></button>
+    <template #modal-footer="{ ok, close }">
+      <button v-if="!force" v-t="'Close'" type="button" class="btn btn-sm btn-secondary" @click="close" />
       <button type="submit" class="btn btn-sm btn-primary" @click="ok">
         <i class="fa fa-check"></i>
         {{ $t('Update') }}
@@ -28,50 +28,38 @@
   </b-modal>
 </template>
 
-<script lang="ts">
-import { BAlert, BModal } from 'bootstrap-vue/src';
-import Vue from 'vue';
-import { i18n } from '~app/core/i18n/i18n';
-import { store } from '~app/core/store';
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { BModal, BAlert } from 'bootstrap-vue-3';
+import PasswordFormWrapper, { VPasswordFormWrapper } from './wrapper.vue';
 import PasswordForm from './form.vue';
-import PasswordFormWrapper, { VPasswordFormWrapper } from './wrapper';
 
-export default Vue.extend({
-  i18n,
-  store,
-  components: {
-    PasswordFormWrapper,
-    PasswordForm
-  },
-  props: {
-    force: { type: Boolean, default: false }
-  },
-  computed: {
-    modal(): BModal {
-      return this.$refs.modal as BModal;
-    },
-    form(): VPasswordFormWrapper {
-      return this.$refs.form as VPasswordFormWrapper;
-    }
-  },
-  mounted() {
-    this.modal.show();
-  },
-  methods: {
-    onSubmit(e: Event) {
-      e.preventDefault();
-      this.form.onSubmit();
-    },
+const { t } = useI18n();
 
-    reset(e: Event) {
-      if (!e.defaultPrevented) {
-        this.form.reset();
-      }
-    },
+const props = defineProps<{
+  force?: boolean;
+}>();
 
-    onSuccess() {
-      this.modal.hide();
-    }
+const modal = ref<InstanceType<typeof BModal>>();
+const form = ref<VPasswordFormWrapper>();
+
+function onSubmit(e: Event) {
+  e.preventDefault();
+  form.value?.onSubmit();
+}
+
+function reset(e: Event) {
+  if (!e.defaultPrevented) {
+    form.value?.reset();
   }
+}
+
+function onSuccess() {
+  modal.value?.hide();
+}
+
+onMounted(() => {
+  modal.value?.show();
 });
 </script>

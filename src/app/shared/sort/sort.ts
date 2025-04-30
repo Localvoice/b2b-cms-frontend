@@ -1,9 +1,12 @@
-import { Dictionary } from 'vue-router/types/router';
+type Dictionary<T = any> = Record<string, T>;
 
 export type SortDirection = 'asc' | 'desc';
 
 export class Sort {
-  constructor(public active?: string, public direction?: SortDirection) {
+  constructor(
+    public active?: string,
+    public direction?: SortDirection
+  ) {
     if (!direction) {
       this.direction = 'asc';
     }

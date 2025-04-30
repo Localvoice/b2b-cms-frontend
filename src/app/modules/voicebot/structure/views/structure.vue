@@ -45,204 +45,166 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { mapGetters, mapActions } from 'vuex';
-import { layoutGetters } from '~app/layout/store';
-import { loadingActions, loadingGetters } from '~app/modules/loading';
-import FixedButton from '~app/shared/fixedButton/fixedButton.vue';
-import { FormGroup } from '~app/shared/form';
-import { areExampleCorrect, fillUpValidationForm, deleteValidationFields } from '~app/shared/validation';
-import { router } from '~app/core/router';
+import { defineComponent, ref, computed, watch, onMounted } from 'vue';
+import { useStore } from 'vuex';
 import { translate } from '~app/core/i18n/i18n';
 import { coerceArray } from '~app/shared/helpers/coerce';
 import { objectKeys } from '~app/shared/helpers/lang';
-import { StructureValidationForm, VoicebotButtonsText, ValidationForm, ValidationTarget } from '~app/shared/types';
-import { voicebotActions, voicebotGetters } from '../store';
-import CategoryGroup from '../components/CategoryGroup.vue';
-import CourseCarousel from '../components/CourseCarousel.vue';
+import { StructureValidationForm, VoicebotButtonsText, ValidationTarget, ValidationForm } from '~app/shared/types';
 import { CourseStructureModel } from '../models/courseStructure';
 
-export default Vue.extend({
-  metaInfo: {
-    title: 'Table One'
-  },
-  components: {
-    CategoryGroup,
-    CourseCarousel,
-    FixedButton
-  },
-  data() {
-    return {
-      courseIndex: 0,
-      validated: false,
-      validationForm: {} as StructureValidationForm<CourseStructureModel>,
-      buttonsText: {
-        save: translate('save'),
-        test: translate('buttons.addStructureToTest'),
-        production: translate('buttons.addStructureToProd')
-      } as VoicebotButtonsText
-    };
-  },
-  computed: {
-    ...mapGetters({
-      layoutState: layoutGetters.getState,
-      courses: voicebotGetters.getStructure,
-      loadingStatus: loadingGetters.getStructureLoadingStatus
-    })
-  },
-  watch: {
-    courseIndex: {
-      immediate: true,
-      handler(courseIndex: string) {
-        let id: FormGroup<CourseStructureModel>;
-        objectKeys(this.validationForm).forEach((course) => {
-          objectKeys(this.validationForm[course]).forEach((target) => {
-            objectKeys(this.validationForm[course][target]).forEach((form) => {
-              id = this.validationForm[course][target][form] as FormGroup<CourseStructureModel>;
-              id.clearErrors();
-            });
+export default defineComponent({
+  setup() {
+    const store = useStore();
+
+    // Reactive data
+    const courseIndex = ref(0);
+    const validated = ref(false);
+    const validationForm = ref<StructureValidationForm<CourseStructureModel>>({});
+    const buttonsText = ref<VoicebotButtonsText>({
+      save: translate('save'),
+      test: translate('buttons.addStructureToTest'),
+      production: translate('buttons.addStructureToProd')
+    });
+
+    // Computed properties
+    const courses = computed(() => store.getters['voicebot/getStructure']);
+    const loadingStatus = computed(() => store.getters['loading/getStructureLoadingStatus']);
+
+    // Watchers
+    watch(courseIndex, (newCourseIndex) => {
+      let id: any;
+      objectKeys(validationForm.value).forEach((course) => {
+        objectKeys(validationForm.value[course]).forEach((target) => {
+          objectKeys(validationForm.value[course][target]).forEach((form) => {
+            id = validationForm.value[course][target][form] as any;
+            id.clearErrors();
           });
         });
-        this.validationForm = {} as StructureValidationForm<CourseStructureModel>;
-        this.validationForm[courseIndex] = {} as ValidationForm<CourseStructureModel>;
-        [ValidationTarget.SAVE, ValidationTarget.TEST].forEach((target) => {
-          this.validationForm[courseIndex][target] = {};
-        });
-      }
-    }
-  },
-  methods: {
-    ...mapActions({
-      linkCurrentCourseCategoriesAndLessons: voicebotActions.linkCurrentCourseCategoriesAndLessons,
-      updateStructure: voicebotActions.updateStructure,
-      savePicture: voicebotActions.savePicture,
-      addLesson: voicebotActions.addLesson,
-      insertLesson: voicebotActions.insertLesson,
-      removeLesson: voicebotActions.removeLesson,
-      insertCategory: voicebotActions.insertCategory,
-      removeCategory: voicebotActions.removeCategory,
-      addCategory: voicebotActions.addCategory,
-      addCourse: voicebotActions.addCourse,
-      removeCourse: voicebotActions.removeCourse,
-      removePicture: voicebotActions.removePicture,
-      setLoadingStatus: loadingActions.addVoicebotStructureLoadingStatus
-    }),
-    comprehensivelyRemoveCategory(data: { courseIndex: number; categoryIndex: number; validationIds: string[] }) {
-      deleteValidationFields({
-        validationIds: coerceArray(data.validationIds),
-        validationForm: this.validationForm[this.courseIndex]
       });
-      this.removeCategory({ courseIndex: data.courseIndex, categoryIndex: data.categoryIndex });
-    },
-    comprehensivelyRemoveLesson(data: {
+      validationForm.value = {} as StructureValidationForm<CourseStructureModel>;
+      validationForm.value[courseIndex.value] = {} as ValidationForm<CourseStructureModel>;
+      [ValidationTarget.SAVE, ValidationTarget.TEST].forEach((target) => {
+        validationForm.value[courseIndex.value][target] = {};
+      });
+    });
+
+    // Methods
+    // const linkCurrentCourseCategoriesAndLessons = store.dispatch.bind(
+    //   store,
+    //   'voicebot/linkCurrentCourseCategoriesAndLessons'
+    // );
+    // const updateStructure = store.dispatch.bind(store, 'voicebot/updateStructure');
+    // const savePicture = store.dispatch.bind(store, 'voicebot/savePicture');
+    // const addLesson = store.dispatch.bind(store, 'voicebot/addLesson');
+    // const insertLesson = store.dispatch.bind(store, 'voicebot/insertLesson');
+    // const removeLesson = store.dispatch.bind(store, 'voicebot/removeLesson');
+    // const insertCategory = store.dispatch.bind(store, 'voicebot/insertCategory');
+    // const removeCategory = store.dispatch.bind(store, 'voicebot/removeCategory');
+    // const addCategory = store.dispatch.bind(store, 'voicebot/addCategory');
+    // const addCourse = store.dispatch.bind(store, 'voicebot/addCourse');
+    // const removeCourse = store.dispatch.bind(store, 'voicebot/removeCourse');
+    // const removePicture = store.dispatch.bind(store, 'voicebot/removePicture');
+    // const setLoadingStatus = store.dispatch.bind(store, 'loading/addVoicebotStructureLoadingStatus');
+
+    // Methods (converted from methods)
+    const comprehensivelyRemoveCategory = (data: {
+      courseIndex: number;
+      categoryIndex: number;
+      validationIds: string[];
+    }) => {
+      // deleteValidationFields({
+      //   validationIds: coerceArray(data.validationIds),
+      //   validationForm: validationForm.value[courseIndex.value]
+      // });
+      // removeCategory({ courseIndex: data.courseIndex, categoryIndex: data.categoryIndex });
+    };
+
+    const comprehensivelyRemoveLesson = (data: {
       courseIndex: number;
       categoryIndex: number;
       lessonIndex: number;
       validationId: string;
-    }) {
-      deleteValidationFields({
-        validationIds: coerceArray(data.validationId),
-        validationForm: this.validationForm[this.courseIndex]
-      });
-      this.removeLesson({
-        courseIndex: data.courseIndex,
-        categoryIndex: data.categoryIndex,
-        lessonIndex: data.lessonIndex
-      });
-    },
-    changeCourseIndex(courseIndex: number) {
-      this.courseIndex = courseIndex;
-    },
-    saveCourseStructure() {
-      console.log(
-        'areExampleCorrect',
-        areExampleCorrect({ validationForm: this.validationForm[this.courseIndex], target: ValidationTarget.SAVE })
-      );
-    },
-    addCourseStructureToTestingEnvironment() {
-      const result = areExampleCorrect({
-        validationForm: this.validationForm[this.courseIndex],
-        target: ValidationTarget.TEST
-      });
-      console.log('result', result);
-      if (!result.isCorrect)
-        // router.app.$toast.success(
-        //   `Before you add course structure to testing environment you have to: ${result.errorMessages}`
-        // );
-        router.app.$toast.success(this.$t('message.hello'));
-      else console.log('jest ok!!');
-      this.linkCurrentCourseCategoriesAndLessons(this.courseIndex);
-    },
-    validation(validation: {
-      courseIndex: number;
-      id: string;
-      data: FormGroup<CourseStructureModel>;
-      targets: ValidationTarget[];
-    }) {
-      if (!this.validationForm[validation.courseIndex])
-        this.validationForm[validation.courseIndex] = {} as ValidationForm<CourseStructureModel>;
-      const validationForm = this.validationForm[validation.courseIndex];
+    }) => {
+      // deleteValidationFields({
+      //   validationIds: coerceArray(data.validationId),
+      //   validationForm: validationForm.value[courseIndex.value]
+      // });
+      // removeLesson({
+      //   courseIndex: data.courseIndex,
+      //   categoryIndex: data.categoryIndex,
+      //   lessonIndex: data.lessonIndex
+      // });
+    };
 
-      fillUpValidationForm({
-        id: validation.id,
-        targets: validation.targets,
-        validationForm,
-        data: validation.data
-      });
-    }
+    const changeCourseIndex = (index: number) => {
+      courseIndex.value = index;
+    };
+
+    const saveCourseStructure = () => {
+      console.log(
+        'areExampleCorrect'
+        // areExampleCorrect({ validationForm: validationForm.value[courseIndex.value], target: ValidationTarget.SAVE })
+      );
+    };
+
+    const addCourseStructureToTestingEnvironment = () => {
+      // const result = areExampleCorrect({
+      //   validationForm: validationForm.value[courseIndex.value],
+      //   target: ValidationTarget.TEST
+      // });
+      // console.log('result', result);
+      // if (!result.isCorrect) {
+      //   router.app.$toast.success(this.$t('message.hello'));
+      // } else {
+      //   console.log('jest ok!!');
+      // }
+      // linkCurrentCourseCategoriesAndLessons(courseIndex.value);
+    };
+
+    const validation = (validation: { courseIndex: number; id: string; data: any; targets: ValidationTarget[] }) => {
+      if (!validationForm.value[validation.courseIndex]) {
+        validationForm.value[validation.courseIndex] = {} as ValidationForm<CourseStructureModel>;
+      }
+      const validationFormData = validationForm.value[validation.courseIndex];
+
+      // fillUpValidationForm({
+      //   id: validation.id,
+      //   targets: validation.targets,
+      //   validationForm: validationFormData,
+      //   data: validation.data
+      // });
+    };
+
+    return {
+      courseIndex,
+      validated,
+      validationForm,
+      buttonsText,
+      courses,
+      loadingStatus,
+      saveCourseStructure,
+      addCourseStructureToTestingEnvironment,
+      validation,
+      comprehensivelyRemoveCategory,
+      comprehensivelyRemoveLesson,
+      changeCourseIndex
+      // savePicture,
+      // removePicture,
+      // updateStructure,
+      // addCourse,
+      // removeCourse,
+      // addLesson,
+      // insertLesson,
+      // removeLesson,
+      // insertCategory,
+      // removeCategory,
+      // addCategory
+    };
   }
 });
-
-// function areExampleCorrect<T>(form: ValidationForm<T>, target: ValidationTarget): boolean {
-//   const lessons = form[target];
-//   let id: FormGroup<T>;
-//   let isAnyError = false;
-//   objectKeys(lessons).forEach((key) => {
-//     id = lessons[key];
-//     id.validate();
-//     if (id.isAnyError) isAnyError = true;
-//   });
-//   return !isAnyError;
-// }
 </script>
 
-<style scope>
-.course-counter {
-  z-index: 1;
-}
-
-.slide-card {
-  padding: 10px;
-}
-
-.myFlex {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.slide-square {
-  height: 315px;
-  margin-left: 20px;
-  border-left: 1px dashed #339ef3;
-  margin-top: -312px;
-}
-
-.v-slide-group__next {
-  align-items: flex-start !important;
-}
-
-.v-slide-group__prev {
-  align-items: flex-start !important;
-}
-
-.mySquare2 {
-  height: 300px;
-  position: absolute;
-  width: 200px;
-  margin-top: 100px !important;
-  margin-left: 31px;
-  border-left: 1px dashed #339ef3;
-  top: 534px;
-}
+<style scoped>
+/* Add your styles here */
 </style>

@@ -1,340 +1,152 @@
-<template>
-  <v-col cols="12">
-    <base-card>
-      <v-card-title>
-        <div v-if="isLessonFetched" class="d-flex justify-space-between flex-wrap">
-          <v-btn class="ma-2" dark color="success" @click="$emit('createNewLesson')">
-            <v-icon>mdi-plus</v-icon>
-            {{ $t('buttons.createLesson') }}
-          </v-btn>
-        </div>
-        <div v-else class="d-flex justify-space-between flex-wrap">
-          <v-btn class="ma-2" dark color="success">
-            <router-link
-              :to="{
-                name: 'list-of-lessons'
-              }"
-              style="text-decoration: none; color: inherit"
-            >
-              <v-icon>mdi-pencil</v-icon>
-              {{ $t('buttons.editLesson') }}
-            </router-link>
-          </v-btn>
-        </div>
-        <fixed-button
-          :save-fn="saveFn"
-          :test-fn="testFn"
-          :prod-fn="prodFn"
-          :buttons-text="buttonsText"
-          :is-fixed-button="false"
-        ></fixed-button>
-      </v-card-title>
-      <v-card-title>Stwórz lekcję dla swoich podopiecznych</v-card-title>
-      <v-card-text>
-        <form-control-state v-slot:default="{ message }" :errors="basicInfoForm.errors.selectedCourseName">
-          <v-select
-            v-model="selectedCourseName"
-            :error-messages="message"
-            :items="courseNames"
-            :label="$t('labels.courseName')"
-            @change="changeCourseSelectField($event)"
-          />
-        </form-control-state>
-        <form-control-state v-slot:default="{ message }" :errors="basicInfoForm.errors.selectedCategoryName">
-          <v-select
-            v-model="selectedCategoryName"
-            :error-messages="message"
-            :items="categoryNames"
-            :label="$t('labels.categoryName')"
-            @change="changeCategorySelectField($event)"
-          />
-        </form-control-state>
-        <form-control-state v-slot:default="{ message }" :errors="basicInfoForm.errors.selectedLessonName">
-          <v-select
-            v-model="selectedLessonName"
-            :error-messages="message"
-            :items="lessonNames"
-            :label="$t('labels.lessonName')"
-            @change="changeLessonSelectField($event)"
-          />
-        </form-control-state>
-        <form-control-state v-slot:default="{ message }" :errors="lessonDescriptionForm.errors.lessonDescription">
-          <v-textarea
-            flat
-            :error-messages="message"
-            :value="lessonDescription"
-            clear-icon
-            hint="To musi być wyrażenie składające się z kilku słów"
-            :label="$t('labels.lessonDescription')"
-            @input="$emit('updateLessonDescription', $event)"
-          />
-        </form-control-state>
-        <form-control-state
-          v-slot:default="{ message }"
-          :errors="lessonDescriptionForm.errors.translatedLessonDescription"
-        >
-          <v-textarea
-            flat
-            :error-messages="message"
-            :value="translatedLessonDescription"
-            clear-icon
-            hint="To musi być wyrażenie składające się z kilku słów"
-            :label="$t('labels.translatedLessonDescription')"
-            @input="$emit('updateTranslatedLessonDescription', $event)"
-          />
-        </form-control-state>
-      </v-card-text>
-    </base-card>
-  </v-col>
-</template>
-
-<script lang="ts">
-import Vue, { PropType } from 'vue';
-import { mapGetters } from 'vuex';
-import FixedButton from '~app/shared/fixedButton/fixedButton.vue';
+<script lang="ts" setup>
+import { ref, watch, computed } from 'vue';
+import { useStore } from 'vuex';
+import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
+import { objectKeys } from '~app/shared/helpers/lang';
 import { FormControlState } from '~app/shared/form';
+import FixedButton from '~app/shared/fixedButton/fixedButton.vue';
 import { emitValidation } from '~app/shared/validation';
 import { voicebotGetters } from '~app/modules/voicebot/structure/store';
-import { objectKeys } from '~app/shared/helpers/lang';
 import { VoicebotButtonsText, ValidationTarget } from '~app/shared/types';
 import { createBasicInfoForm, createLessonDescriptionForm } from '../validation/forms';
 import { LessonBasicInformation, LessonDescription } from '../types';
 
-export default Vue.extend({
-  components: {
-    FormControlState,
-    FixedButton
+// Props
+const props = defineProps<{
+  isLessonFetched: boolean;
+  courseNameOnEdit: string[];
+  categoryNameOnEdit: string[];
+  lessonNameOnEdit: string[];
+  lessonDescription: string;
+  translatedLessonDescription: string;
+  selectedFieldsValidationId: string;
+  descriptionFieldsValidationId: string;
+  numberOfSentences: number;
+  saveFn: () => void;
+  testFn: () => void;
+  prodFn: () => void;
+  buttonsText: VoicebotButtonsText;
+}>();
+
+const emit = defineEmits<{
+  (e: 'createNewLesson'): void;
+  (e: 'courseField', selectedCourseName: string): void;
+  (e: 'categoryField', selectedCategoryName: string): void;
+  (e: 'lessonField', selectedLessonName: string): void;
+  (e: 'updateLessonDescription', value: string): void;
+  (e: 'updateTranslatedLessonDescription', value: string): void;
+}>();
+
+// Store
+const store = useStore();
+
+// Data
+const basicInfoForm = createBasicInfoForm();
+const lessonDescriptionForm = createLessonDescriptionForm();
+
+const courseNames = ref<string[]>([]);
+const selectedCourseName = ref('');
+const categoryNames = ref<string[]>([]);
+const selectedCategoryName = ref('');
+const lessonNames = ref<string[]>([]);
+const selectedLessonName = ref('');
+
+// Computed
+const linkedCoursesCategoriesAndLessons = computed(() =>
+  voicebotGetters.getLinkedCoursesCategoriesAndLessons(store.state)
+);
+
+// Helpers
+function getCourseNames() {
+  return objectKeys(linkedCoursesCategoriesAndLessons.value);
+}
+
+// Watchers
+
+watch(
+  () => [selectedCourseName.value, selectedCategoryName.value, selectedLessonName.value],
+  () => {
+    emitValidation<LessonBasicInformation>(
+      {
+        selectedCourseName: selectedCourseName.value,
+        selectedCategoryName: selectedCategoryName.value,
+        selectedLessonName: selectedLessonName.value
+      },
+      {
+        form: basicInfoForm,
+        instance: null,
+        validationId: props.selectedFieldsValidationId,
+        targets: [ValidationTarget.SAVE, ValidationTarget.TEST]
+      }
+    );
   },
-  props: {
-    isLessonFetched: {
-      type: Boolean
-    },
-    courseNameOnEdit: {
-      type: Array as PropType<string[]>,
-      default: () => []
-    },
-    categoryNameOnEdit: {
-      type: Array as PropType<string[]>,
-      default: () => []
-    },
-    lessonNameOnEdit: {
-      type: Array as PropType<string[]>,
-      default: () => []
-    },
-    lessonDescription: {
-      type: String,
-      default: () => ''
-    },
-    translatedLessonDescription: {
-      type: String,
-      default: () => ''
-    },
-    selectedFieldsValidationId: {
-      type: String,
-      default: () => ''
-    },
-    descriptionFieldsValidationId: {
-      type: String,
-      default: () => ''
-    },
-    numberOfSentences: {
-      type: Number,
-      default: 0
-    },
-    saveFn: {
-      type: Function,
-      default: () => ''
-    },
-    testFn: {
-      type: Function,
-      default: () => ''
-    },
-    prodFn: {
-      type: Function,
-      default: () => ''
-    },
-    buttonsText: {
-      type: Object as PropType<VoicebotButtonsText>,
-      default: () => ({
-        save: '',
-        test: '',
-        production: ''
-      })
+  { immediate: true }
+);
+
+watch(
+  () => [props.lessonDescription, props.translatedLessonDescription, props.numberOfSentences],
+  () => {
+    emitValidation<LessonDescription>(
+      {
+        lessonDescription: props.lessonDescription,
+        translatedLessonDescription: props.translatedLessonDescription,
+        numberOfSentences: props.numberOfSentences
+      },
+      {
+        form: lessonDescriptionForm,
+        instance: null,
+        validationId: props.descriptionFieldsValidationId,
+        targets: [ValidationTarget.TEST]
+      }
+    );
+  },
+  { immediate: true }
+);
+
+watch(
+  () => props.isLessonFetched,
+  (isLessonFetched) => {
+    if (isLessonFetched) {
+      courseNames.value = props.courseNameOnEdit;
+      selectedCourseName.value = props.courseNameOnEdit[0] || '';
+      categoryNames.value = props.categoryNameOnEdit;
+      selectedCategoryName.value = props.categoryNameOnEdit[0] || '';
+      lessonNames.value = props.lessonNameOnEdit;
+      selectedLessonName.value = props.lessonNameOnEdit[0] || '';
+    } else {
+      courseNames.value = getCourseNames();
+      selectedCourseName.value = '';
+      selectedCategoryName.value = '';
+      selectedLessonName.value = '';
+      categoryNames.value = [];
+      lessonNames.value = [];
     }
   },
-  data: () => {
-    const basicInfoForm = createBasicInfoForm();
-    const lessonDescriptionForm = createLessonDescriptionForm();
-    return {
-      courseNames: [] as string[],
-      selectedCourseName: '',
-      categoryNames: [] as string[],
-      selectedCategoryName: '',
-      lessonNames: [] as string[],
-      selectedLessonName: '',
-      basicInfoForm,
-      lessonDescriptionForm
-    };
-  },
-  computed: {
-    ...mapGetters({
-      linkedCoursesCategoriesAndLessons: voicebotGetters.getLinkedCoursesCategoriesAndLessons
-    })
-  },
-  watch: {
-    lessonDescription: {
-      immediate: true,
-      handler(lessonDescription) {
-        console.log('lessonDescription watcher', lessonDescription);
-        emitValidation<LessonDescription>(
-          {
-            lessonDescription,
-            translatedLessonDescription: this.translatedLessonDescription,
-            numberOfSentences: this.numberOfSentences
-          },
-          {
-            form: this.lessonDescriptionForm,
-            instance: this,
-            validationId: this.descriptionFieldsValidationId,
-            targets: [ValidationTarget.TEST]
-          }
-        );
-      }
-    },
-    translatedLessonDescription: {
-      immediate: true,
-      handler(translatedLessonDescription) {
-        emitValidation<LessonDescription>(
-          {
-            lessonDescription: this.lessonDescription,
-            translatedLessonDescription,
-            numberOfSentences: this.numberOfSentences
-          },
-          {
-            form: this.lessonDescriptionForm,
-            instance: this,
-            validationId: this.descriptionFieldsValidationId,
-            targets: [ValidationTarget.TEST]
-          }
-        );
-      }
-    },
-    numberOfSentences: {
-      immediate: true,
-      handler(numberOfSentences) {
-        emitValidation<LessonDescription>(
-          {
-            lessonDescription: this.lessonDescription,
-            translatedLessonDescription: this.translatedLessonDescription,
-            numberOfSentences
-          },
-          {
-            form: this.lessonDescriptionForm,
-            instance: this,
-            validationId: this.descriptionFieldsValidationId,
-            targets: [ValidationTarget.TEST]
-          }
-        );
-      }
-    },
-    isLessonFetched: {
-      immediate: true,
-      handler(isLessonFetched) {
-        if (isLessonFetched) {
-          this.courseNames = this.courseNameOnEdit;
-          this.selectedCourseName = this.courseNameOnEdit[0];
-          this.categoryNames = this.categoryNameOnEdit;
-          this.selectedCategoryName = this.categoryNameOnEdit[0];
-          this.lessonNames = this.lessonNameOnEdit;
-          this.selectedLessonName = this.lessonNameOnEdit[0];
-        } else {
-          this.courseNames = this.getCourseNames();
-          this.selectedCourseName = '';
-          this.selectedCategoryName = '';
-          this.selectedLessonName = '';
-          this.categoryNames = [];
-          this.lessonNames = [];
-        }
-      }
-    },
-    selectedCourseName: {
-      immediate: true,
-      handler(selectedCourseName) {
-        console.log('selectedCourseName watcher', selectedCourseName);
-        emitValidation<LessonBasicInformation>(
-          {
-            selectedCourseName,
-            selectedCategoryName: this.selectedCategoryName,
-            selectedLessonName: this.selectedLessonName
-          },
-          {
-            form: this.basicInfoForm,
-            instance: this,
-            validationId: this.selectedFieldsValidationId,
-            targets: [ValidationTarget.SAVE, ValidationTarget.TEST]
-          }
-        );
-      }
-    },
-    selectedCategoryName: {
-      immediate: true,
-      handler(selectedCategoryName) {
-        console.log('selectedCategoryName watcher', selectedCategoryName);
-        emitValidation<LessonBasicInformation>(
-          {
-            selectedCourseName: this.selectedCourseName,
-            selectedCategoryName,
-            selectedLessonName: this.selectedLessonName
-          },
-          {
-            form: this.basicInfoForm,
-            instance: this,
-            validationId: this.selectedFieldsValidationId,
-            targets: [ValidationTarget.SAVE, ValidationTarget.TEST]
-          }
-        );
-      }
-    },
-    selectedLessonName: {
-      immediate: true,
-      handler(selectedLessonName) {
-        console.log('selectedLessonName watcher', selectedLessonName);
-        emitValidation<LessonBasicInformation>(
-          {
-            selectedCourseName: this.selectedCourseName,
-            selectedCategoryName: this.selectedCategoryName,
-            selectedLessonName
-          },
-          {
-            form: this.basicInfoForm,
-            instance: this,
-            validationId: this.selectedFieldsValidationId,
-            targets: [ValidationTarget.SAVE, ValidationTarget.TEST]
-          }
-        );
-      }
-    }
-  },
-  methods: {
-    getCourseNames(): any {
-      return objectKeys(this.linkedCoursesCategoriesAndLessons);
-    },
-    changeCourseSelectField(selectedCourseName: string) {
-      const structure = this.linkedCoursesCategoriesAndLessons;
-      this.selectedCourseName = selectedCourseName;
-      this.$emit('courseField', selectedCourseName);
-      this.categoryNames = objectKeys(structure[selectedCourseName]) as string[];
-    },
-    changeCategorySelectField(selectedCategoryName: string) {
-      const structure = this.linkedCoursesCategoriesAndLessons;
-      this.selectedCategoryName = selectedCategoryName;
-      this.$emit('categoryField', selectedCategoryName);
-      this.lessonNames = structure[this.selectedCourseName][this.selectedCategoryName];
-    },
-    changeLessonSelectField(selectedLessonName: string) {
-      this.selectedLessonName = selectedLessonName;
-      this.$emit('lessonField', selectedLessonName);
-    }
-  }
-});
+  { immediate: true }
+);
+
+// Methods
+
+function changeCourseSelectField(course: string) {
+  selectedCourseName.value = course;
+  emit('courseField', course);
+  const structure = linkedCoursesCategoriesAndLessons.value;
+  categoryNames.value = objectKeys(structure[course]) || [];
+  selectedCategoryName.value = '';
+  lessonNames.value = [];
+}
+
+function changeCategorySelectField(category: string) {
+  selectedCategoryName.value = category;
+  emit('categoryField', category);
+  const structure = linkedCoursesCategoriesAndLessons.value;
+  lessonNames.value = structure[selectedCourseName.value]?.[category] || [];
+  selectedLessonName.value = '';
+}
+
+function changeLessonSelectField(lesson: string) {
+  selectedLessonName.value = lesson;
+  emit('lessonField', lesson);
+}
 </script>

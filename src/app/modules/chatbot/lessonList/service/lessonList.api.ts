@@ -18,11 +18,11 @@ const lessonListApi = {
     return api
       .delete('/api/voicebot/lesson', { params })
       .then(() => {
-        router.app.$toast.success('Lesson has been successfully deleted');
+        // router.app.$toast.success('Lesson has been successfully deleted');
       })
       .catch((errorMessage) => {
         console.log('errorMessage', errorMessage);
-        router.app.$toast.success('There was a problem to delete the lesson');
+        // router.app.$toast.success('There was a problem to delete the lesson');
       });
   }
 };

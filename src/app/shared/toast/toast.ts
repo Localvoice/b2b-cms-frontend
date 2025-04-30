@@ -17,13 +17,9 @@ export const SysToastFactory = (): SysToast => {
     if (toastContainer) {
       toastContainer.appendChild(mountNode);
 
-      const toastApp = createApp(ToastComponent, {
-        message,
-        color: options.color
-      });
+      // const toastApp = createApp(ToastComponent);
 
-      // Optional: clean up after component unmounts
-      toastApp.mount(mountNode);
+      // toastApp.mount(mountNode);
     }
   };
 

@@ -26,7 +26,7 @@ const options: I18nOptions = {
 export const i18n = createI18n(options);
 
 function updateLanguage(lang: string): string | null {
-  i18n.global.locale.value = lang;
+  i18n.global.locale = lang;
   const html = document.querySelector('html');
   if (!html) return null;
   html.setAttribute('lang', lang.substring(0, 2));
@@ -37,7 +37,7 @@ const loadedLanguages: string[] = [];
 
 export function setLanguage(lang: string): Promise<string | null> {
   if (!lang || !languageExist(lang)) {
-    return Promise.resolve(i18n.global.locale.value);
+    return Promise.resolve(i18n.global.locale);
   }
 
   if (loadedLanguages.includes(lang)) {
@@ -52,7 +52,7 @@ export function setLanguage(lang: string): Promise<string | null> {
 }
 
 export const translate = (key: string, arg?: Record<string, unknown>): string => {
-  if (!key) return '';
+  if (!key || !arg) return '';
   return i18n.global.t(key, arg);
 };
 

@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import VueI18n from 'vue-i18n';
-import { CombinedVueInstance } from 'vue/types/vue';
+import { ComponentPublicInstance } from 'vue';
 import { FormGroup } from '../form/group';
 import { objectKeys } from '../helpers/lang';
 import { ValidationForm, ValidationTarget } from '../types';
@@ -61,7 +61,7 @@ export function emitValidation<T = any>(
     targets
   }: {
     form: FormGroup<T>;
-    instance: CombinedVueInstance<Vue, any, any, any, any>;
+    instance: ComponentPublicInstance<any, any, any, any, any>;
     validationId: string;
     targets: ValidationTarget[];
   }

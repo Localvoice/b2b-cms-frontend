@@ -1,7 +1,6 @@
 import { App } from 'vue';
 import { Store } from 'vuex';
 import { api } from '../api/client';
-import { FeatureDirective } from './features';
 import { configActions, configGetters, configStore, NAMESPACE } from './store';
 import { Config } from './types';
 
@@ -29,9 +28,6 @@ export const ConfigPluginFactory = ({ store }: AppConfigPluginOptions): AppConfi
 
     // Add $config to global properties
     app.config.globalProperties.$config = store.getters[configGetters.getState];
-
-    // Register the directive globally
-    app.directive('feature', FeatureDirective);
   },
 
   async init() {

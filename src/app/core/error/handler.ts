@@ -1,6 +1,6 @@
-import { AxiosError } from 'axios';
-import Vue from 'vue';
+import { AxiosError, AxiosResponse } from 'axios';
 import { AppError } from './app-error';
+import { ComponentPublicInstance } from 'vue';
 
 function isHttpError(error: any): boolean {
   return error?.isAxiosError;
@@ -10,10 +10,10 @@ function convertHttpError(error: AxiosError): AppError {
   const { response } = error;
 
   if (!response) {
-    return new AppError(error.message, `${error.config.method!.toUpperCase()} ${error.config.url}`);
+    return new AppError(error.message, `${error.config!.method!.toUpperCase()} ${error.config!.url}`);
   }
 
-  const data = response.data || {};
+  const data: Record<any, any> = response.data || {};
 
   const name = `HTTP ${response.status} ${response.statusText}`;
   let message = data.message || data.title;
@@ -27,7 +27,7 @@ function convertHttpError(error: AxiosError): AppError {
   return new AppError(name, message, response.status);
 }
 
-export function errorHandler(error: Error, vm: Vue): void {
+export function errorHandler(error: any, vm: any): void {
   let appError: AppError;
   if (isHttpError(error)) {
     appError = convertHttpError(error as AxiosError);
@@ -36,6 +36,6 @@ export function errorHandler(error: Error, vm: Vue): void {
   }
   // TODO
   // missing part of code
-  vm.$loading.resolveAll();
+  // vm.$loading.resolveAll();
   console.error(error); // eslint-disable-line no-console
 }

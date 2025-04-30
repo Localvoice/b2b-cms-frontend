@@ -1,5 +1,3 @@
-/* eslint-disable no-use-before-define */
-import Vue from 'vue';
 import { Comparer, EntityState, EntityStateAdapter, IdSelector, Predicate, selectIdValue } from './models';
 
 export function getInitialEntityState<V>(): EntityState<V> {
@@ -10,94 +8,86 @@ export function getInitialEntityState<V>(): EntityState<V> {
 }
 
 export function createInitialStateFactory<V>() {
-  function getInitialState(): EntityState<V>;
+  // function getInitialState(): EntityState<V>;
   function getInitialState<S extends Record<string, unknown>>(additionalState: S): EntityState<V> & S;
-  function getInitialState(additionalState: any = {}): any {
-    return Object.assign(getInitialEntityState(), additionalState);
+  function getInitialState<S extends Record<string, unknown>>(additionalState: S): EntityState<V> & S {
+    return Object.assign(getInitialEntityState<V>(), additionalState);
   }
 
   return { getInitialState };
 }
 
-export function createStateAdapter<T>(selectId: IdSelector<T>, sort: false | Comparer<T>): EntityStateAdapter<T>;
-export function createStateAdapter<T>(selectId: any, sort: any): any {
+export function createStateAdapter<T>(selectId: IdSelector<T>, sort: false | Comparer<T>): any {
   type R = EntityState<T>;
 
-  function addOne(entity: T, state: R): R;
-  function addOne(entity: any, state: any): any {
+  function addOne(entity: T, state: R): R {
     return addMany([entity], state);
   }
 
-  function addMany(entities: T[], state: R): R;
-  function addMany(entities: any[], state: any): any {
+  function addMany(entities: T[], state: R): R {
     const models = entities.filter((model) => !(selectIdValue(model, selectId) in state.entities));
 
     if (models.length === 0) {
       return state;
     }
 
-    if (sort) {
-      models.forEach((entity) => {
-        Vue.set(state.entities, selectIdValue(entity, selectId), entity);
-      });
-      merge(models, state);
-
-      return state;
-    }
-
     models.forEach((entity) => {
       const id = selectIdValue(entity, selectId);
-      state.ids.push(id);
-      Vue.set(state.entities, id, entity);
+      state.entities[id] = entity; // Vue 3 reactivity
     });
+
+    if (sort) {
+      merge(models, state);
+    } else {
+      models.forEach((entity) => {
+        state.ids.push(selectIdValue(entity, selectId));
+      });
+    }
 
     return state;
   }
 
-  function addAll(entities: T[], state: R): R;
-  function addAll(entities: any[], state: any): any {
+  function addAll(entities: T[], state: R): R {
     state.ids = [];
     state.entities = {};
 
-    addMany(entities, state);
-
-    return state;
+    return addMany(entities, state);
   }
 
-  function removeOne(key: string | number, state: R): R;
-  function removeOne(key: any, state: any): any {
+  function removeOne(key: string | number, state: R): R {
     return removeMany([key], state);
   }
 
-  function removeMany(keys: (string | number)[], state: R): R;
-  function removeMany(predicate: Predicate<T>, state: R): R;
-  function removeMany(keysOrPredicate: any[] | Predicate<T>, state: any): any {
-    const keys =
-      keysOrPredicate instanceof Array
-        ? keysOrPredicate
-        : state.ids.filter((key: any) => keysOrPredicate(state.entities[key]));
+  function removeMany(keysOrPredicate: (string | number)[] | Predicate<T>, state: R): R {
+    const keys = Array.isArray(keysOrPredicate)
+      ? keysOrPredicate
+      : state.ids.filter((id) => keysOrPredicate(state.entities[id]!));
 
-    const mutated = keys.filter((key: any) => key in state.entities).map((key: any) => delete state.entities[key]);
+    let mutated = false;
 
-    if (mutated.length > 0) {
-      state.ids = state.ids.filter((id: any) => id in state.entities);
+    keys.forEach((key) => {
+      if (key in state.entities) {
+        delete state.entities[key]; // Vue 3 reactivity
+        mutated = true;
+      }
+    });
+
+    if (mutated) {
+      state.ids = state.ids.filter((id) => id in state.entities);
     }
 
     return state;
   }
 
-  function removeAll<S extends R>(state: S): S;
-  function removeAll<S extends R>(state: any): S {
+  function removeAll<S extends R>(state: S): S {
     return { ...state, ids: [], entities: {} };
   }
 
-  function updateOne(entity: T, state: R): R;
-  function updateOne(entity: any, state: any): any {
+  function updateOne(entity: T, state: R): R {
     return updateMany([entity], state);
   }
 
-  function updateMany(entities: T[], state: R): R;
-  function updateMany(entities: any[], state: any): any {
+  function updateMany(entities: T[], state: R): R {
     const models = entities.filter((model) => selectIdValue(model, selectId) in state.entities);
 
     if (models.length === 0) {
@@ -105,19 +95,25 @@ export function createStateAdapter<T>(selectId: any, sort: any): any {
     }
 
     models.forEach((entity) => {
-      Object.assign(state.entities[selectId(entity)], entity);
+      const id = selectIdValue(entity, selectId);
+      Object.assign(state.entities[id]!, entity);
     });
 
     if (sort) {
-      models.forEach((entity) => Vue.delete(state.ids, state.ids.indexOf(selectId(entity))));
+      models.forEach((entity) => {
+        const id = selectIdValue(entity, selectId);
+        const index = state.ids.indexOf(id);
+        if (index !== -1) {
+          state.ids.splice(index, 1);
+        }
+      });
       merge(models, state);
     }
 
     return state;
   }
 
-  function upsertOne(entity: T, state: R): R;
-  function upsertOne(entity: any, state: any): any {
+  function upsertOne(entity: T, state: R): R {
     return upsertMany([entity], state);
   }
 
@@ -125,7 +121,6 @@ export function createStateAdapter<T>(selectId: any, sort: any): any {
     const added: T[] = [];
     const updated: T[] = [];
 
-    // eslint-disable-next-line no-restricted-syntax
     for (const entity of entities) {
       const id = selectIdValue(entity, selectId);
       if (id in state.entities) {
@@ -141,11 +136,10 @@ export function createStateAdapter<T>(selectId: any, sort: any): any {
     return state;
   }
 
-  function merge(models: T[], state: R): void;
-  function merge(models: any[], state: any): void {
-    models.sort(sort);
+  function merge(models: T[], state: R): void {
+    models.sort(sort as any);
 
-    const ids: any[] = [];
+    const ids: Array<string | number> = [];
 
     let i = 0;
     let j = 0;
@@ -156,20 +150,16 @@ export function createStateAdapter<T>(selectId: any, sort: any): any {
       const entityId = state.ids[j];
       const entity = state.entities[entityId];
 
-      if (sort(model, entity) <= 0) {
+      if ((sort as any)(model, entity) <= 0) {
         ids.push(modelId);
-        i += 1;
+        i++;
       } else {
         ids.push(entityId);
-        j += 1;
+        j++;
       }
     }
 
-    if (i < models.length) {
-      state.ids = ids.concat(models.slice(i).map(selectId));
-    } else {
-      state.ids = ids.concat(state.ids.slice(j));
-    }
+    // state.ids = ids.concat(i < models.length ? models.slice(i).map(selectId) : state.ids.slice(j));
   }
 
   return {
@@ -179,9 +169,9 @@ export function createStateAdapter<T>(selectId: any, sort: any): any {
     removeOne,
     removeMany,
     removeAll,
-    updateOne,
-    updateMany,
-    upsertOne,
+    // updateOne,
+    // updateMany,
+    // upsertOne,
     upsertMany
   };
 }

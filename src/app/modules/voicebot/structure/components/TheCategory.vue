@@ -2,7 +2,7 @@
   <base-card class="mr-5">
     <div class="mt-4">
       <v-tooltip top>
-        <template v-slot:activator="{ on }">
+        <template #activator="{ on }">
           <v-btn
             class="mb-4 mr-4"
             color="primary"
@@ -10,7 +10,7 @@
             small
             :disabled="isMaxCategories"
             v-on="on"
-            @click.stop="$emit('insertCategory', { courseIndex, categoryIndex })"
+            @click.stop="insertCategory"
           >
             <v-icon>mdi-plus</v-icon>
           </v-btn>
@@ -18,21 +18,8 @@
         <span>{{ $t('buttons.addCategoryRightAfterThat') }}</span>
       </v-tooltip>
       <v-tooltip top>
-        <template v-slot:activator="{ on }">
-          <v-btn
-            class="mb-4"
-            color="warning"
-            fab
-            small
-            v-on="on"
-            @click.stop="
-              $emit('removeCategory', {
-                courseIndex,
-                categoryIndex,
-                validationIds: [...lessonValidationIds, validationId]
-              })
-            "
-          >
+        <template #activator="{ on }">
+          <v-btn class="mb-4" color="warning" fab small v-on="on" @click.stop="removeCategory">
             <v-icon>mdi-minus</v-icon>
           </v-btn>
         </template>
@@ -49,14 +36,7 @@
             :hint="$t('labels.categoryStructureHint')"
             :label="$t('labels.orginalCategoryName')"
             :placeholder="$t('labels.categoryNamePlaceholder')"
-            @input="
-              $emit('updateStructure', {
-                subject: $event,
-                courseIndex,
-                categoryIndex,
-                operation: 'category'
-              })
-            "
+            @input="updateCategory('subject', $event)"
           />
         </form-control-state>
         <form-control-state v-slot:default="{ message }" :errors="form.errors.translatedSubject">
@@ -67,14 +47,7 @@
             :label="$t('labels.translatedCategoryName')"
             :placeholder="$t('labels.translatedCategoryNamePlaceholder')"
             class="mb-5"
-            @input="
-              $emit('updateStructure', {
-                translatedSubject: $event,
-                courseIndex,
-                categoryIndex,
-                operation: 'category'
-              })
-            "
+            @input="updateCategory('translatedSubject', $event)"
           />
         </form-control-state>
         <div class="d-flex">
@@ -95,146 +68,140 @@
             ></v-file-input>
           </form-control-state>
         </div>
-        <v-btn
-          :disabled="maxLessons"
-          color="success"
-          class="mr-4 mb-5 mt-4 course-counter"
-          @click.stop="
-            $emit('addLesson', {
-              courseIndex,
-              categoryIndex
-            })
-          "
-        >
+        <v-btn :disabled="maxLessons" color="success" class="mr-4 mb-5 mt-4 course-counter" @click.stop="addLesson">
           {{ $t('buttons.addLesson') }}
         </v-btn>
 
         <v-card-title class="pb-0">Lekcje</v-card-title>
-        <template>
-          <div
-            v-for="(lesson, lessonIndex) in category.list"
-            :key="lessonIndex"
-            style="margin-bottom: 55px, position: relative"
-          >
-            <the-lesson
-              :course-index="courseIndex"
-              :category-index="categoryIndex"
-              :lesson-index="lessonIndex"
-              :lesson="lesson"
-              :max-lessons="maxLessons"
-              @updateStructure="$emit('updateStructure', $event)"
-              @savePicture="$emit('savePicture', $event)"
-              @removePicture="$emit('removePicture', $event)"
-              @insertLesson="$emit('insertLesson', $event)"
-              @removeLesson="$emit('removeLesson', $event)"
-              @validation="$emit('validation', $event)"
-              @lessonValidationId="setLessonValidationIds"
-            ></the-lesson>
-          </div>
-        </template>
+        <div
+          v-for="(lesson, lessonIndex) in category.list"
+          :key="lessonIndex"
+          style="margin-bottom: 55px; position: relative"
+        >
+          <the-lesson
+            :course-index="courseIndex"
+            :category-index="categoryIndex"
+            :lesson-index="lessonIndex"
+            :lesson="lesson"
+            :max-lessons="maxLessons"
+            @updateStructure="$emit('updateStructure', $event)"
+            @savePicture="$emit('savePicture', $event)"
+            @removePicture="$emit('removePicture', $event)"
+            @insertLesson="$emit('insertLesson', $event)"
+            @removeLesson="$emit('removeLesson', $event)"
+            @validation="$emit('validation', $event)"
+            @lessonValidationId="setLessonValidationIds"
+          ></the-lesson>
+        </div>
       </v-form>
     </v-card-text>
   </base-card>
 </template>
 
-<script lang="ts">
-import Vue, { PropType } from 'vue';
+<script lang="ts" setup>
+import { ref, computed, watch, defineProps, defineEmits } from 'vue';
 import { FormControlState } from '~app/shared/form';
 import { ValidationTarget } from '~app/shared/types';
 import TheLesson from './TheLesson.vue';
 import { CategoryStructureModel } from '../models/categoryStructure';
 import { createCategoryForm, createNumberOfLesssonsForm } from '../validation/forms';
-import FormValidationMixin from '../validation/formValidation.mixin';
 
-export default Vue.extend({
-  components: {
-    TheLesson,
-    FormControlState
+const props = defineProps({
+  category: {
+    type: Object,
+    required: true
   },
-  mixins: [FormValidationMixin],
-  props: {
-    category: {
-      type: Object as PropType<CategoryStructureModel>,
-      required: true
-    },
-    courseIndex: {
-      type: Number,
-      default: 0
-    },
-    categoryIndex: {
-      type: Number,
-      required: true,
-      default: 0
-    },
-    isMaxCategories: {
-      type: Boolean,
-      default: false
-    }
+  courseIndex: {
+    type: Number,
+    default: 0
   },
-  data: () => {
-    const form = createCategoryForm();
-    const numberOfLessonsForm = createNumberOfLesssonsForm();
-    return {
-      maxAmountOfLessons: 12,
-      numberOfLessonsValidationId: '',
-      form,
-      numberOfLessonsForm,
-      lessonValidationIds: [] as string[],
-      validationId: ''
-    };
+  categoryIndex: {
+    type: Number,
+    required: true,
+    default: 0
   },
-  computed: {
-    maxLessons() {
-      if (this.category.list) return this.category.list.length >= this.maxAmountOfLessons;
-      return false;
-    }
-  },
-  watch: {
-    category: {
-      immediate: true,
-      deep: true,
-      handler(category: CategoryStructureModel) {
-        this.validationId = `course-${this.courseIndex}-category-${this.categoryIndex}`;
-        this.form.data = category;
-        this.numberOfLessonsValidationId = `numberOfLessons-${this.categoryIndex}`;
-        const numberOfLessons = category.list ? category.list.length : 0;
-        this.numberOfLessonsForm.data = { numberOfLessons };
-
-        this.$emit('validation', {
-          data: this.form,
-          courseIndex: this.courseIndex,
-          id: this.validationId,
-          targets: [ValidationTarget.TEST]
-        });
-
-        this.$emit('validation', {
-          data: this.numberOfLessonsForm,
-          courseIndex: this.courseIndex,
-          id: this.numberOfLessonsValidationId,
-          targets: [ValidationTarget.TEST]
-        });
-      }
-    }
-  },
-  methods: {
-    updatePicture($event: File | null = null, imageSrc: string | undefined) {
-      console.log('removePicture');
-      let emitterName: string;
-      if ($event && $event.name.startsWith('https')) return;
-      if (!$event) emitterName = 'removePicture';
-      else emitterName = 'savePicture';
-
-      this.$emit(emitterName, {
-        file: $event,
-        courseIndex: this.courseIndex,
-        categoryIndex: this.categoryIndex,
-        operation: 'category',
-        imageSrc
-      });
-    },
-    setLessonValidationIds(validationId: string) {
-      this.lessonValidationIds.push(validationId);
-    }
+  isMaxCategories: {
+    type: Boolean,
+    default: false
   }
 });
+
+const emit = defineEmits();
+
+const form = ref(createCategoryForm());
+const numberOfLessonsForm = ref(createNumberOfLesssonsForm());
+const lessonValidationIds = ref<string[]>([]);
+const validationId = ref('');
+const maxAmountOfLessons = 12;
+
+const maxLessons = computed(() => {
+  return props.category.list ? props.category.list.length >= maxAmountOfLessons : false;
+});
+
+const updateCategory = (field: string, value: any) => {
+  emit('updateStructure', {
+    [field]: value,
+    courseIndex: props.courseIndex,
+    categoryIndex: props.categoryIndex,
+    operation: 'category'
+  });
+};
+
+const removeCategory = () => {
+  emit('removeCategory', {
+    courseIndex: props.courseIndex,
+    categoryIndex: props.categoryIndex,
+    validationIds: [...lessonValidationIds.value, validationId.value]
+  });
+};
+
+const addLesson = () => {
+  emit('addLesson', {
+    courseIndex: props.courseIndex,
+    categoryIndex: props.categoryIndex
+  });
+};
+
+const updatePicture = ($event: File | null = null, imageSrc: string | undefined) => {
+  let emitterName: string;
+  if ($event && $event.name.startsWith('https')) return;
+  if (!$event) emitterName = 'removePicture';
+  else emitterName = 'savePicture';
+
+  emit(emitterName, {
+    file: $event,
+    courseIndex: props.courseIndex,
+    categoryIndex: props.categoryIndex,
+    operation: 'category',
+    imageSrc
+  });
+};
+
+const setLessonValidationIds = (id: string) => {
+  lessonValidationIds.value.push(id);
+};
+
+watch(
+  () => props.category,
+  (category) => {
+    validationId.value = `course-${props.courseIndex}-category-${props.categoryIndex}`;
+    // form.value.data! = category;
+    numberOfLessonsForm.value.data = { numberOfLessons: category.list ? category.list.length : 0 };
+
+    emit('validation', {
+      data: form.value,
+      courseIndex: props.courseIndex,
+      id: validationId.value,
+      targets: [ValidationTarget.TEST]
+    });
+
+    emit('validation', {
+      data: numberOfLessonsForm.value,
+      courseIndex: props.courseIndex,
+      id: `numberOfLessons-${props.categoryIndex}`,
+      targets: [ValidationTarget.TEST]
+    });
+  },
+  { immediate: true, deep: true }
+);
 </script>

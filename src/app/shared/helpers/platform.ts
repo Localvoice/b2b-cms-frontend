@@ -9,7 +9,7 @@ try {
 }
 
 export function isBrowser(): boolean {
-  return !Vue.prototype.$isServer;
+  return typeof window !== 'undefined' && typeof document !== 'undefined';
 }
 
 export class Platform {

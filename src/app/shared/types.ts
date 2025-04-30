@@ -78,7 +78,7 @@ export type ErrorMessages = {
 export interface ValidationError {
   type: ErrorType;
   arg: string;
-  message?: string | VueI18n.LocaleMessages;
+  message?: string;
 }
 
 export interface ValidatorFn {

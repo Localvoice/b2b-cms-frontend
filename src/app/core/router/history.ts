@@ -19,8 +19,9 @@ export class RouterHistory {
     }
 
     router.afterEach((to) => {
-      if (to && to.meta) {
-        this.addStep(to.fullPath, to.meta.historyMarker || to.name);
+      if (to?.fullPath) {
+        const marker = typeof to.meta?.historyMarker === 'string' ? to.meta.historyMarker : (to.name as string);
+        this.addStep(to.fullPath, marker);
       }
     });
   }
@@ -64,7 +65,7 @@ export class RouterHistory {
     return !!this.history[finalOffset];
   }
 
-  navigateToStep(offset: number, fallback?: string): Promise<void> {
+  navigateToStep(offset: number, fallback?: string) {
     if (this.hasStep(offset)) {
       return this.router.push(this.getStep(offset));
     }
@@ -80,7 +81,7 @@ export class RouterHistory {
     return this;
   }
 
-  navigateToMarker(marker: string, fallback?: string): Promise<void> {
+  navigateToMarker(marker: string, fallback?: string) {
     if (this.hasMarker(marker)) {
       return this.router.push(this.getMarker(marker));
     }

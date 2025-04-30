@@ -1,31 +1,19 @@
-import { RouteConfig } from 'vue-router';
-import { NotFound, RouterView } from '~app/core/router';
-import { voicebotRoutes } from '~app/modules/voicebot/routes';
-import { chatbotRoutes } from '~app/modules/chatbot/routes';
+import { defineComponent } from 'vue';
+import { RouteRecordRaw } from 'vue-router';
+import { RouterView } from '~app/core/router';
 
-export const appRoutes: RouteConfig[] = [
+export const appRoutes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('~app/modules/index.vue'),
     // beforeEnter: authenticate,
-    redirect: '/app/voicebot/list-of-lessons',
+    redirect: '/app',
     children: [
-      ...voicebotRoutes,
-      ...chatbotRoutes,
       {
-        path: '/app/chatbot',
-        component: RouterView,
-        children: [
-          {
-            path: 'list-of-lessons',
-            name: 'list-of-lessons',
-            meta: {
-              breadcrumb: [{ name: 'Chatbot' }, { name: 'List of Lessons' }]
-            },
-            component: () =>
-              import(/* webpackChunkName: "listOfLesson" */ '~app/modules/voicebot/lessonList/views/lessonList.vue')
-          }
-        ]
+        path: '/app',
+        component: defineComponent({
+          render: () => '/app page'
+        })
       }
     ]
   },
@@ -43,13 +31,8 @@ export const appRoutes: RouteConfig[] = [
     ]
   },
   {
-    path: '/sign-in',
-    name: 'sign-in',
-    component: () => import(/* webpackChunkName: "session" */ '~app/modules/session/views/SignIn.vue')
-  },
-  {
     path: '/:catchAll(.*)',
     name: 'NotFound',
-    component: NotFound
+    component: () => import(/* webpackChunkName: "not-found" */ '~app/core/router/not-found.vue')
   }
 ];

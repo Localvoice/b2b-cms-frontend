@@ -1,4 +1,4 @@
-import { NormalizedScopedSlot, VNode } from 'vue/types/vnode';
+import { VNode } from 'vue';
 import { coerceArray } from '../helpers/coerce';
 
 /**
@@ -7,7 +7,7 @@ import { coerceArray } from '../helpers/coerce';
 export function normalizeSlot(
   names: string | string[],
   scope: Record<string, unknown> = {},
-  $scopedSlots: { [key: string]: NormalizedScopedSlot | undefined } = {},
+  $scopedSlots: { [key: string]: Function | undefined } = {},
   $slots: { [key: string]: VNode[] | undefined } = {}
 ): VNode[] | undefined {
   // Ensure names is an array without "falsy" values

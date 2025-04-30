@@ -9,84 +9,57 @@
   </span>
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
+<script lang="ts" setup>
+import { ref, computed, onMounted, onUpdated } from 'vue';
 import { DOCUMENT, platform } from '../helpers/platform';
 import { SPINNER_BASE_SIZE_REDUCED, SPINNER_BASE_STROKE_WIDTH } from './types';
+
+interface Props {
+  diameter?: number;
+  strokeWidth?: number;
+  rounded?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  diameter: SPINNER_BASE_SIZE_REDUCED,
+  rounded: false
+});
 
 const fallbackAnimation = platform.EDGE || platform.TRIDENT;
 const styleRoot = DOCUMENT.head;
 const diameters = new Set<number>();
 
-type NewType = string;
+const circleRadius = computed(() => (props.diameter - SPINNER_BASE_STROKE_WIDTH) / 2);
+const strokeCircumference = computed(() => 2 * Math.PI * circleRadius.value);
+const strokeWidthMethod = computed(() => props.strokeWidth || Math.abs(props.diameter / 10));
+const strokeDashOffset = computed(() => (fallbackAnimation ? strokeCircumference.value * 0.2 : null));
 
-export default Vue.extend({
-  props: {
-    diameter: { type: Number, default: SPINNER_BASE_SIZE_REDUCED, validator: (v: number) => v > 0 },
-    strokeWidth: { type: Number },
-    rounded: { type: Boolean, default: false }
-  },
-  computed: {
-    circleRadius(): number {
-      return (this.diameter - SPINNER_BASE_STROKE_WIDTH) / 2;
-    },
+const computedStyles = computed(() => ({
+  animationName: `sys-spinner-stroke-rotate-${props.diameter}`,
+  strokeDashoffset: `${strokeDashOffset.value}px`,
+  strokeDasharray: `${strokeCircumference.value}px`,
+  strokeWidth: `${props.strokeWidth}%`,
+  strokeLinecap: props.rounded ? 'round' : 'butt'
+}));
 
-    viewBox(): string {
-      const viewBox = this.circleRadius * 2 + this.strokeWidth;
-      return `0 0 ${viewBox} ${viewBox}`;
-    },
+function attachStyleNode() {
+  if (diameters.has(props.diameter)) return;
 
-    strokeWidthMethod(): number {
-      return this.strokeWidth || Math.abs(this.diameter / 10);
-    },
+  const styleTag: HTMLStyleElement = DOCUMENT.createElement('style');
+  styleTag.setAttribute('sys-spinner-animation', String(props.diameter));
+  styleTag.textContent = getAnimationStyles(strokeCircumference.value, props.diameter);
+  styleRoot.appendChild(styleTag);
+  diameters.add(props.diameter);
+}
 
-    strokeDashOffset(): number | null {
-      if (fallbackAnimation) {
-        return this.strokeCircumference * 0.2;
-      }
-      return null;
-    },
+onMounted(() => {
+  attachStyleNode();
 
-    strokeCircumference(): number {
-      return 2 * Math.PI * this.circleRadius;
-    },
-
-    computedStyles(): Record<string, NewType> {
-      return {
-        animationName: `sys-spinner-stroke-rotate-${this.diameter}`,
-        strokeDashoffset: `${this.strokeDashOffset}px`,
-        strokeDasharray: `${this.strokeCircumference}px`,
-        strokeWidth: `${this.strokeWidth}%`,
-        strokeLinecap: this.rounded ? 'round' : 'butt'
-      };
-    }
-  },
-
-  mounted(): void {
-    this.attachStyleNode();
-
-    const animationClass = `sys-spinner${fallbackAnimation ? '-fallback' : ''}-animation`;
-    this.$el.classList.add(animationClass);
-  },
-
-  updated(): void {
-    this.attachStyleNode();
-  },
-
-  methods: {
-    attachStyleNode() {
-      if (diameters.has(this.diameter)) {
-        return;
-      }
-
-      const styleTag: HTMLStyleElement = DOCUMENT.createElement('style');
-      styleTag.setAttribute('sys-spinner-animation', String(this.diameter));
-      styleTag.textContent = getAnimationStyles(this.strokeCircumference, this.diameter);
-      styleRoot.appendChild(styleTag);
-      diameters.add(this.diameter);
-    }
-  }
+  const animationClass = `sys-spinner${fallbackAnimation ? '-fallback' : ''}-animation`;
+  (document.querySelector('.sys-spinner') as HTMLElement)?.classList.add(animationClass);
 });
+
+onUpdated(attachStyleNode);
 
 const ANIMATION_TEMPLATE = `
  @keyframes sys-spinner-stroke-rotate-DIAMETER {

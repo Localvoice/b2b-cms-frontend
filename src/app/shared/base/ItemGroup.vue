@@ -16,93 +16,79 @@
       </v-list-item-content>
     </template>
 
-    <template v-for="(child, i) in children">
-      <base-item-sub-group v-if="child.children" :key="`sub-group-${i}`" dark :item="child" />
-
-      <base-item v-else :key="`item-${i}`" :item="child" :text="false" />
+    <template v-for="(child, i) in children" :key="i">
+      <base-item-sub-group v-if="child.children" :item="child" dark />
+      <base-item v-else :item="child" :text="false" />
     </template>
   </v-list-group>
 </template>
 
-<script>
-// Utilities
-// eslint-disable-next-line import/no-extraneous-dependencies
-import kebabCase from 'lodash/kebabCase';
+<script setup>
+import { computed, ref } from 'vue';
+import kebabCase from 'lodash/kebabCase'; // Utility function
 
-export default {
-  name: 'BaseItemGroup',
-  // mixins: [Themeable],
-
-  inheritAttrs: false,
-  props: {
-    item: {
-      type: Object,
-      default: () => ({
-        avatar: undefined,
-        group: undefined,
-        title: undefined,
-        subHeader: undefined,
-        children: []
-      })
-    },
-    subGroup: {
-      type: Boolean,
-      default: false
-    },
-    text: {
-      type: Boolean,
-      default: false
-    }
+// Define props
+const props = defineProps({
+  item: {
+    type: Object,
+    default: () => ({
+      avatar: undefined,
+      group: undefined,
+      title: undefined,
+      subHeader: undefined,
+      children: []
+    })
   },
-  data() {
-    return {
-      listModel: 0,
-      verticalSidebarDrawerColor: 'dark'
-    };
+  subGroup: {
+    type: Boolean,
+    default: false
   },
-
-  computed: {
-    children() {
-      return this.item.children.map((item) => ({
-        ...item,
-        to: !item.to ? undefined : `/app/${this.item.group}/${item.to}`
-      }));
-    },
-    computedText() {
-      if (!this.item || !this.item.title) return '';
-
-      let text = '';
-
-      this.item.title.split(' ').forEach((val) => {
-        text += val.substring(0, 1);
-      });
-
-      return text;
-    },
-    group() {
-      return this.genGroup(this.item.children);
-    }
-  },
-
-  methods: {
-    genGroup(children) {
-      return children
-        .filter((item) => item.to)
-        .map((item) => {
-          const parent = item.group || this.item.group;
-          let group = `${parent}/${kebabCase(item.to)}`;
-
-          if (item.children) {
-            group = `${group}|${this.genGroup(item.children)}`;
-            console.log('child');
-          }
-
-          return group;
-          // eslint-disable-next-line no-unreachable
-          console.log(group);
-        })
-        .join('|');
-    }
+  text: {
+    type: Boolean,
+    default: false
   }
-};
+});
+
+// Local state
+const listModel = ref(0);
+const verticalSidebarDrawerColor = ref('dark');
+
+// Computed properties
+const children = computed(() => {
+  return props.item.children.map((item) => ({
+    ...item,
+    to: !item.to ? undefined : `/app/${props.item.group}/${item.to}`
+  }));
+});
+
+const computedText = computed(() => {
+  if (!props.item || !props.item.title) return '';
+
+  let text = '';
+  props.item.title.split(' ').forEach((val) => {
+    text += val.substring(0, 1);
+  });
+
+  return text;
+});
+
+const group = computed(() => genGroup(props.item.children));
+
+// Methods
+function genGroup(children) {
+  return children
+    .filter((item) => item.to)
+    .map((item) => {
+      const parent = item.group || props.item.group;
+      let group = `${parent}/${kebabCase(item.to)}`;
+
+      if (item.children) {
+        group = `${group}|${genGroup(item.children)}`;
+        console.log('child');
+      }
+
+      return group;
+    })
+    .join('|');
+}
 </script>

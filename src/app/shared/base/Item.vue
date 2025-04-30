@@ -24,53 +24,48 @@
   </v-list-item>
 </template>
 
-<script>
-export default {
-  name: 'BaseItem',
+<script setup>
+import { computed, ref } from 'vue';
 
-  // mixins: [Themeable],
-  props: {
-    item: {
-      type: Object,
-      default: () => ({
-        href: undefined,
-        icon: undefined,
-        subtitle: undefined,
-        title: undefined,
-        to: undefined,
-        dark: true
-      })
-    },
-    text: {
-      type: Boolean,
-      default: false
-    }
+// Define props
+const props = defineProps({
+  item: {
+    type: Object,
+    default: () => ({
+      href: undefined,
+      icon: undefined,
+      subtitle: undefined,
+      title: undefined,
+      to: undefined,
+      dark: true
+    })
   },
-  data() {
-    return {
-      isDark: true
-    };
-  },
-
-  computed: {
-    computedText() {
-      if (!this.item || !this.item.title) return '';
-
-      let text = '';
-
-      this.item.title.split(' ').forEach((val) => {
-        text += val.substring(0, 1);
-      });
-
-      return text;
-    },
-    href() {
-      return this.item.href || (!this.item.to ? '#' : undefined);
-    }
+  text: {
+    type: Boolean,
+    default: false
   }
-};
+});
+
+// Reactive state
+const isDark = ref(true);
+
+// Computed property to generate text from the title
+const computedText = computed(() => {
+  if (!props.item || !props.item.title) return '';
+
+  let text = '';
+  props.item.title.split(' ').forEach((val) => {
+    text += val.substring(0, 1);
+  });
+
+  return text;
+});
+
+// Computed property for the href
+const href = computed(() => props.item.href || (!props.item.to ? '#' : undefined));
 </script>
-<style>
+
+<style scoped>
 .mySidebar .theme--light.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) {
   color: #fff !important;
 }

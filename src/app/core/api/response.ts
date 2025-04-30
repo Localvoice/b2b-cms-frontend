@@ -14,7 +14,7 @@ export function collectionResponseInterceptor(responseMessage: AxiosResponse): A
   console.log('responseMessage', responseMessage);
   if (responseMessage.status < 400) {
     response = {
-      data: responseMessage.data.message
+      data: responseMessage.data.data
     };
   } else {
     response = {

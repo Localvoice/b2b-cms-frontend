@@ -12,7 +12,7 @@ const lessonApi = {
       .get<LessonModel>('/api/voicebot/lesson', { params })
       .then((response) => deserialize(LessonModel, response.data))
       .catch(() => {
-        router.app.$toast.success('There was a problem with lesson fetching');
+        // router.app.$toast.success('There was a problem with lesson fetching');
       });
   }
 };

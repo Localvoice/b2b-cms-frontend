@@ -67,7 +67,7 @@ export function deserialize<T>(Type: new () => T, json: any): T | undefined {
 
   const instance = new Type();
 
-  (Object.keys(instance) as (keyof T)[]).forEach((key) => {
+  (Object.keys(instance!) as (keyof T)[]).forEach((key) => {
     const metadata = getJsonProperty(instance, key);
 
     if (!metadata) {
@@ -111,7 +111,7 @@ export function serialize<T>(instance: T): any {
   }
 
   const obj: any = {};
-  (Object.keys(instance) as (keyof T)[]).forEach((key) => {
+  (Object.keys(instance!) as (keyof T)[]).forEach((key) => {
     let metadata = getJsonProperty(instance, key);
     if (!metadata) {
       metadata = {};
@@ -154,7 +154,7 @@ function serializeProperty(metadata: MapperMetadata<any>, value: any, obj: any):
 export function toModel<T>(Type: new () => T, object: Partial<T>): T {
   const instance = new Type();
 
-  (Object.keys(instance) as (keyof T)[]).forEach((key) => {
+  (Object.keys(instance!) as (keyof T)[]).forEach((key) => {
     if (!object || !hasOwn(object, key)) {
       return;
     }
@@ -186,7 +186,7 @@ export function toModel<T>(Type: new () => T, object: Partial<T>): T {
 
 /** Returns constructor function from property metadata. */
 function getTypeConstructor<T>(target: T, propertyKey: keyof T): new () => T {
-  return Reflect.getMetadata('design:type', target, propertyKey as string);
+  return Reflect.getMetadata('design:type', target!, propertyKey as string);
 }
 
 /** Returns mapping configuration from property metadata. */

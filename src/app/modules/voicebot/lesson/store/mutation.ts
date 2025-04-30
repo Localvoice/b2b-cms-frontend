@@ -141,11 +141,6 @@ export const mutations = {
       console.log('sentenceIndex', sentenceIndex);
       console.log('sentenceExampleIndex', sentenceExampleIndex);
       console.log('attributeToUpdate', attributeToUpdate);
-      Vue.set(
-        state.lesson.lessonOnEdit.exercises!.sentenceExercise![sentenceIndex].sentenceExample![sentenceExampleIndex],
-        attributeToUpdate.key,
-        attributeToUpdate.value
-      );
     }
   )
 };

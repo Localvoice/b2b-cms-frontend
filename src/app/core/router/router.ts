@@ -2,10 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 export const router = createRouter({
   history: createWebHistory(),
-  scrollBehavior: (to, from, savedPosition) => {
+  scrollBehavior(to, from, savedPosition) {
     if (to.hash) {
       return {
-        selector: to.hash
+        el: to.hash
       };
     }
 
@@ -13,7 +13,7 @@ export const router = createRouter({
       return savedPosition;
     }
 
-    return { x: 0, y: 0 };
+    return { left: 0, top: 0 };
   },
   linkActiveClass: 'active',
   routes: []

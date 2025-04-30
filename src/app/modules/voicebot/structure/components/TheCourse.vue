@@ -1,139 +1,125 @@
 <template>
   <div class="d-flex justify-start pl-5">
     <div style="min-width: 23%">
-      <form-control-state v-slot:default="{ message }" :errors="form.errors.subject">
+      <FormControlState v-slot="{ message }" :errors="form.errors.subject">
         <v-text-field
-          :value="course.subject"
+          :model-value="course.subject"
           :error-messages="message"
           :label="$t('labels.orginalCourseName')"
           :hint="$t('labels.orginalCourseNameHint')"
           :placeholder="$t('labels.orginalCourseNamePlaceholder')"
-          @input="
-            $emit('updateStructure', {
-              subject: $event,
-              courseIndex,
-              operation: 'course'
-            })
-          "
-        ></v-text-field>
-      </form-control-state>
-      <form-control-state v-slot:default="{ message }" :errors="form.errors.translatedSubject">
+          @update:model-value="onSubjectUpdate"
+        />
+      </FormControlState>
+
+      <FormControlState v-slot="{ message }" :errors="form.errors.translatedSubject">
         <v-text-field
-          :value="course.translatedSubject"
+          :model-value="course.translatedSubject"
           :error-messages="message"
           :hint="$t('labels.translatedCourseHint')"
           :label="$t('labels.translatedCourseName')"
           :placeholder="$t('labels.translatedCourseNamePlaceholder')"
-          @input="
-            $emit('updateStructure', {
-              translatedSubject: $event,
-              courseIndex,
-              operation: 'course'
-            })
-          "
-        ></v-text-field>
-      </form-control-state>
+          @update:model-value="onTranslatedSubjectUpdate"
+        />
+      </FormControlState>
     </div>
 
     <div class="ml-15">
       <v-img :src="course.imageSrc" width="120px" />
     </div>
+
     <div class="ml-15" style="min-width: 15%">
-      <form-control-state
-        v-slot:default="{ message, blobFile }"
-        :image="course.imageSrc"
-        :errors="form.errors.imageSrc"
-      >
+      <FormControlState v-slot="{ message, blobFile }" :image="course.imageSrc" :errors="form.errors.imageSrc">
         <v-file-input
           :label="$t('labels.courseFileInput')"
-          :value="blobFile"
+          :model-value="blobFile"
           :error-messages="message"
-          @change="updatePicture($event, course.imageSrc)"
-        ></v-file-input>
-      </form-control-state>
+          @update:model-value="onPictureChange"
+        />
+      </FormControlState>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import Vue, { PropType } from 'vue';
+<script lang="ts" setup>
+import { ref, watch, defineProps, defineEmits } from 'vue';
 import { FormControlState } from '~app/shared/form';
 import { ValidationTarget } from '~app/shared/types';
-import { CourseStructureModel } from '../models/courseStructure';
 import { createCourseForm, createNumberOfCategoriesForm } from '../validation/forms';
-import FormValidationMixin from '../validation/formValidation.mixin';
+import { CourseStructureModel } from '../models/courseStructure';
 
-export default Vue.extend({
-  components: {
-    FormControlState
-  },
-  mixins: [FormValidationMixin],
-  props: {
-    course: {
-      type: Object as PropType<CourseStructureModel>,
-      required: true
-    },
-    courseIndex: {
-      type: Number,
-      required: true
-    },
-    numberOfCategories: {
-      type: Number,
-      required: true
-    }
-  },
-  data: () => {
-    const form = createCourseForm();
-    const numberOfCategoriesForm = createNumberOfCategoriesForm();
-    return {
-      form,
-      numberOfCategoriesForm,
-      validationId: '',
-      numberOfCategoriesValidationId: 'numberOfCategories'
-    };
-  },
-  watch: {
-    course: {
-      immediate: true,
-      handler(course) {
-        this.form.data = course;
-        this.validationId = `course-${this.courseIndex}`;
-        this.$emit('validation', {
-          data: this.form,
-          courseIndex: this.courseIndex,
-          id: this.validationId,
-          targets: [ValidationTarget.TEST]
-        });
-      }
-    },
-    numberOfCategories: {
-      immediate: true,
-      handler(numberOfCategories: number) {
-        this.numberOfCategoriesForm.data = { numberOfCategories };
-        this.$emit('validation', {
-          data: this.numberOfCategoriesForm,
-          courseIndex: this.courseIndex,
-          id: this.numberOfCategoriesValidationId,
-          targets: [ValidationTarget.TEST]
-        });
-      }
-    }
-  },
-  methods: {
-    updatePicture($event: File | null = null, imageSrc: string | undefined) {
-      console.log('removePicture');
-      let emitterName: string;
-      if ($event && $event.name.startsWith('https')) return;
-      if (!$event) emitterName = 'removePicture';
-      else emitterName = 'savePicture';
+const props = defineProps<{
+  course: CourseStructureModel;
+  courseIndex: number;
+  numberOfCategories: number;
+}>();
 
-      this.$emit(emitterName, {
-        file: $event,
-        courseIndex: this.courseIndex,
-        operation: 'course',
-        imageSrc
-      });
-    }
-  }
-});
+const emit = defineEmits<{
+  (e: 'updateStructure', payload: any): void;
+  (e: 'validation', payload: any): void;
+  (e: 'savePicture', payload: any): void;
+  (e: 'removePicture', payload: any): void;
+}>();
+
+const form = ref(createCourseForm());
+const numberOfCategoriesForm = ref(createNumberOfCategoriesForm());
+const validationId = ref('');
+const numberOfCategoriesValidationId = 'numberOfCategories';
+
+watch(
+  () => props.course,
+  (course) => {
+    form.value.data = course;
+    validationId.value = `course-${props.courseIndex}`;
+    emit('validation', {
+      data: form.value,
+      courseIndex: props.courseIndex,
+      id: validationId.value,
+      targets: [ValidationTarget.TEST]
+    });
+  },
+  { immediate: true }
+);
+
+watch(
+  () => props.numberOfCategories,
+  (numberOfCategories) => {
+    numberOfCategoriesForm.value.data = { numberOfCategories };
+    emit('validation', {
+      data: numberOfCategoriesForm.value,
+      courseIndex: props.courseIndex,
+      id: numberOfCategoriesValidationId,
+      targets: [ValidationTarget.TEST]
+    });
+  },
+  { immediate: true }
+);
+
+function onSubjectUpdate(value: string) {
+  emit('updateStructure', {
+    subject: value,
+    courseIndex: props.courseIndex,
+    operation: 'course'
+  });
+}
+
+function onTranslatedSubjectUpdate(value: string) {
+  emit('updateStructure', {
+    translatedSubject: value,
+    courseIndex: props.courseIndex,
+    operation: 'course'
+  });
+}
+
+function onPictureChange(file: File | null) {
+  if (file && file.name.startsWith('https')) return;
+
+  const emitterName = file ? 'savePicture' : 'removePicture';
+  emit(emitterName, {
+    file,
+    courseIndex: props.courseIndex,
+    operation: 'course',
+    imageSrc: props.course.imageSrc
+  });
+}
 </script>

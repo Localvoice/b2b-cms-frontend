@@ -1,17 +1,11 @@
 <template>
   <v-app>
-    <!-- <keep-alive> -->
-    <layout-loader />
-    <!-- </keep-alive> -->
+    <LayoutLoader />
   </v-app>
 </template>
 
-<script>
-import { LayoutLoader } from '@/app/layout';
+<script setup>
+import { defineAsyncComponent } from 'vue';
 
-export default {
-  components: {
-    LayoutLoader
-  }
-};
+const LayoutLoader = defineAsyncComponent(() => import(/* webpackChunkName: "layout" */ '@/app/layout/loader.vue'));
 </script>

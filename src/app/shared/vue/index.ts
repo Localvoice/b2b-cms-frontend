@@ -6,5 +6,3 @@ export function registerGlobalFilters(app: App) {
     nl2br
   };
 }
-
-export * from './vnode';

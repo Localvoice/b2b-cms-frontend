@@ -2,10 +2,11 @@
   <router-view />
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue';
 import '~app/shared/components';
 
-export default {
+export default defineComponent({
   name: 'App',
   metaInfo() {
     return {
@@ -13,10 +14,10 @@ export default {
       titleTemplate: '%s | Localvoice'
     };
   }
-};
+});
 </script>
 
-<style>
+<style scoped>
 .container {
   max-width: 1385px !important;
 }

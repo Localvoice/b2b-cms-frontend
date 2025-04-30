@@ -9,37 +9,39 @@
       fixed
       class="fixed-save-bottom-button-localvoice"
     >
-      <template v-slot:activator>
+      <template #activator>
         <v-btn color="blue darken-2" dark fab>
           <v-icon v-if="fab">mdi-close</v-icon>
           <v-icon v-else>mdi-pencil</v-icon>
         </v-btn>
       </template>
-      <v-btn v-if="buttonsText.save" dark color="green" @click="saveFn()">
+
+      <v-btn v-if="buttonsText.save" dark color="green" @click="saveFn">
         <v-icon>mdi-plus</v-icon>
         {{ buttonsText.save }}
       </v-btn>
-      <v-btn v-if="buttonsText.test" dark color="indigo" @click="testFn()">
+      <v-btn v-if="buttonsText.test" dark color="indigo" @click="testFn">
         <v-icon>mdi-plus</v-icon>
         {{ buttonsText.test }}
       </v-btn>
-      <v-btn v-if="buttonsText.production" dark color="red" @click="prodFn()">
+      <v-btn v-if="buttonsText.production" dark color="red" @click="prodFn">
         {{ buttonsText.production }}
         <v-icon>mdi-plus</v-icon>
       </v-btn>
     </v-speed-dial>
+
     <div v-else class="d-flex justify-start flex-wrap">
-      <v-btn v-if="buttonsText.save" class="ma-2" dark color="danger" @click="saveFn()">
+      <v-btn v-if="buttonsText.save" class="ma-2" dark color="danger" @click="saveFn">
         <v-icon>mdi-plus</v-icon>
         {{ buttonsText.save }}
       </v-btn>
       <div>
-        <v-btn v-if="buttonsText.test" class="ma-2" color="primary" @click="testFn()">
+        <v-btn v-if="buttonsText.test" class="ma-2" color="primary" @click="testFn">
           <v-icon>mdi-plus</v-icon> {{ buttonsText.test }}
         </v-btn>
       </div>
       <div>
-        <v-btn v-if="buttonsText.production" class="ma-2" color="success" @click="prodFn()">
+        <v-btn v-if="buttonsText.production" class="ma-2" color="success" @click="prodFn">
           <v-icon>mdi-plus</v-icon> {{ buttonsText.production }}
         </v-btn>
       </div>
@@ -48,26 +50,26 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { VoicebotButtonsText } from '../types';
 
-export default Vue.extend({
+export default defineComponent({
   name: 'FixedButton',
   props: {
     saveFn: {
       type: Function,
-      default: () => ''
+      default: () => {}
     },
     testFn: {
       type: Function,
-      default: () => ''
+      default: () => {}
     },
     prodFn: {
       type: Function,
-      default: () => ''
+      default: () => {}
     },
     buttonsText: {
-      type: Object as PropType<VoicebotButtonsText>,
+      type: Object as () => VoicebotButtonsText,
       default: () => ({
         save: '',
         test: '',
@@ -76,11 +78,15 @@ export default Vue.extend({
     },
     isFixedButton: {
       type: Boolean,
-      default: () => true
+      default: true
     }
   },
-  data: () => ({
-    fab: false
-  })
+  setup() {
+    const fab = ref(false);
+
+    return {
+      fab
+    };
+  }
 });
 </script>

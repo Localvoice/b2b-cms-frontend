@@ -14,74 +14,74 @@
   </v-btn>
 </template>
 
-<script>
-export default {
-  name: 'BaseHoverButton',
-  props: {
-    text: {
-      type: String,
-      default: ''
-    },
-    color: {
-      type: String,
-      default: ''
-    },
-    bgColor: {
-      type: String,
-      default: ''
-    },
-    textColor: {
-      type: String,
-      default: ''
-    },
-    textHover: {
-      type: String,
-      default: ''
-    },
-    bgHover: {
-      type: String,
-      default: ''
-    },
-    block: {
-      type: Boolean,
-      default: false
-    },
-    depressed: {
-      type: Boolean,
-      default: true
-    },
-    small: {
-      type: Boolean,
-      default: false
-    },
-    iconName: {
-      type: String,
-      default: ''
-    },
-    customClass: {
-      type: String,
-      default: ''
-    },
-    large: {
-      type: Boolean,
-      default: false
-    },
-    xSmall: {
-      type: Boolean,
-      default: false
-    },
-    iconMr: {
-      type: String,
-      default: ''
-    },
-    smallIcon: {
-      type: Boolean,
-      default: false
-    },
-    clickEvent: {
-      type: String,
-      default: ''
-    }
+<script setup>
+import { defineProps } from 'vue';
+
+// Declare props
+const props = defineProps({
+  text: {
+    type: String,
+    default: ''
+  },
+  color: {
+    type: String,
+    default: ''
+  },
+  bgColor: {
+    type: String,
+    default: ''
+  },
+  textColor: {
+    type: String,
+    default: ''
+  },
+  textHover: {
+    type: String,
+    default: ''
+  },
+  bgHover: {
+    type: String,
+    default: ''
+  },
+  block: {
+    type: Boolean,
+    default: false
+  },
+  depressed: {
+    type: Boolean,
+    default: true
+  },
+  small: {
+    type: Boolean,
+    default: false
+  },
+  iconName: {
+    type: String,
+    default: ''
+  },
+  customClass: {
+    type: String,
+    default: ''
+  },
+  large: {
+    type: Boolean,
+    default: false
+  },
+  xSmall: {
+    type: Boolean,
+    default: false
+  },
+  iconMr: {
+    type: String,
+    default: ''
+  },
+  smallIcon: {
+    type: Boolean,
+    default: false
+  },
+  clickEvent: {
+    type: String,
+    default: ''
   }
-};
+});
 </script>

@@ -3,17 +3,20 @@
     <b-input-group-prepend is-text>
       <i class="fas fa-search"></i>
     </b-input-group-prepend>
-    <b-input
+
+    <b-form-input
+      v-bind="$attrs"
       :placeholder="$attrs.placeholder"
+      :autofocus="autofocus"
+      :model-value="modelValue"
       trim
       debounce="250"
-      :value="value"
-      :autofocus="autofocus"
-      @update="$emit('update', $event)"
-      @keyup.esc="$emit('update', '')"
-    ></b-input>
+      @update:modelValue="onInput"
+      @keyup.esc="clearInput"
+    />
+
     <b-input-group-append>
-      <b-button v-if="value" variant="outline-secondary" class="btn-icon" @click.prevent="$emit('update', '')">
+      <b-button v-if="modelValue" variant="outline-secondary" class="btn-icon" @click.prevent="clearInput">
         <i class="fas fa-times"></i>
       </b-button>
     </b-input-group-append>
@@ -21,25 +24,37 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { defineComponent } from 'vue';
 
-export default Vue.extend({
+export default defineComponent({
   name: 'SearchInput',
   inheritAttrs: false,
-  model: {
-    prop: 'value',
-    event: 'update'
-  },
   props: {
-    value: {
-      type: String
+    modelValue: {
+      type: String,
+      default: ''
     },
     autofocus: {
       type: Boolean,
       default: true
     }
+  },
+  emits: ['update:modelValue'],
+  setup(props, { emit }) {
+    const onInput = (value: string) => {
+      emit('update:modelValue', value);
+    };
+
+    const clearInput = () => {
+      emit('update:modelValue', '');
+    };
+
+    return {
+      onInput,
+      clearInput
+    };
   }
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped lang="scss"></style>

@@ -1,39 +1,13 @@
 <template>
-  <v-app
-    :style="{
-      background: layoutState.backgroundColor
-    }"
-    :class="{
-      'app-admin-wrap-layout-1 sidebar-mini': false,
-      'sidebar-close': !true
-    }"
-  >
-    <the-header></the-header>
-    <the-sidebar></the-sidebar>
-    <keep-alive>
-      <data-container />
-    </keep-alive>
-    <the-footer></the-footer>
-  </v-app>
+  <DataContainer />
 </template>
 
-<script>
-import { mapGetters } from 'vuex';
+<script setup>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
 import { layoutGetters } from './store';
+import DataContainer from './components/DataContainer.vue';
 
-export default {
-  components: {
-    DataContainer: () => import('./components/DataContainer.vue'),
-    TheSidebar: () => import('./components/TheSidebar.vue'),
-    TheFooter: () => import('./components/TheFooter.vue'),
-    TheHeader: () => import('./components/TheHeader.vue')
-  },
-  computed: {
-    ...mapGetters({
-      layoutState: layoutGetters.getState
-    })
-  }
-};
+const store = useStore();
+const layoutState = computed(() => layoutGetters.getState(store));
 </script>
-
-<style lang="scss" scoped></style>

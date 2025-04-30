@@ -1,7 +1,8 @@
 import { ApiClient } from './client';
+import { ComponentCustomProperties } from 'vue';
 
-declare module 'vue/types/vue' {
-  interface Vue {
-    readonly $api: ApiClient;
+declare module '@vue/runtime-core' {
+  interface ComponentCustomProperties {
+    $api: ApiClient;
   }
 }

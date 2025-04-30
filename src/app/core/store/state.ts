@@ -1,5 +1,5 @@
-import { Route } from 'vue-router';
+import { RouteLocationNormalizedLoaded } from 'vue-router';
 
 export type RootState = {
-  route: Route;
+  route: RouteLocationNormalizedLoaded;
 };

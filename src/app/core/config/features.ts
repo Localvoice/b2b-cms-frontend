@@ -1,8 +1,6 @@
 /* eslint-disable import/no-cycle */
-import { DirectiveFunction } from 'vue';
 import { NavigationGuard } from 'vue-router';
 import { store } from '~app/core/store';
-import { commentNode } from '~app/shared/vue';
 import { configGetters } from './store';
 import { FeatureName } from './types';
 
@@ -13,9 +11,3 @@ export function hasFeature(feature: FeatureName | FeatureName[]): boolean {
 export function featureGuard(feature: FeatureName | FeatureName[]): NavigationGuard {
   return (to, from, next) => next(hasFeature(feature) ? undefined : (from as any));
 }
-
-export const FeatureDirective: DirectiveFunction = (el, binding, vnode) => {
-  if (!hasFeature(binding.value)) {
-    commentNode(el, vnode);
-  }
-};

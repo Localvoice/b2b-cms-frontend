@@ -1,6 +1,6 @@
-import { RouteConfig } from 'vue-router';
+import { RouteRecordRaw } from 'vue-router';
 
-export const authRoutes: RouteConfig[] = [
+export const authRoutes: RouteRecordRaw[] = [
   {
     path: 'password',
     component: () => import(/* webpackChunkName: "auth" */ './components/password/page.vue')
@@ -12,7 +12,7 @@ export const authRoutes: RouteConfig[] = [
   }
 ];
 
-export const authRoutesPublic: RouteConfig[] = [
+export const authRoutesPublic: RouteRecordRaw[] = [
   {
     path: '/password-reset',
     name: 'password-reset',

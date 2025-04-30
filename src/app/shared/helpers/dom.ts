@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import Vue from 'vue';
 
-const isServer = Vue.prototype.$isServer;
+const isServer = typeof window === 'undefined';
 
 export function getStyle(element: HTMLElement, styleName: keyof CSSStyleDeclaration) {
   if (isServer) return null;

@@ -1,106 +1,72 @@
 <template>
   <v-row>
     <v-col cols="2" class="myFlex">
-      <v-btn color="primary" dark small fab d-inline class="course-counter">
+      <v-btn color="primary" dark small fab class="course-counter">
         <v-icon>{{ lessonIndex + 1 }}</v-icon>
       </v-btn>
     </v-col>
+
     <v-col>
-      <form-control-state v-slot:default="{ message }" :errors="form.errors.subject">
+      <FormControlState v-slot="{ message }" :errors="form.errors.subject">
         <v-text-field
-          :value="lesson.subject"
+          :model-value="lesson.subject"
           :error-messages="message"
-          clear-icon
+          clearable
           :label="$t('labels.lessonName')"
           :placeholder="$t('labels.lessonNamePlaceholder')"
-          @input="
-            $emit('updateStructure', {
-              subject: $event,
-              courseIndex,
-              categoryIndex,
-              lessonIndex,
-              operation: 'lesson'
-            })
-          "
+          @update:model-value="onSubjectUpdate"
         />
-      </form-control-state>
-      <form-control-state v-slot:default="{ message }" :errors="form.errors.translatedSubject">
+      </FormControlState>
+
+      <FormControlState v-slot="{ message }" :errors="form.errors.translatedSubject">
         <v-text-field
-          :value="lesson.translatedSubject"
+          :model-value="lesson.translatedSubject"
           :error-messages="message"
           :label="$t('labels.translatedLessonName')"
           :placeholder="$t('labels.translatedLessonNamePlaceholder')"
           class="mb-5"
-          @input="
-            $emit('updateStructure', {
-              translatedSubject: $event,
-              courseIndex,
-              categoryIndex,
-              lessonIndex,
-              operation: 'lesson'
-            })
-          "
+          @update:model-value="onTranslatedSubjectUpdate"
         />
-      </form-control-state>
+      </FormControlState>
+
       <div class="d-flex">
         <v-img v-if="lesson.imageSrc" :src="lesson.imageSrc" width="10px" />
-        <form-control-state
-          v-slot:default="{ message, blobFile }"
-          :image="lesson.imageSrc"
-          :errors="form.errors.imageSrc"
-        >
+
+        <FormControlState v-slot="{ message, blobFile }" :image="lesson.imageSrc" :errors="form.errors.imageSrc">
           <v-file-input
             v-if="lesson"
-            :label="$t('labels.lessonFileInput')"
             flat
-            :value="blobFile"
+            :label="$t('labels.lessonFileInput')"
+            :model-value="blobFile"
             :error-messages="message"
             class="d-inline-flex localvoice-file-input"
             truncate-length="4"
-            @change="updatePicture($event, lesson.imageSrc)"
-          ></v-file-input>
-        </form-control-state>
+            @update:model-value="onPictureChange"
+          />
+        </FormControlState>
       </div>
+
       <div class="mt-4">
-        <v-tooltip top>
-          <template v-slot:activator="{ on }">
+        <v-tooltip location="top">
+          <template #activator="{ props }">
             <v-btn
               class="mb-4 mr-4"
               color="primary"
               fab
               small
               :disabled="maxLessons"
-              v-on="on"
-              @click.stop="
-                $emit('insertLesson', {
-                  courseIndex,
-                  categoryIndex,
-                  lessonIndex
-                })
-              "
+              v-bind="props"
+              @click.stop="insertLesson"
             >
               <v-icon>mdi-plus</v-icon>
             </v-btn>
           </template>
           <span>Dodaj lekcję poniżej</span>
         </v-tooltip>
-        <v-tooltip top>
-          <template v-slot:activator="{ on }">
-            <v-btn
-              class="mb-4"
-              color="warning"
-              fab
-              small
-              v-on="on"
-              @click.stop="
-                $emit('removeLesson', {
-                  courseIndex,
-                  categoryIndex,
-                  lessonIndex,
-                  validationId
-                })
-              "
-            >
+
+        <v-tooltip location="top">
+          <template #activator="{ props }">
+            <v-btn class="mb-4" color="warning" fab small v-bind="props" @click.stop="removeLesson">
               <v-icon>mdi-minus</v-icon>
             </v-btn>
           </template>
@@ -111,92 +77,92 @@
   </v-row>
 </template>
 
-<script lang="ts">
-import Vue, { PropType } from 'vue';
+<script lang="ts" setup>
+import { ref, watch, defineProps, defineEmits } from 'vue';
 import { FormControlState } from '~app/shared/form';
-import { ValidationTarget } from '~app/shared/types';
-import { LessonStructureModel } from '../models/lessonStructure';
 import { createLessonForm } from '../validation/forms';
-import FormValidationMixin from '../validation/formValidation.mixin';
+import { LessonStructureModel } from '../models/lessonStructure';
 
-export default Vue.extend({
-  name: 'TheLesson',
-  components: {
-    FormControlState
-  },
-  mixins: [FormValidationMixin],
-  props: {
-    lesson: {
-      type: Object as PropType<LessonStructureModel>,
-      required: true
-    },
-    courseIndex: {
-      type: Number,
-      default: 0
-    },
-    categoryIndex: {
-      type: Number,
-      default: 0
-    },
-    lessonIndex: {
-      type: Number,
-      default: 0
-    },
-    maxLessons: {
-      type: Boolean,
-      default: false
-    }
-  },
-  data: () => {
-    const form = createLessonForm();
-    return {
-      validationId: '',
-      form
-    };
-  },
-  watch: {
-    lesson: {
-      immediate: true,
-      handler(lessonChange) {
-        this.form.data = lessonChange;
-        this.validationId = `course-${this.courseIndex}-category-${this.categoryIndex}-course-${this.lessonIndex}`;
-        this.$emit('validation', {
-          data: this.form,
-          courseIndex: this.courseIndex,
-          id: this.validationId,
-          targets: [ValidationTarget.TEST]
-        });
-      }
-    },
-    validationId: {
-      handler(validationId) {
-        this.$emit('lessonValidationId', validationId);
-      },
-      immediate: true
-    }
-  },
-  methods: {
-    updatePicture($event: File | null = null, imageSrc: string | undefined) {
-      console.log('removePicture');
-      let emitterName: string;
-      if ($event && $event.name.startsWith('https')) return;
-      if (!$event) emitterName = 'removePicture';
-      else emitterName = 'savePicture';
+const props = defineProps<{
+  lesson: LessonStructureModel;
+  courseIndex: number;
+  categoryIndex: number;
+  lessonIndex: number;
+  maxLessons: boolean;
+}>();
 
-      this.$emit(emitterName, {
-        file: $event,
-        courseIndex: this.courseIndex,
-        categoryIndex: this.categoryIndex,
-        lessonIndex: this.lessonIndex,
-        imageSrc,
-        operation: 'lesson'
-      });
-    }
-  }
-});
+const emit = defineEmits<{
+  (e: 'updateStructure', payload: any): void;
+  (e: 'insertLesson', payload: any): void;
+  (e: 'removeLesson', payload: any): void;
+  (e: 'savePicture', payload: any): void;
+  (e: 'removePicture', payload: any): void;
+}>();
+
+const form = ref(createLessonForm());
+const validationId = ref('');
+
+watch(
+  () => props.lesson,
+  (lesson) => {
+    form.value.data = lesson;
+    validationId.value = `lesson-${props.courseIndex}-${props.categoryIndex}-${props.lessonIndex}`;
+  },
+  { immediate: true }
+);
+
+function onSubjectUpdate(value: string) {
+  emit('updateStructure', {
+    subject: value,
+    courseIndex: props.courseIndex,
+    categoryIndex: props.categoryIndex,
+    lessonIndex: props.lessonIndex,
+    operation: 'lesson'
+  });
+}
+
+function onTranslatedSubjectUpdate(value: string) {
+  emit('updateStructure', {
+    translatedSubject: value,
+    courseIndex: props.courseIndex,
+    categoryIndex: props.categoryIndex,
+    lessonIndex: props.lessonIndex,
+    operation: 'lesson'
+  });
+}
+
+function onPictureChange(file: File | null) {
+  if (file && file.name.startsWith('https')) return;
+  const emitterName = file ? 'savePicture' : 'removePicture';
+  emit(emitterName, {
+    file,
+    courseIndex: props.courseIndex,
+    categoryIndex: props.categoryIndex,
+    lessonIndex: props.lessonIndex,
+    imageSrc: props.lesson.imageSrc,
+    operation: 'lesson'
+  });
+}
+
+function insertLesson() {
+  emit('insertLesson', {
+    courseIndex: props.courseIndex,
+    categoryIndex: props.categoryIndex,
+    lessonIndex: props.lessonIndex
+  });
+}
+
+function removeLesson() {
+  emit('removeLesson', {
+    courseIndex: props.courseIndex,
+    categoryIndex: props.categoryIndex,
+    lessonIndex: props.lessonIndex,
+    validationId: validationId.value
+  });
+}
 </script>
 
-<style scope>
+<style scoped>
 .course-counter {
   z-index: 1;
 }

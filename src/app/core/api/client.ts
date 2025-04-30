@@ -5,8 +5,10 @@ import { collectionResponseInterceptor } from './response';
 
 export type ApiClient = AxiosInstance;
 
-// Axios instance
+const BASE_URL = 'https://api.localvoice.pl/staging';
+
 export const api: ApiClient = axios.create({
+  baseURL: BASE_URL,
   paramsSerializer(params) {
     return Object.keys(params)
       .map((key) => `${key}=${encodeURIComponent(params[key])}`)
@@ -14,14 +16,11 @@ export const api: ApiClient = axios.create({
   }
 });
 
-// Helper to convert Sort into query param
 export function sortParams(sort?: Sort): { sorting: string } | null {
   return sort?.active ? { sorting: `${sort.active},${sort.direction}` } : null;
 }
 
-// Set base URL and attach response interceptor
 export const apiInitializer: (config: Config) => ApiClient = (config) => {
-  // api.defaults.baseURL = config.apiUrl;
   api.interceptors.response.use(collectionResponseInterceptor);
   return api;
 };

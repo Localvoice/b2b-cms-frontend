@@ -1,7 +1,7 @@
 <template>
   <div class="page-wrap">
     <div class="session-form-hold">
-      <base-card class="localvoice-shadow p-10">
+      <v-card class="localvoice-shadow p-10">
         <v-card-text class="text-center">
           <v-row class="mb-16">
             <h5 class="mb-10 mx-auto localvoice-header">
@@ -10,18 +10,20 @@
             <img src="@/assets/images/alexa.png" align="center" justify="center" class="mx-auto" />
           </v-row>
 
-          <v-text-field label="Email" color="#1C7AC3" light />
+          <v-text-field label="Email" color="#1C7AC3" light v-model="email" />
           <v-text-field
             :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             :type="show ? 'text' : 'password'"
             name="input-10-2"
             label="Password"
-            value="Pa"
+            v-model="password"
             color="#1C7AC3"
             light
             @click:append="show = !show"
           ></v-text-field>
-          <v-btn class="mb-4 localvoice-sign-in-button" block @click.prevent="login">Zaloguj się</v-btn>
+          <v-btn class="mb-4 localvoice-sign-in-button" :loading="loading" block @click.prevent="loginUser"
+            >Zaloguj się</v-btn
+          >
           <v-row>
             <h6 class="localvoice-sign-in-options mx-auto">
               kliknij jeśli <router-link to="/session/reset">nie pamiętasz hasła</router-link> lub
@@ -29,120 +31,61 @@
             </h6>
           </v-row>
         </v-card-text>
-      </base-card>
+      </v-card>
     </div>
   </div>
 </template>
-<script>
-import axios from 'axios';
 
-export default {
-  name: 'SignFour',
-  metaInfo: {
-    // title will be injected into parent titleTemplate
-    title: 'Sign Four'
-  },
-  data() {
-    return {
-      show: false,
-      password: 'Password',
-      checkbox1: true,
-      checkbox2: false
-    };
-  },
-  methods: {
-    // login() {
-    //   console.log('login');
-    //   return this.$api
-    //     .get('http://localhost:3000/user?business=localvoice')
-    //     .then((data) => {
-    //       console.log('data', data);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error.response.data.errorMessage);
-    //     });
-    // },
+<script setup>
+import { ref, getCurrentInstance } from 'vue';
+import { useStore } from 'vuex';
+import { AuthUser } from '~app/modules/auth';
+import { TokenStorage } from '~app/modules/auth/model/token/storage';
+import { importAuthToken } from '~app/modules/auth/model/token/token';
+import { configGetters } from '~app/core/config/store';
+import { useRouter, useRoute } from 'vue-router';
 
-    login() {
-      console.log('login');
-      return this.$api
-        .post('http://localhost:3000/user', {
-          email: 'paweł',
-          business: 'localvoice'
-        })
-        .then((data) => {
-          console.log('data', data);
-        })
-        .catch((error) => {
-          console.log(error.response.data.errorMessage);
-        });
-    }
+const show = ref(false);
+const email = ref('');
+const password = ref('');
+const loading = ref(false);
 
-    // login() {
-    //   console.log('login');
-    //   return this.$api
-    //     .put('http://localhost:3000/user', {
-    //       firstName: 'pawel',
-    //       email: 'pawel',
-    //     })
-    //     .then((data) => {
-    //       console.log('data', data);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error.response.data.errorMessage);
-    //     });
-    // },
+const router = useRouter();
+const route = useRoute();
+const store = useStore();
 
-    // login() {
-    //   console.log('login');
-    //   return this.$api
-    //     .post('http://localhost:3000/login', {
-    //       firstName: 'pawel',
-    //       email: 'pawel',
-    //     })
-    //     .then((data) => {
-    //       console.log('data', data);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error.response.data.errorMessage);
-    //     });
-    // },
+const { proxy } = getCurrentInstance();
 
-    // login2() {
-    //   console.log('login');
-    //   return axios({
-    //     method: 'get',
-    //     url: 'http://localhost:3000/test',
-    //     headers: {
-    //       Authorization:
-    //         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJidXNpbmVzcyI6ImxvY2Fsdm9pY2UiLCJlbWFpbCI6InBhd2VsZ2Fnb3Jvd3NraTAyNkBnbWFpbC5jb20iLCJpYXQiOjE2NDI2NzA4NzQsImV4cCI6MTY0Mjc1NzI3NH0.YXyeMupNgReUr6vbuoUmjz4K18tHi-j2FsimVbub78c',
-    //     },
-    //   })
-    //     .then((data) => {
-    //       console.log('data', data);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error.response.data.errorMessage);
-    //     });
+const loginUser = () => {
+  loading.value = true;
+  proxy.$api
+    .post('/auth/signinWithCredentials', {
+      email: email.value,
+      password: password.value
+    })
+    .then(async ({ data }) => {
+      console.log('userInfo', data);
 
-    // .get('http://localhost:3000/test', {
-    //   firstName: 'pawel',
-    //   email: 'pawel',
-    //   headers: {
-    //     Authorization:
-    //       'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJidXNpbmVzcyI6ImxvY2Fsdm9pY2UiLCJlbWFpbCI6InBhd2VsZ2Fnb3Jvd3NraTAyNkBnbWFpbC5jb20iLCJpYXQiOjE2NDI2NzA4NzQsImV4cCI6MTY0Mjc1NzI3NH0.YXyeMupNgReUr6vbuoUmjz4K18tHi-j2FsimVbub78c',
-    //   },
-    // })
-    // .then((data) => {
-    //   console.log('data', data);
-    // })
-    // .catch((error) => {
-    //   console.log(error.response.data.errorMessage);
-    // });
-    // },
-  }
+      const tokenStorage = new TokenStorage();
+      await tokenStorage.store(data);
+
+      const urlParams = new URLSearchParams(route.fullPath.split('?')[1]);
+
+      if (urlParams.has('ReturnUrl')) {
+        router.push(urlParams.get('ReturnUrl'));
+      } else {
+        router.push('/');
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .finally(() => {
+      loading.value = false;
+    });
 };
 </script>
+
 <style lang="scss" scoped>
 .page-wrap {
   background-color: #fff !important;
@@ -167,7 +110,9 @@ export default {
 }
 
 .localvoice-shadow {
-  box-shadow: rgba(47, 60, 74, 0.18) 0px 8px 32px, rgba(47, 60, 74, 0.02) 0px 8px 16px !important;
+  box-shadow:
+    rgba(47, 60, 74, 0.18) 0px 8px 32px,
+    rgba(47, 60, 74, 0.02) 0px 8px 16px !important;
 }
 
 .session-form-hold img {

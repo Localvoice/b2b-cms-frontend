@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { api } from '~app/core/api/client';
 import { RootState } from '~app/core/store';
 import { deserialize } from '~app/shared/json-mapper';
 import { PictureTarget, S3Credentials } from '~app/shared/types';
 import { createActionFactory, createActionMap } from '~app/shared/vuex';
-import { AuthUser } from '../model';
+import { AuthUser, TokenStorage } from '../model';
 import { authMutations } from './mutations';
 import { AuthState, NAMESPACE } from './state';
 
@@ -13,21 +13,24 @@ const createAction = createActionFactory<AuthState, RootState>();
 
 export const actions = {
   fetchUser: createAction(({ commit }) => {
-    console.log('fetchUser action');
-    return api
-      .get<AuthUser>('/api/user')
-      .then((res) => {
-        console.log('data from user', res.data);
-        const user = deserialize(AuthUser, res.data);
-        commit(authMutations.setUser.local, user);
-      })
-      .catch((error: AxiosError) => {
-        if (error.response!.status < 500) {
-          // eg. 404 = account removed
-          return;
-        }
-        throw error;
-      });
+    const tokenStorage = new TokenStorage();
+    tokenStorage.load().then((token) => {
+      // TODO: fetch user with accessToken
+      // return api
+      //   .get<AuthUser>('/api/user')
+      //   .then((res) => {
+      //     console.log('data from user', res.data);
+      //     const user = deserialize(AuthUser, res.data);
+      //     commit(authMutations.setUser.local, user);
+      //   })
+      //   .catch((error: AxiosError) => {
+      //     if (error.response!.status < 500) {
+      //       // eg. 404 = account removed
+      //       return;
+      //     }
+      //     throw error;
+      //   });
+    });
   }),
   getS3Credentials: createAction(
     ({ commit }, { pictureTarget, type }: { pictureTarget: PictureTarget; type: string }) => {

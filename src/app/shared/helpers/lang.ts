@@ -3,7 +3,7 @@ export function hasOwn<T = any>(object: T | any, key: keyof T): boolean {
 }
 
 export function objectKeys<T>(obj: T): (keyof T)[] {
-  return Object.keys(obj) as (keyof T)[];
+  return Object.keys(obj!) as (keyof T)[];
 }
 
 export const isNullOrUndefined = (arg: any): boolean => {

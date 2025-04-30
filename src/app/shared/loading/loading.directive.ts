@@ -1,6 +1,4 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-unused-expressions */
-import { DirectiveOptions } from 'vue';
+import { Directive } from 'vue';
 import { loadingService } from './loading.service';
 import { SysLoadingNamespace } from './types';
 
@@ -10,28 +8,29 @@ type LoadingElement = HTMLElement & {
   instance: SysLoadingNamespace;
 };
 
-export const SysLoading: DirectiveOptions = {
-  bind(element, binding) {
+export const SysLoading: Directive<HTMLElement, boolean> = {
+  beforeMount(el, binding) {
     const name = binding.arg || `sys-loading-${(LOADING_NEXT_ID += 1)}`;
-    // const myEl: any = el;
-    const bindingElement: any = element;
+    const bindingElement = el as LoadingElement;
+
     bindingElement.instance = loadingService.create({
       name,
-      target: element
+      target: el
     });
 
     if (binding.value) {
       bindingElement.instance.register();
     }
   },
-  update(element, binding) {
-    const bindingElement: any = element;
+  updated(el, binding) {
+    const bindingElement = el as LoadingElement;
+
     if (binding.oldValue !== binding.value) {
       binding.value ? bindingElement.instance.register() : bindingElement.instance.resolve();
     }
   },
-  unbind(element) {
-    const bindingElement: any = element;
+  unmounted(el) {
+    const bindingElement = el as LoadingElement;
     bindingElement.instance.remove();
   }
 };

@@ -4,7 +4,7 @@
       <b-form-input id="login" v-model="form.data.login" disabled></b-form-input>
     </b-form-group>
 
-    <form-control-state :errors="form.errors.current" v-slot:default="{ state, message }">
+    <form-control-state :errors="form.errors.current" v-slot="{ state, message }">
       <b-form-group
         label-cols-sm="4"
         :label="$t('Old Password')"
@@ -23,7 +23,7 @@
       </b-form-group>
     </form-control-state>
 
-    <form-control-state :errors="form.errors.password" v-slot:default="{ state, message }">
+    <form-control-state :errors="form.errors.password" v-slot="{ state, message }">
       <b-form-group
         label-cols-sm="4"
         :label="$t('New Password')"
@@ -45,7 +45,7 @@
     <form-control-state
       :errors="form.errors.confirm"
       :custom="{ matchWith: $t('Password must match') }"
-      v-slot:default="{ state, message }"
+      v-slot="{ state, message }"
     >
       <b-form-group
         class="mb-0"
@@ -68,17 +68,13 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue, { PropType } from 'vue';
-import { FormControlState, FormGroup } from '~app/shared/form';
-import { PasswordFormData } from './wrapper';
+<script lang="ts" setup>
+import { PropType } from 'vue';
+import FormControlState from '~app/shared/form/FormControlState.vue';
+import type { FormGroup } from '~app/shared/form';
+import type { PasswordFormData } from './wrapper.vue';
 
-export default Vue.extend({
-  components: {
-    FormControlState
-  },
-  props: {
-    form: { type: Object as PropType<FormGroup<PasswordFormData>>, required: true }
-  }
-});
+const props = defineProps<{
+  form: FormGroup<PasswordFormData>;
+}>();
 </script>

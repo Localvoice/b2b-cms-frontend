@@ -12,8 +12,6 @@ store.registerModule(NAMESPACE, {
   getters
 });
 
-console.log('hello from file!!!!!!!!');
-
 export * from './state';
 export { loadingActions } from './actions';
 export { loadingGetters } from './getters';

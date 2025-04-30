@@ -1,48 +1,47 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable prefer-destructuring */
-import Vue, { CreateElement, PropType, RenderContext, VNode } from 'vue';
+import { defineComponent, h } from 'vue';
 import { ValidationError } from '../types';
 
-export const FormControlState = Vue.extend({
+export const FormControlState = defineComponent({
   name: 'FormControlState',
-  functional: true,
-
   props: {
-    errors: { type: Array as PropType<ValidationError[]> },
-    image: { type: String },
+    errors: {
+      type: Array as () => ValidationError[],
+      default: () => []
+    },
+    image: {
+      type: String,
+      default: ''
+    },
     custom: {
-      type: Object as PropType<{ [key: string]: string }>,
+      type: Object as () => { [key: string]: string },
       default: () => ({})
     }
   },
-
-  render(h: CreateElement, context: RenderContext): VNode | VNode[] {
+  setup(props, { slots }) {
     let error: ValidationError | undefined;
-    let errors: ValidationError[];
-    let blobFile: File | undefined;
+    let blobFile: File | null = null;
 
-    if (context.props.errors) {
-      errors = context.props.errors;
-      error = errors[0];
-      if (context.props.custom[error.type]) {
-        error.message = context.props.custom[error.type];
+    if (props.errors && props.errors.length > 0) {
+      error = props.errors[0];
+      if (props.custom && props.custom[error.type]) {
+        error.message = props.custom[error.type];
       }
     }
 
-    if (context.props.image) {
-      blobFile = new File([], context.props.image);
+    if (props.image) {
+      blobFile = new File([], props.image);
     }
 
-    // if(context.props.image) {}
-    return context.scopedSlots.default({
-      // for bootstrap-vue form components
-      state: error ? false : null,
-      // for custom components, eg. v-select
-      invalid: !!error,
-      // translated error message
-      message: error ? error.message : null,
+    if (!slots.default) return () => null;
 
-      blobFile: blobFile || null
-    }) as VNode | VNode[];
+    return () =>
+      slots.default?.({
+        state: error ? false : null,
+        invalid: !!error,
+        message: error ? error.message : null,
+        blobFile
+      });
   }
 });

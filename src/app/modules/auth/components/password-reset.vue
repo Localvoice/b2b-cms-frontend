@@ -10,7 +10,7 @@
 
         <div v-sys-loading="loading" class="card b-a-0 shadow-sm mb-3">
           <!-- PASSWORD CHANGE -->
-          <template v-if="$route.query.token">
+          <template v-if="route.query.token">
             <sys-card-header :title="$t('Change your password')" icon="fas fa-key"></sys-card-header>
 
             <form autocomplete="off" @submit.prevent="changePassword">
@@ -124,157 +124,139 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
+import { ref, reactive, watch, inject } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { AxiosError } from 'axios';
-import Vue from 'vue';
 import { i18n } from '~app/core/i18n/marker';
 import { AuthInjectKey } from '~app/modules/auth';
 import { FormControlState, FormGroup, matchWith, required } from '~app/shared/form';
 
-type PasswordRequestData = { login: string };
-type PasswordChangeData = { password: string; confirm: string };
-type PasswordChangeError = 'EMAIL_UNDEFINED' | 'ACCOUNT_NOT_EXIST' | 'TOKEN_EXPIRED';
+const route = useRoute();
+const router = useRouter();
 
-export default Vue.extend({
-  components: {
-    FormControlState
-  },
-  inject: {
-    auth: AuthInjectKey
-  },
-  data() {
-    return {
-      requestForm: new FormGroup<PasswordRequestData>({
-        login: {
-          validators: [required]
-        }
-      }),
+const auth = inject(AuthInjectKey)!;
 
-      changeForm: new FormGroup<PasswordChangeData>({
-        password: {
-          validators: [required]
-        },
-        confirm: {
-          validators: [required, matchWith('password', 'matchWith')]
-        }
-      }),
-
-      error: '',
-      messages: {
-        EMAIL_UNDEFINED: i18n.t('Sorry, your account has no email address defined. Please contact administrator.'),
-        ACCOUNT_NOT_EXIST: i18n.t('Sorry, there is no account with given username.'),
-        TOKEN_EXPIRED: i18n.t('Sorry, your password reset link has expired.')
-      },
-      loading: false,
-      success: false
-    };
-  },
-  watch: {
-    '$route.query.token': {
-      handler() {
-        this.error = '';
-        this.success = false;
-      }
-    },
-    'requestForm.data': {
-      deep: true,
-      handler() {
-        console.log('requestForm.data watch');
-        if (this.requestForm.validated) {
-          this.requestForm.validate();
-        }
-      }
-    },
-    'changeForm.data': {
-      deep: true,
-      handler() {
-        console.log('changeForm.data watch');
-        console.log('this.changeForm.validated', this.changeForm.validated);
-        console.log('this.changeForm', this.changeForm);
-        if (this.changeForm.validated) {
-          this.changeForm.validate();
-        }
-      }
-    },
-    changeForm: {
-      deep: true,
-      handler() {
-        console.log('changeForm watch');
-      }
-    },
-    state: {
-      deep: true,
-      handler(value) {
-        console.log('jaki mamy state', value);
-      }
+const requestForm = reactive(
+  new FormGroup<{ login: string }>({
+    login: {
+      validators: [required]
     }
-  },
-  methods: {
-    requestLink(): any {
-      this.error = '';
-      this.success = false;
+  })
+);
 
-      if (!this.requestForm.validate()) {
-        return null;
-      }
-
-      this.loading = true;
-      return (
-        this.$api
-          .post('/dupa', this.requestForm.data)
-          // .post('/api/account/password', this.requestForm.data)
-          .then(() => {
-            this.requestForm.reset();
-            this.success = true;
-          })
-          .catch((error: AxiosError) => {
-            if (error.response!.status === 409) {
-              this.error = 'EMAIL_UNDEFINED';
-              return;
-            }
-
-            if (error.response!.status === 400) {
-              this.error = 'ACCOUNT_NOT_EXIST';
-              return;
-            }
-
-            throw error;
-          })
-          .finally(() => {
-            this.loading = false;
-          })
-      );
+const changeForm = reactive(
+  new FormGroup<{ password: string; confirm: string }>({
+    password: {
+      validators: [required]
     },
-
-    changePassword(): any {
-      this.error = '';
-      this.success = false;
-      console.log('changePass');
-      if (!this.changeForm.validate()) {
-        return null;
-      }
-
-      this.loading = true;
-      return this.$api;
-      // .put('/api/account/password', {
-      // .then(() => {
-      //   this.changeForm.reset();
-      //   this.success = true;
-      // })
-      // .catch((error: AxiosError) => {
-      //   if (error.response!.status === 401) {
-      //     this.error = 'TOKEN_EXPIRED';
-      //     return;
-      //   }
-
-      //   throw error;
-      // })
-      // .finally(() => {
-      //   this.loading = false;
-      // })
+    confirm: {
+      validators: [required, matchWith('password', 'matchWith')]
     }
+  })
+);
+
+const error = ref('');
+const success = ref(false);
+const loading = ref(false);
+
+const messages = {
+  EMAIL_UNDEFINED: i18n.t('Sorry, your account has no email address defined. Please contact administrator.'),
+  ACCOUNT_NOT_EXIST: i18n.t('Sorry, there is no account with given username.'),
+  TOKEN_EXPIRED: i18n.t('Sorry, your password reset link has expired.')
+};
+
+watch(
+  () => route.query.token,
+  () => {
+    error.value = '';
+    success.value = false;
   }
-});
+);
+
+watch(
+  () => requestForm.data,
+  () => {
+    if (requestForm.validated) {
+      requestForm.validate();
+    }
+  },
+  { deep: true }
+);
+
+watch(
+  () => changeForm.data,
+  () => {
+    if (changeForm.validated) {
+      changeForm.validate();
+    }
+  },
+  { deep: true }
+);
+
+function requestLink() {
+  error.value = '';
+  success.value = false;
+
+  if (!requestForm.validate()) {
+    return null;
+  }
+
+  loading.value = true;
+  return (
+    // Adjust URL when restoring
+    (router.app.config.globalProperties.$api as any)
+      .post('/dupa', requestForm.data)
+      .then(() => {
+        requestForm.reset();
+        success.value = true;
+      })
+      .catch((err: AxiosError) => {
+        if (err.response!.status === 409) {
+          error.value = 'EMAIL_UNDEFINED';
+          return;
+        }
+        if (err.response!.status === 400) {
+          error.value = 'ACCOUNT_NOT_EXIST';
+          return;
+        }
+        throw err;
+      })
+      .finally(() => {
+        loading.value = false;
+      })
+  );
+}
+
+function changePassword() {
+  error.value = '';
+  success.value = false;
+
+  if (!changeForm.validate()) {
+    return null;
+  }
+
+  loading.value = true;
+  return (
+    // Finish this once endpoint is ready
+    router.app.config.globalProperties.$api as any
+    // .put('/api/account/password', changeForm.data)
+    // .then(() => {
+    //   changeForm.reset();
+    //   success.value = true;
+    // })
+    // .catch((err: AxiosError) => {
+    //   if (err.response!.status === 401) {
+    //     error.value = 'TOKEN_EXPIRED';
+    //     return;
+    //   }
+    //   throw err;
+    // })
+    // .finally(() => {
+    //   loading.value = false;
+    // })
+  );
+}
 </script>
 
 <style lang="scss" scoped>

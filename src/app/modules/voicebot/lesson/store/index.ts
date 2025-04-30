@@ -12,8 +12,6 @@ store.registerModule(NAMESPACE, {
   getters
 });
 
-console.log('hello from create lesson!!!!!!!!!!');
-
 export * from './state';
 export { lessonActions } from './actions';
 export { lessonGetters } from './getters';

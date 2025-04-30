@@ -1,4 +1,4 @@
-import jwtDecode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 export interface AuthToken {
   accessToken: string;
@@ -21,7 +21,6 @@ export interface AuthJwtToken {
 
 // TODO change it when it's done
 export function importAuthToken(response: string): AuthToken {
-  console.log('importAuthToken', response);
   const res = JSON.parse(response);
   const jwt = jwtDecode<AuthJwtToken>(res.accessToken);
 

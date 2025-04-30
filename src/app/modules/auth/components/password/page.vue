@@ -3,11 +3,12 @@
     <div class="col-sm-10 col-md-9 col-lg-7 col-xl-6">
       <password-form-wrapper v-slot="{ form }" autocomplete="off" novalidate>
         <div class="card b-a-0 shadow-sm">
-          <sys-card-header :title="$t('Change Password')" icon="fas fa-unlock-alt"></sys-card-header>
+          <sys-card-header :title="$t('Change Password')" icon="fas fa-unlock-alt" />
 
           <div class="card-body">
-            <password-form :form="form"></password-form>
+            <password-form :form="form" />
           </div>
+
           <div class="card-footer">
             <div class="row">
               <div class="col-sm-8 offset-sm-4">
@@ -24,15 +25,11 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
+<script lang="ts" setup>
 import PasswordForm from './form.vue';
-import PasswordFormWrapper from './wrapper';
+import PasswordFormWrapper from './wrapper.vue';
+import SysCardHeader from '@/components/sys-card-header.vue'; // ← guessing location for `sys-card-header`
+import { useI18n } from 'vue-i18n';
 
-export default Vue.extend({
-  components: {
-    PasswordFormWrapper,
-    PasswordForm
-  }
-});
+const { t } = useI18n();
 </script>

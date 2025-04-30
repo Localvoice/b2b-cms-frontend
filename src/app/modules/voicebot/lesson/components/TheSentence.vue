@@ -1,40 +1,100 @@
+<script lang="ts" setup>
+import { ref, watch, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+import FormControlState from '~app/shared/form/FormControlState.vue';
+import SentenceExample from './SentenceExample.vue';
+import { ValidationTarget } from '~app/shared/types';
+import SentenceExercisesModel from '../models/sentenceExerciseModel';
+import { createSentenceForm } from '../validation/forms';
+
+// Props
+const props = defineProps<{
+  sentenceExercise: SentenceExercisesModel;
+  sentenceIndex: number;
+}>();
+
+// Emits
+const emit = defineEmits<{
+  (e: 'updateSentence', payload: { sentence: string; sentenceIndex: number }): void;
+  (e: 'addSentenceExample', sentenceIndex: number): void;
+  (e: 'insertSentence', sentenceIndex: number): void;
+  (e: 'removeSentence', payload: { sentenceIndex: number; validationIds: string[] }): void;
+  (e: 'updateSentenceExample', payload: any): void;
+  (e: 'insertSentenceExample', payload: any): void;
+  (e: 'removeSentenceExample', payload: any): void;
+  (e: 'savePicture', payload: any): void;
+  (e: 'removePicture', payload: any): void;
+  (e: 'validation', payload: any): void;
+}>();
+
+const { t } = useI18n();
+
+// Form state
+const form = createSentenceForm();
+const validationId = ref('');
+const sentenceExampleValidationIds = ref<string[]>([]);
+const index = computed(() => props.sentenceIndex + 1);
+
+// Watchers
+watch(
+  () => props.sentenceExercise,
+  (newExercise) => {
+    console.log('sentenceExercise', newExercise);
+    validationId.value = `sentence-${props.sentenceIndex}`;
+    form.data = newExercise;
+    emit('validation', {
+      data: form,
+      id: validationId.value,
+      targets: [ValidationTarget.TEST]
+    });
+  },
+  { immediate: true, deep: true }
+);
+
+// Methods
+function setSentenceExampleValidationIds(id: string) {
+  sentenceExampleValidationIds.value.push(id);
+}
+</script>
+
 <template>
   <v-col cols="10" class="offset-md-1">
     <base-card>
-      <v-card-title class="pb-0">{{ $t('labels.sentenceTitle') }}</v-card-title>
-      <v-btn class="ml-n16 mt-10" color="primary" absolute dark small fab d-inline>
+      <v-card-title class="pb-0">{{ t('labels.sentenceTitle') }}</v-card-title>
+
+      <v-btn class="ml-n16 mt-10" color="primary" absolute dark small fab>
         <v-icon>{{ index }}</v-icon>
       </v-btn>
+
       <v-card-text>
-        <form-control-state v-slot:default="{ message }" :errors="form.errors.sentence">
+        <form-control-state v-slot="{ message }" :errors="form.errors.sentence">
           <v-text-field
             :counter="50"
             :error-messages="message"
-            :label="$t('labels.sentenceToLearn')"
-            :placeholder="$t('labels.sentencePlaceholder')"
-            :value="sentenceExercise.sentence"
-            @input="
-              $emit('updateSentence', {
-                sentence: $event,
-                sentenceIndex
-              })
+            :label="t('labels.sentenceToLearn')"
+            :placeholder="t('labels.sentencePlaceholder')"
+            :model-value="props.sentenceExercise.sentence"
+            @update:model-value="
+              (value) => emit('updateSentence', { sentence: value, sentenceIndex: props.sentenceIndex })
             "
           />
         </form-control-state>
-        <v-btn :disabled="false" color="success" class="mr-4" @click="$emit('addSentenceExample', sentenceIndex)">
-          {{ $t('buttons.addSentenceExample') }}
+
+        <v-btn color="success" class="mr-4" @click="emit('addSentenceExample', props.sentenceIndex)">
+          {{ t('buttons.addSentenceExample') }}
         </v-btn>
-        <v-btn :disabled="false" color="primary" class="mr-4" @click="$emit('insertSentence', sentenceIndex)">
-          {{ $t('buttons.addExample') }}
+
+        <v-btn color="primary" class="mr-4" @click="emit('insertSentence', props.sentenceIndex)">
+          {{ t('buttons.addExample') }}
         </v-btn>
+
         <v-btn
-          :disabled="false"
-          color="danger"
+          color="error"
           dark
           class="mr-4"
           @click="
-            $emit('removeSentence', {
-              sentenceIndex,
+            emit('removeSentence', {
+              sentenceIndex: props.sentenceIndex,
               validationIds: [...sentenceExampleValidationIds, validationId]
             })
           "
@@ -43,88 +103,24 @@
         </v-btn>
       </v-card-text>
     </base-card>
+
     <div
-      v-for="(sentenceExample, sentenceExampleIndex) in sentenceExercise.sentenceExample"
+      v-for="(sentenceExample, sentenceExampleIndex) in props.sentenceExercise.sentenceExample"
       :key="sentenceExampleIndex"
     >
       <sentence-example
-        :sentence="sentenceExercise.sentence"
-        :sentence-index="sentenceIndex"
+        :sentence="props.sentenceExercise.sentence"
+        :sentence-index="props.sentenceIndex"
         :sentence-example="sentenceExample"
         :sentence-example-index="sentenceExampleIndex"
-        @updateSentenceExample="$emit('updateSentenceExample', $event)"
-        @insertSentenceExample="$emit('insertSentenceExample', $event)"
-        @removeSentenceExample="$emit('removeSentenceExample', $event)"
-        @savePicture="$emit('savePicture', $event)"
-        @removePicture="$emit('removePicture', $event)"
-        @validation="$emit('validation', $event)"
+        @updateSentenceExample="emit('updateSentenceExample', $event)"
+        @insertSentenceExample="emit('insertSentenceExample', $event)"
+        @removeSentenceExample="emit('removeSentenceExample', $event)"
+        @savePicture="emit('savePicture', $event)"
+        @removePicture="emit('removePicture', $event)"
+        @validation="emit('validation', $event)"
         @sentenceExampleValidationId="setSentenceExampleValidationIds"
-      ></sentence-example>
+      />
     </div>
   </v-col>
 </template>
-
-<script lang="ts">
-import Vue, { PropType } from 'vue';
-import { FormControlState } from '~app/shared/form';
-import { ValidationTarget } from '~app/shared/types';
-import SentenceExample from './SentenceExample.vue';
-import SentenceExercisesModel from '../models/sentenceExerciseModel';
-import { createSentenceForm } from '../validation/forms';
-
-export default Vue.extend({
-  components: {
-    SentenceExample,
-    FormControlState
-  },
-  props: {
-    sentenceExercise: {
-      type: Object as PropType<SentenceExercisesModel>,
-      default: {
-        sentence: '',
-        sentenceExample: []
-      }
-    },
-    sentenceIndex: {
-      type: Number,
-      default: 0
-    }
-  },
-  data: () => {
-    const form = createSentenceForm();
-    return {
-      index: 0,
-      validationId: '',
-      sentenceExampleValidationIds: [] as string[],
-      form
-    };
-  },
-  watch: {
-    sentenceIndex: {
-      handler(sentenceIndex) {
-        this.index = sentenceIndex + 1;
-      },
-      immediate: true
-    },
-    sentenceExercise: {
-      handler(sentenceExercise) {
-        console.log('sentenceExercise', sentenceExercise);
-        this.validationId = `sentence-${this.sentenceIndex}`;
-        this.form.data = sentenceExercise;
-        this.$emit('validation', {
-          data: this.form,
-          id: this.validationId,
-          targets: [ValidationTarget.TEST]
-        });
-      },
-      immediate: true,
-      deep: true
-    }
-  },
-  methods: {
-    setSentenceExampleValidationIds(validationId: string) {
-      this.sentenceExampleValidationIds.push(validationId);
-    }
-  }
-});
-</script>

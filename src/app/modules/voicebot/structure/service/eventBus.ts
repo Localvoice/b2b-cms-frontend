@@ -1,3 +1,3 @@
-import Vue from 'vue';
+// import Vue from 'vue';
 
-export const VoicebotEventBus = new Vue();
+// export const VoicebotEventBus = new Vue();
