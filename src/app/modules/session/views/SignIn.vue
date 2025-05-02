@@ -10,6 +10,8 @@
             class="text-input"
             :rules="[emailRules.required, emailRules.email]"
             required
+            rounded
+            variant="outlined"
           ></v-text-field>
           <v-text-field
             type="password"
@@ -18,19 +20,19 @@
             class="text-input"
             :rules="[passwordRules.required]"
             required
+            rounded
+            variant="outlined"
           ></v-text-field>
           <div class="password-reset-wrapper">
             <router-link to="/session/password" class="password-reset">Przypomnij hasło</router-link>
           </div>
-          <v-btn type="submit" class="submit-button" :loading="loading" block @click.prevent="loginUser"
-            >Zaloguj się</v-btn
-          >
+          <v-btn type="submit" class="submit-button" :loading="loading" block>Zaloguj się</v-btn>
           <p class="login-text">Lub zaloguj się poprzez</p>
-          <div class="socials-wrapper">
-            <button class="social-button">
+          <div class="d-flex justify-center mb-6">
+            <button class="social-button ma-2">
               <img :src="GoogleIcon" alt="google" />
             </button>
-            <button class="social-button">
+            <button class="social-button ma-2">
               <img :src="FacebookIcon" alt="google" />
             </button>
           </div>
@@ -55,7 +57,6 @@ import { useRouter, useRoute } from 'vue-router';
 import GoogleIcon from '../../../../assets/images/google.svg';
 import FacebookIcon from '../../../../assets/images/facebook.svg';
 
-const show = ref(false);
 const email = ref('');
 const password = ref('');
 const loading = ref(false);

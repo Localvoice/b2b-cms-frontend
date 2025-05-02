@@ -28,7 +28,13 @@ export const appRoutes: RouteRecordRaw[] = [
         path: 'sign-in',
         name: 'sign-in',
         meta: { title: 'Zaloguj się' },
-        component: () => import(/* webpackChunkName: "session" */ '~app/modules/session/views/SignIn.vue')
+        component: () => import(/* webpackChunkName: "session-signin" */ '~app/modules/session/views/SignIn.vue')
+      },
+      {
+        path: 'sign-up',
+        name: 'sign-up',
+        meta: { title: 'Zarejestruj się' },
+        component: () => import(/* webpackChunkName: "session-signup" */ '~app/modules/session/views/SignUp.vue')
       }
     ]
   },
