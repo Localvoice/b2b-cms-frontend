@@ -1,48 +1,34 @@
 import { AuthPermission } from '~app/modules/auth';
 
-export function getMenuItems() {
-  return [
-    {
-      id: 1,
-      title: 'Voicebot',
-      icon: 'mdi-view-dashboard',
-      group: 'voicebot',
-      permissions: [AuthPermission.VOICEBOT],
-      children: [
-        {
-          title: 'List of Lessons',
-          icon: 'mdi-circle-medium',
-          to: 'list-of-lessons'
-        },
-        {
-          title: 'Create Lesson',
-          icon: 'mdi-circle-medium',
-          to: 'create-lesson'
-        },
-        {
-          title: 'Create Course',
-          icon: 'mdi-circle-medium',
-          to: 'create-course'
-        },
-        {
-          title: 'Monthly Challenge',
-          icon: 'mdi-circle-medium',
-          to: 'monthly-challenge'
-        }
-      ]
-    },
-    {
-      id: 2,
-      title: 'Chatbot',
-      icon: 'mdi-apps-box',
-      group: 'chatbot',
-      children: [
-        {
-          title: 'List of Lessons',
-          icon: 'mdi-circle-medium',
-          to: 'list-of-lessons'
-        }
-      ]
-    }
-  ];
-}
+export const menuItems = [
+  {
+    id: 1,
+    title: 'Strona główna',
+    icon: 'mdi-home',
+    to: '/app'
+  },
+  {
+    id: 2,
+    title: 'Kursy',
+    icon: 'mdi-school-outline',
+    to: '/app/courses'
+  },
+  {
+    id: 3,
+    title: 'Lekcje',
+    icon: 'mdi-book-open-page-variant-outline',
+    to: '/app/lessons'
+  },
+  {
+    id: 4,
+    title: 'Statystyki',
+    icon: 'mdi-circle-double',
+    to: '/app/stats'
+  },
+  {
+    id: 5,
+    title: 'Ustawienia',
+    icon: 'mdi-cog',
+    to: '/app/settings'
+  }
+];

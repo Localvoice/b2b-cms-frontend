@@ -23,6 +23,7 @@ export const appRoutes: RouteRecordRaw[] = [
     component: RouterView,
     name: 'session',
     redirect: '/session/sign-in',
+    meta: { hideNavigation: true },
     children: [
       {
         path: 'sign-in',
