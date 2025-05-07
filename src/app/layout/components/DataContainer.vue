@@ -1,9 +1,9 @@
 <template>
-  <v-main app>
+  <v-main app class="main-wrapper">
     <div v-if="showNavigation">
       <Appbar />
     </div>
-    <v-container class="pt-10">
+    <v-container class="pa-8">
       <router-view />
     </v-container>
   </v-main>
@@ -25,5 +25,10 @@ const showNavigation = computed(() => !route.meta.hideNavigation);
   position: relative;
   display: flex;
   flex-direction: column;
+}
+.main-wrapper {
+  background-color: #f9f9fb;
+  height: 100%;
+  min-height: 100vh;
 }
 </style>
