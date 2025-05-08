@@ -16,8 +16,26 @@
         <h4>Twoje treści</h4>
       </v-col>
       <v-col class="d-flex align-center justify-end">
-        <v-btn variant="outlined" prepend-icon="mdi-filter-outline" class="outlined-btn mr-3">Filtry</v-btn>
-        <v-btn icon="mdi-magnify" variant="outlined" rounded="md" class="search-btn" size="small"></v-btn>
+        <FiltersDialog />
+        <v-sheet :class="['d-flex', { border: activeSearch }]" rounded="lg" :width="activeSearch ? '300' : 'auto'">
+          <v-text-field
+            ref="inputRef"
+            variant="plain"
+            density="compact"
+            placeholder="Wyszukaj"
+            class="px-3"
+            hide-details
+            v-if="activeSearch"
+          ></v-text-field>
+          <v-btn
+            :icon="activeSearch ? 'mdi-close' : 'mdi-magnify'"
+            :variant="activeSearch ? 'plain' : 'outlined'"
+            rounded="md"
+            class="search-btn"
+            size="small"
+            @click="activeSearch = !activeSearch"
+          ></v-btn>
+        </v-sheet>
       </v-col>
     </v-row>
     <v-tabs class="tabs mb-3 w-full" v-model="activeTab" @update:modelValue="onTabChange">
@@ -45,16 +63,19 @@
 import Card from '~app/shared/base/Card.vue';
 import Header from './Header.vue';
 import StatsTile from './StatsTile.vue';
+import FiltersDialog from './FiltersDialog.vue';
 import Table from './Table.vue';
 import { overviewStats } from '../dummyData/overviewStats';
 import { courses } from '../dummyData/courses';
-import { ref, watch } from 'vue';
+import { ref, watch, nextTick } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
 const router = useRouter();
 
 const activeTab = ref(route.query.tab || 'courses');
+const activeSearch = ref(false);
+const inputRef = ref(null);
 
 const onTabChange = (newTab) => {
   router.replace({
@@ -73,6 +94,13 @@ watch(
     }
   }
 );
+
+watch(activeSearch, async (newActiveSearch) => {
+  if (newActiveSearch) {
+    await nextTick();
+    inputRef.value.focus();
+  }
+});
 </script>
 
 <style lang="scss">
