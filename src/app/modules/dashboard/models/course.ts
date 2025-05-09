@@ -14,6 +14,8 @@ class CourseModel {
   isPremium: boolean | undefined = undefined;
 
   version: string | undefined = undefined;
+
+  status: string | undefined = undefined;
 }
 
 export default CourseModel;

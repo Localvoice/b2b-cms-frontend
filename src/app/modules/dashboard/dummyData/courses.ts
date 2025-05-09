@@ -7,7 +7,8 @@ export const courses = [
     level: 'easy',
     category: 'Przygotowania do egzaminu',
     isPremium: true,
-    version: '1.1'
+    version: '1.1',
+    status: 'published'
   },
   {
     id: 2,
@@ -17,7 +18,8 @@ export const courses = [
     level: 'medium',
     category: 'Przygotowania do egzaminu',
     isPremium: false,
-    version: '1.1'
+    version: '1.1',
+    status: 'published'
   },
   {
     id: 3,
@@ -27,7 +29,8 @@ export const courses = [
     level: 'hard',
     category: 'Business English',
     isPremium: false,
-    version: '1.1'
+    version: '1.1',
+    status: 'published'
   },
   {
     id: 4,
@@ -37,6 +40,7 @@ export const courses = [
     level: 'easy',
     category: 'Przygotowania do egzaminu',
     isPremium: false,
-    version: '1.1'
+    version: '1.1',
+    status: 'published'
   }
 ];
