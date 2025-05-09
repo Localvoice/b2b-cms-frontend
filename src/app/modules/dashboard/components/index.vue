@@ -43,7 +43,7 @@
       <v-tab value="lessons">Lekcje</v-tab>
     </v-tabs>
     <div class="w-full mb-12">
-      <Table :courses="courses" />
+      <Table />
     </div>
     <v-row class="w-full" justify="space-between" align="center">
       <v-col cols="auto">
@@ -65,13 +65,17 @@ import Header from './Header.vue';
 import StatsTile from './StatsTile.vue';
 import FiltersDialog from './FiltersDialog.vue';
 import Table from './Table.vue';
+import { coursesListActions } from '../store';
+import { useStore } from 'vuex';
 import { overviewStats } from '../dummyData/overviewStats';
-import { courses } from '../dummyData/courses';
-import { ref, watch, nextTick } from 'vue';
+import { ref, watch, nextTick, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
+const store = useStore();
 const route = useRoute();
 const router = useRouter();
+
+const fetchCoursesList = () => store.dispatch(coursesListActions.fetchCoursesList, { pagination: 1 });
 
 const activeTab = ref(route.query.tab || 'courses');
 const activeSearch = ref(false);
@@ -100,6 +104,10 @@ watch(activeSearch, async (newActiveSearch) => {
     await nextTick();
     inputRef.value.focus();
   }
+});
+
+onMounted(() => {
+  fetchCoursesList();
 });
 </script>
 

@@ -71,23 +71,17 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  courses: {
-    id: number;
-    title: string;
-    type: string;
-    lessonsCount: number;
-    level: string;
-    category: string;
-    isPremium: boolean;
-    version: string;
-  };
-}>();
+import { useStore } from 'vuex';
+import { coursesListGetters } from '../store';
+import { computed } from 'vue';
+
+const store = useStore();
 const difficulty = {
   easy: { label: 'Łatwy', color: 'success' },
   medium: { label: 'Średni', color: 'warning' },
   hard: { label: 'Trudny', color: 'error' }
 };
+const courses = computed(() => store.getters[coursesListGetters.getCoursesList]);
 </script>
 
 <style lang="scss">
