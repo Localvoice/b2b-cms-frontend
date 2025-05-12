@@ -51,10 +51,14 @@
           </div>
         </td>
         <td>
-          <v-chip color="pink">{{ course.category }}</v-chip>
+          <v-tooltip :text="course.category" location="bottom">
+            <template v-slot:activator="{ props }">
+              <v-chip size="small" color="pink" v-bind="props">{{ truncate(course.category) }}</v-chip>
+            </template>
+          </v-tooltip>
         </td>
         <td>
-          <v-chip :color="course.isPremium ? 'purple' : 'grey'">
+          <v-chip size="small" :color="course.isPremium ? 'purple' : 'grey'">
             <v-icon v-if="course.isPremium" class="text-warning mr-1" icon="mdi-seal" size="medium"></v-icon>
             {{ course.isPremium ? 'Premium' : 'Darmowy' }}
           </v-chip>
@@ -82,6 +86,10 @@ const difficulty = {
   hard: { label: 'Trudny', color: 'error' }
 };
 const courses = computed(() => store.getters[coursesListGetters.getCoursesList]);
+
+const truncate = (text: string, maxLength = 10) => {
+  return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+};
 </script>
 
 <style lang="scss">
