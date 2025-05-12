@@ -13,6 +13,11 @@ export const appRoutes: RouteRecordRaw[] = [
         path: '/app',
         meta: { title: 'Strona główna' },
         component: () => import(/* webpackChunkName: "dashboard" */ '~app/modules/dashboard/components/index.vue')
+      },
+      {
+        path: '/app/courses',
+        meta: { title: 'Twoje Kursy' },
+        component: () => import(/* webpackChunkName: "courses" */ '~app/modules/courses/components/index.vue')
       }
     ]
   },
