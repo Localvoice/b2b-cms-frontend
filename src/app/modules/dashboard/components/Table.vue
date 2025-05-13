@@ -34,7 +34,7 @@
       <tr v-for="course in courses" :key="course.id">
         <td>
           <div>
-            <router-link to="/app/courses" class="d-inline-block">
+            <router-link to="/app/courses/course-id" class="d-inline-block">
               <h6 class="table-text">{{ course.title }}</h6>
             </router-link>
           </div>
