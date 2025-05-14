@@ -84,44 +84,50 @@
               <v-btn class="confirm-btn" rounded>Stwórz nową lekcję</v-btn>
             </v-col>
           </v-row>
-          <v-card class="pa-2" rounded="lg" border>
-            <v-row justify="space-between" align="center">
-              <v-col cols="auto">
-                <div class="d-flex align-center">
-                  <v-icon icon="mdi-drag-vertical" class="cursor-grab mr-1"></v-icon>
-                  <v-chip class="lesson-chip mr-2" color="purple" variant="tonal">1</v-chip>
-                  <p class="muted-text">Pytania o trasę i kierunek</p>
-                </div>
-              </v-col>
-              <v-col cols="auto">
-                <div class="d-flex align-center">
-                  <div class="status-indicatior testing-status mr-2"></div>
-                  <p class="status-text testing-status">Lekcja testowana</p>
-                </div>
-              </v-col>
-              <v-col cols="auto">
-                <v-menu location="start">
-                  <template v-slot:activator="{ props }">
-                    <v-btn variant="plain" icon="mdi-dots-horizontal" v-bind="props"></v-btn>
-                  </template>
-                  <v-list class="py-0">
-                    <v-list-item class="pa-0">
-                      <v-btn class="menu-btn" variant="plain">Edytuj</v-btn>
-                    </v-list-item>
-                    <v-list-item class="pa-0">
-                      <v-btn class="menu-btn" variant="plain">Odepnij lekcję od tego kursu</v-btn>
-                    </v-list-item>
-                    <v-divider></v-divider>
-                    <v-list-item class="pa-0">
-                      <v-btn class="menu-btn text-error" variant="plain" append-icon="mdi-trash-can-outline"
-                        >Usuń</v-btn
-                      >
-                    </v-list-item>
-                  </v-list>
-                </v-menu>
-              </v-col>
-            </v-row>
-          </v-card>
+          <draggable :list="lessonsList" handle="#drag-handle" item-key="id" @end="onDragEnd">
+            <template #item="{ element, index }">
+              <v-card class="pa-2 mb-4" rounded="lg" border>
+                <v-row justify="space-between" align="center">
+                  <v-col cols="auto">
+                    <div class="d-flex align-center">
+                      <v-icon id="drag-handle" icon="mdi-drag-vertical" class="cursor-grab mr-1"></v-icon>
+                      <v-chip class="lesson-chip mr-2" color="purple" variant="tonal">{{ index + 1 }}</v-chip>
+                      <p class="muted-text">{{ element.title }}</p>
+                    </div>
+                  </v-col>
+                  <v-col cols="auto">
+                    <div class="d-flex align-center">
+                      <div :class="['status-indicatior mr-2', getStatusClass(element.status)]"></div>
+                      <p :class="['status-text', getStatusClass(element.status)]">
+                        {{ getStatusLabel(element.status) }}
+                      </p>
+                    </div>
+                  </v-col>
+                  <v-col cols="auto">
+                    <v-menu location="start">
+                      <template v-slot:activator="{ props }">
+                        <v-btn variant="plain" icon="mdi-dots-horizontal" v-bind="props"></v-btn>
+                      </template>
+                      <v-list class="py-0">
+                        <v-list-item class="pa-0">
+                          <v-btn class="menu-btn" variant="plain">Edytuj</v-btn>
+                        </v-list-item>
+                        <v-list-item class="pa-0">
+                          <v-btn class="menu-btn" variant="plain">Odepnij lekcję od tego kursu</v-btn>
+                        </v-list-item>
+                        <v-divider></v-divider>
+                        <v-list-item class="pa-0">
+                          <v-btn class="menu-btn text-error" variant="plain" append-icon="mdi-trash-can-outline"
+                            >Usuń</v-btn
+                          >
+                        </v-list-item>
+                      </v-list>
+                    </v-menu>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </template>
+          </draggable>
         </v-card>
       </v-col>
     </v-row>
@@ -129,6 +135,7 @@
 </template>
 
 <script setup lang="ts">
+import draggable from 'vuedraggable';
 import Card from '~app/shared/base/Card.vue';
 import CourseImage from '../../../../assets/images/course-image.png';
 import LessonsIcon from '../../../../assets/images/lessons-icon.png';
@@ -137,10 +144,38 @@ import DateIcon from '../../../../assets/images/date-icon.png';
 import ChangesIcon from '../../../../assets/images/changes-icon.png';
 import { ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { lessons } from '../dummyData/lessons';
 
 const route = useRoute();
 const router = useRouter();
 const activeTab = ref(route.query.tab || 'content');
+const lessonsList = ref(lessons);
+
+const getStatusLabel = (status: string) => {
+  switch (status) {
+    case 'testing':
+      return 'Lekcja testowana';
+    case 'draft':
+      return 'Lekcja w wersji roboczej';
+    case 'published':
+      return 'Lekcja opublikowana';
+  }
+};
+
+const getStatusClass = (status: string) => {
+  switch (status) {
+    case 'testing':
+      return 'testing-status';
+    case 'draft':
+      return 'draft-status';
+    case 'published':
+      return 'published-status';
+  }
+};
+
+const onDragEnd = () => {
+  console.log('Drag end', lessonsList.value);
+};
 
 const onTabChange = (newTab: string) => {
   router.replace({
@@ -159,6 +194,10 @@ watch(
     }
   }
 );
+
+watch(lessonsList, (newLessonsList) => {
+  console.log('lessonsList', newLessonsList);
+});
 </script>
 
 <style lang="scss">
@@ -236,5 +275,6 @@ watch(
   font-weight: 600;
   letter-spacing: 0;
   display: flex;
+  justify-content: space-between;
 }
 </style>
