@@ -81,7 +81,7 @@
               <p class="muted-text">3 lekcje</p>
             </v-col>
             <v-col cols="auto">
-              <v-btn class="confirm-btn" rounded>Stwórz nową lekcję</v-btn>
+              <AddLessonDialog />
             </v-col>
           </v-row>
           <draggable :list="lessonsList" handle="#drag-handle" item-key="id" @end="onDragEnd">
@@ -145,6 +145,7 @@ import ChangesIcon from '../../../../assets/images/changes-icon.png';
 import { ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { lessons } from '../dummyData/lessons';
+import AddLessonDialog from './AddLessonDialog.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -225,13 +226,6 @@ watch(lessonsList, (newLessonsList) => {
   color: #6b708a;
   font-weight: 600;
   font-size: 13px;
-}
-.confirm-btn {
-  background-color: #fe5b14;
-  font-weight: 700;
-  font-size: 14px;
-  color: #fff;
-  text-transform: initial;
 }
 .lesson-chip {
   font-size: 13px;
