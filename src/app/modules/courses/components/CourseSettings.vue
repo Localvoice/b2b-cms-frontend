@@ -1,0 +1,268 @@
+<template>
+  <v-row class="w-full">
+    <v-col lg="3">
+      <v-card class="pa-8" color="grey-lighten-5" border rounded="lg">
+        <p class="card-label mb-4">IKONA KURSU</p>
+        <img class="w-full mb-4" :src="imageUrl" alt="course-image" />
+        <v-btn @click="triggerFileInput" class="upload-btn w-full" rounded>Zmień zdjęcie</v-btn>
+        <input type="file" ref="fileInput" accept="image/*" @change="handleFileChange" class="d-none" />
+      </v-card>
+    </v-col>
+    <v-col lg="9">
+      <v-card class="pa-8" color="grey-lighten-5" border rounded="lg">
+        <p class="card-label mb-4">USTAWIENIA KURSU</p>
+        <form>
+          <h6 class="mb-2">Tytuł</h6>
+          <v-text-field
+            id="title"
+            density="compact"
+            rounded
+            variant="outlined"
+            bg-color="white"
+            required
+            :rules="[titleRules.required]"
+            placeholder="Wpisz tytuł"
+            v-model="form.title"
+          ></v-text-field>
+          <h6 class="mb-2">Opis</h6>
+          <v-text-field
+            id="description"
+            density="compact"
+            rounded
+            variant="outlined"
+            bg-color="white"
+            required
+            :rules="[descriptionRules.required]"
+            placeholder="Wpisz opis"
+            v-model="form.description"
+          ></v-text-field>
+          <h6>Poziom trudności</h6>
+          <v-radio-group v-model="form.difficultyLevel" hide-details>
+            <v-row class="w-full mt-1 mb-4">
+              <v-col cols="auto" class="pa-1">
+                <v-chip
+                  :color="form.difficultyLevel === 'a1' ? 'purple' : 'white'"
+                  :variant="form.difficultyLevel === 'a1' ? 'tonal' : 'elevated'"
+                >
+                  <v-radio
+                    :color="form.difficultyLevel === 'a1' ? 'purple' : 'gray'"
+                    density="compact"
+                    hide-details
+                    label="A1"
+                    value="a1"
+                  ></v-radio>
+                </v-chip>
+              </v-col>
+              <v-col cols="auto" class="pa-1">
+                <v-chip
+                  :color="form.difficultyLevel === 'a2' ? 'purple' : 'white'"
+                  :variant="form.difficultyLevel === 'a2' ? 'tonal' : 'elevated'"
+                >
+                  <v-radio
+                    :color="form.difficultyLevel === 'a2' ? 'purple' : 'gray'"
+                    density="compact"
+                    hide-details
+                    label="A2"
+                    value="a2"
+                  ></v-radio>
+                </v-chip>
+              </v-col>
+              <v-col cols="auto" class="pa-1">
+                <v-chip
+                  :color="form.difficultyLevel === 'b1' ? 'purple' : 'white'"
+                  :variant="form.difficultyLevel === 'b1' ? 'tonal' : 'elevated'"
+                >
+                  <v-radio
+                    :color="form.difficultyLevel === 'b1' ? 'purple' : 'gray'"
+                    density="compact"
+                    hide-details
+                    label="B1"
+                    value="b1"
+                  ></v-radio>
+                </v-chip>
+              </v-col>
+              <v-col cols="auto" class="pa-1">
+                <v-chip
+                  :color="form.difficultyLevel === 'b2' ? 'purple' : 'white'"
+                  :variant="form.difficultyLevel === 'b2' ? 'tonal' : 'elevated'"
+                >
+                  <v-radio
+                    :color="form.difficultyLevel === 'b2' ? 'purple' : 'gray'"
+                    density="compact"
+                    hide-details
+                    label="B2"
+                    value="b2"
+                  ></v-radio>
+                </v-chip>
+              </v-col>
+              <v-col cols="auto" class="pa-1">
+                <v-chip
+                  :color="form.difficultyLevel === 'c1' ? 'purple' : 'white'"
+                  :variant="form.difficultyLevel === 'c1' ? 'tonal' : 'elevated'"
+                >
+                  <v-radio
+                    :color="form.difficultyLevel === 'c1' ? 'purple' : 'gray'"
+                    density="compact"
+                    hide-details
+                    label="C1"
+                    value="c1"
+                  ></v-radio>
+                </v-chip>
+              </v-col>
+              <v-col cols="auto" class="pa-1">
+                <v-chip
+                  :color="form.difficultyLevel === 'c2' ? 'purple' : 'white'"
+                  :variant="form.difficultyLevel === 'c2' ? 'tonal' : 'elevated'"
+                >
+                  <v-radio
+                    :color="form.difficultyLevel === 'c2' ? 'purple' : 'gray'"
+                    density="compact"
+                    hide-details
+                    label="C2"
+                    value="c2"
+                  ></v-radio>
+                </v-chip>
+              </v-col>
+            </v-row>
+          </v-radio-group>
+          <h6 class="mb-2">Kategoria</h6>
+          <form @submit.prevent="addCategory">
+            <v-sheet :class="['d-flex border px-1 pb-2 mb-8', { 'pt-2': enteredCategory }]" rounded="xl">
+              <v-text-field
+                v-model="form.category"
+                variant="plain"
+                density="compact"
+                placeholder="Wpisz kategorie"
+                class="px-3"
+                hide-details
+                v-if="!enteredCategory"
+              ></v-text-field>
+              <v-chip color="pink" v-if="enteredCategory">
+                {{ enteredCategory }}
+                <v-btn
+                  size="small"
+                  density="compact"
+                  variant="plain"
+                  icon="mdi-close"
+                  class="ml-1"
+                  @click="resetCategory"
+                ></v-btn>
+              </v-chip>
+            </v-sheet>
+          </form>
+          <h6 class="mb-2">Typ subskrypcji</h6>
+          <v-select
+            :items="['Darmowa', 'Premium']"
+            density="compact"
+            v-model="form.subscriptionType"
+            bg-color="white"
+            rounded
+            class="select mb-4"
+          >
+          </v-select>
+          <h6 class="mb-2">Wersja</h6>
+          <v-text-field
+            id="version"
+            density="compact"
+            rounded
+            variant="outlined"
+            bg-color="white"
+            required
+            :rules="[versionRules.required]"
+            placeholder="Wpisz wersje"
+            v-model="form.version"
+          ></v-text-field>
+        </form>
+        <p class="card-label mb-4">INNE OPCJE</p>
+        <v-btn class="delete-btn" rounded>Usuń kurs</v-btn>
+      </v-card>
+    </v-col>
+  </v-row>
+</template>
+
+<script setup lang="ts">
+import { ref, computed, reactive } from 'vue';
+import { useStore } from 'vuex';
+import CourseImageLarge from '../../../../assets/images/course-image-large.png';
+import { courseDetailsGetters } from '../store';
+
+const form = reactive({
+  title: '',
+  description: '',
+  difficultyLevel: '',
+  category: '',
+  subscriptionType: 'Darmowa',
+  version: ''
+});
+
+const titleRules = {
+  required: (v: string) => !!v || 'Tytuł jest wymagany'
+};
+
+const descriptionRules = {
+  required: (v: string) => !!v || 'Opis jest wymagany'
+};
+
+const versionRules = {
+  required: (v: string) => !!v || 'Wersja jest wymagany'
+};
+
+const store = useStore();
+
+const fileInput = ref<HTMLInputElement | null>(null);
+const imageUrl = ref<string | null>(CourseImageLarge);
+const category = ref('');
+const enteredCategory = ref<string | null>(null);
+
+const triggerFileInput = () => {
+  fileInput.value?.click();
+};
+
+const handleFileChange = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  const file = target.files?.[0];
+
+  if (file && file.type.startsWith('image/')) {
+    imageUrl.value = URL.createObjectURL(file);
+  }
+};
+
+const addCategory = (e: Event) => {
+  e.stopPropagation();
+  if (form.category === '') return;
+
+  enteredCategory.value = form.category;
+  form.category = '';
+};
+
+const resetCategory = () => {
+  enteredCategory.value = null;
+};
+
+const isEditing = computed(() => store.getters[courseDetailsGetters.getEditingState]);
+</script>
+
+<style lang="scss">
+.card-label {
+  color: #6b708a;
+  font-weight: 600;
+  font-size: 12px;
+}
+.upload-btn {
+  background-color: #7b62fe;
+  font-weight: 700;
+  font-size: 14px;
+  color: #fff;
+  text-transform: initial;
+}
+.select .v-field__outline {
+  display: none;
+}
+.delete-btn {
+  background-color: #dd1a43;
+  font-weight: 700;
+  font-size: 14px;
+  color: #fff;
+  text-transform: initial;
+}
+</style>
