@@ -47,7 +47,7 @@
 import Card from '~app/shared/base/Card.vue';
 import Search from '~app/shared/base/Search.vue';
 import Header from './Header.vue';
-import StatsTile from './StatsTile.vue';
+import StatsTile from '~app/shared/stats/StatsTile.vue';
 import FiltersDialog from './FiltersDialog.vue';
 import Table from './Table.vue';
 import { coursesListActions } from '../store';

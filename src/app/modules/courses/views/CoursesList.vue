@@ -52,7 +52,7 @@
 <script setup>
 import Card from '~app/shared/base/Card.vue';
 import Search from '~app/shared/base/Search.vue';
-import StatsTile from '../../dashboard/components/StatsTile.vue';
+import StatsTile from '~app/shared/stats/StatsTile.vue';
 import FiltersDialog from '../../dashboard/components/FiltersDialog.vue';
 import AddCourseDialog from '../components/AddCourseDialog.vue';
 import Table from '../../dashboard/components/Table.vue';
