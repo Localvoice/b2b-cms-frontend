@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable array-callback-return */
 import { createMutationFactory, createMutationMap } from '~app/shared/vuex';
-import { NAMESPACE, CoursesListState } from './state';
+import { NAMESPACE, CoursesListState, ActiveView } from './state';
 import CourseModel from '../models/course';
 import LessonModel from '../../lessons/models/lesson';
 
@@ -12,7 +12,10 @@ export const mutations = {
     state.courses.coursesList = coursesList;
   }),
   setLessonsList: createMutation((state, lessonsList: LessonModel[]) => {
-    state.courses.coursesList = lessonsList;
+    state.lessons.lessonsList = lessonsList;
+  }),
+  setActiveView: createMutation((state, activeView: ActiveView) => {
+    state.activeView = activeView;
   })
 };
 

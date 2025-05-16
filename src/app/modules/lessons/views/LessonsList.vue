@@ -67,10 +67,12 @@ const store = useStore();
 const route = useRoute();
 const router = useRouter();
 
-const fetchCoursesList = () => store.dispatch(coursesListActions.fetchCoursesList, { pagination: 1 });
+const fetchLessonsList = () => store.dispatch(coursesListActions.fetchLessonsList, { pagination: 1 });
+const setActiveView = (activeView) => store.dispatch(coursesListActions.setActiveView, { activeView });
 
 onMounted(() => {
-  fetchCoursesList();
+  fetchLessonsList();
+  setActiveView('lessons');
 });
 </script>
 

@@ -3,9 +3,12 @@ import { createEntityAdapter, EntityAdapter } from '~app/shared/vuex';
 import CourseModel from '../models/course';
 import LessonModel from '../../lessons/models/lesson';
 
+export type ActiveView = 'courses' | 'lessons';
+
 export const NAMESPACE = 'coursesList';
 
 export interface CoursesListState {
+  activeView: ActiveView;
   courses: {
     coursesList: CourseModel[];
   };
@@ -18,6 +21,7 @@ export const CoursesListEntityAdapter: EntityAdapter<CourseModel> = createEntity
 
 export function initialState(): CoursesListState {
   return {
+    activeView: 'courses',
     courses: {
       coursesList: []
     },

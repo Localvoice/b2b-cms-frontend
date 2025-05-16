@@ -1,6 +1,6 @@
 <template>
   <v-table class="w-full" rounded="lg">
-    <thead>
+    <thead v-if="activeView === 'courses'">
       <tr>
         <th class="text-left">KURS</th>
         <th class="text-left">
@@ -30,7 +30,37 @@
         </th>
       </tr>
     </thead>
-    <tbody>
+    <thead v-if="activeView === 'lessons'">
+      <tr>
+        <th class="text-left">KURS</th>
+        <th class="text-left">
+          <div class="d-flex align-center">
+            <span class="mr-1">TYP</span>
+            <v-btn icon="mdi-swap-vertical" variant="plain" size="x-small"></v-btn>
+          </div>
+        </th>
+        <th class="text-left">
+          <div class="d-flex align-center">
+            <span class="mr-1">POZIOM</span>
+            <v-btn icon="mdi-swap-vertical" variant="plain" size="x-small"></v-btn>
+          </div>
+        </th>
+        <th class="text-left">KATEGORIA</th>
+        <th class="text-left">
+          <div class="d-flex align-center">
+            <span class="mr-1">PLAN</span>
+            <v-btn icon="mdi-swap-vertical" variant="plain" size="x-small"></v-btn>
+          </div>
+        </th>
+        <th class="text-left">
+          <div class="d-flex align-center">
+            <span class="mr-1">WERSJA</span>
+            <v-btn icon="mdi-swap-vertical" variant="plain" size="x-small"></v-btn>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody v-if="activeView === 'courses'">
       <tr v-for="course in courses" :key="course.id">
         <td>
           <div>
@@ -71,6 +101,47 @@
         </td>
       </tr>
     </tbody>
+    <tbody v-if="activeView === 'lessons'">
+      <tr v-for="lesson in lessons" :key="lesson.id">
+        <td>
+          <div>
+            <router-link to="/app/lessons/lesson-id" class="d-inline-block">
+              <h6 class="table-text">{{ lesson.title }}</h6>
+            </router-link>
+          </div>
+        </td>
+        <td>
+          <p class="table-text">{{ lesson.type }}</p>
+        </td>
+        <td>
+          <div class="d-flex align-center">
+            <v-icon :class="`text-${difficulty[lesson.level].color} mr-2`" icon="mdi-poll" size="x-small"></v-icon>
+            <span class="table-text">
+              {{ difficulty[lesson.level].label }}
+            </span>
+          </div>
+        </td>
+        <td>
+          <v-tooltip :text="lesson.category" location="bottom">
+            <template v-slot:activator="{ props }">
+              <v-chip size="small" color="pink" v-bind="props">{{ truncate(lesson.category) }}</v-chip>
+            </template>
+          </v-tooltip>
+        </td>
+        <td>
+          <v-chip size="small" :color="lesson.isPremium ? 'purple' : 'grey'">
+            <v-icon v-if="lesson.isPremium" class="text-warning mr-1" icon="mdi-seal" size="medium"></v-icon>
+            {{ lesson.isPremium ? 'Premium' : 'Darmowy' }}
+          </v-chip>
+        </td>
+        <td>
+          <div class="d-flex align-center">
+            <p class="table-text">{{ lesson.version }}</p>
+            <v-btn class="ml-auto" variant="plain" icon="mdi-dots-horizontal" size="x-small"></v-btn>
+          </div>
+        </td>
+      </tr>
+    </tbody>
   </v-table>
 </template>
 
@@ -86,6 +157,8 @@ const difficulty = {
   hard: { label: 'Trudny', color: 'error' }
 };
 const courses = computed(() => store.getters[coursesListGetters.getCoursesList]);
+const lessons = computed(() => store.getters[coursesListGetters.getLessonsList]);
+const activeView = computed(() => store.getters[coursesListGetters.getActiveView]);
 
 const truncate = (text: string, maxLength = 10) => {
   return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;

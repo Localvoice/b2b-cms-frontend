@@ -23,6 +23,9 @@ export const actions = {
   fetchLessonsList: createAction(({ commit }, { pagination, sort, filters } = {}) => {
     // TODO: add pagination, sort, filters
     commit(coursesListMutations.setLessonsList.local, lessons);
+  }),
+  setActiveView: createAction(({ commit }, { activeView }) => {
+    commit(coursesListMutations.setActiveView.local, activeView);
   })
 };
 

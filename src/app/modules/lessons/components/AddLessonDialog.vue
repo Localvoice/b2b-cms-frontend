@@ -167,7 +167,7 @@ const title = ref('');
 const difficultyLevel = ref('');
 const category = ref('');
 const enteredCategory = ref<string | null>(null);
-const lessonType = ref('');
+const lessonType = ref('Nauka wymowy');
 
 const titleRules = {
   required: (v: string) => !!v || 'Tytuł jest wymagany'
