@@ -12,7 +12,7 @@ export const appRoutes: RouteRecordRaw[] = [
       {
         path: '/app',
         meta: { title: 'Strona główna' },
-        component: () => import(/* webpackChunkName: "dashboard" */ '~app/modules/dashboard/components/index.vue')
+        component: () => import(/* webpackChunkName: "dashboard" */ '~app/modules/dashboard/views/Dashboard.vue')
       },
       {
         path: '/app/courses',

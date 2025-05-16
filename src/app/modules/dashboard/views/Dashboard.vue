@@ -1,6 +1,13 @@
 <template>
   <Card>
-    <Header />
+    <v-row justify="space-between" align="center">
+      <v-col>
+        <h4>Statystki</h4>
+      </v-col>
+      <v-col class="d-flex justify-end">
+        <router-link to="/" class="header-link">Pokaż wszystkie</router-link>
+      </v-col>
+    </v-row>
     <v-row class="w-full mb-8">
       <v-col cols="12" md="6" lg="3" v-for="stats in overviewStats" :key="stats.id">
         <StatsTile
@@ -46,10 +53,9 @@
 <script setup>
 import Card from '~app/shared/base/Card.vue';
 import Search from '~app/shared/base/Search.vue';
-import Header from './Header.vue';
 import StatsTile from '~app/shared/stats/StatsTile.vue';
-import FiltersDialog from './FiltersDialog.vue';
-import Table from './Table.vue';
+import FiltersDialog from '../components/FiltersDialog.vue';
+import Table from '../components/Table.vue';
 import { coursesListActions } from '../store';
 import { useStore } from 'vuex';
 import { overviewStats } from '../dummyData/overviewStats';
@@ -112,5 +118,10 @@ onMounted(() => {
   font-size: 14px;
   color: #6b708a;
   text-transform: initial;
+}
+.header-link {
+  color: #fe5b14;
+  font-weight: 600;
+  font-size: 14px;
 }
 </style>
