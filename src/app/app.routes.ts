@@ -22,17 +22,17 @@ export const appRoutes: RouteRecordRaw[] = [
       {
         path: '/app/courses/course-id',
         meta: { title: 'Zawartość kursu' },
-        component: () => import(/* webpackChunkName: "courses-id" */ '~app/modules/courses/views/CourseDetails.vue')
+        component: () => import(/* webpackChunkName: "course-id" */ '~app/modules/courses/views/CourseDetails.vue')
       },
       {
         path: '/app/lessons',
         meta: { title: 'Twoje Lekcje' },
-        component: () => import(/* webpackChunkName: "courses" */ '~app/modules/lessons/views/LessonsList.vue')
+        component: () => import(/* webpackChunkName: "lessons" */ '~app/modules/lessons/views/LessonsList.vue')
       },
       {
         path: '/app/lessons/lesson-id',
         meta: { title: 'Zawartość lekcji' },
-        component: () => import(/* webpackChunkName: "courses-id" */ '~app/modules/lessons/views/LessonDetails.vue')
+        component: () => import(/* webpackChunkName: "lesson-id" */ '~app/modules/lessons/views/LessonDetails.vue')
       }
     ]
   },
