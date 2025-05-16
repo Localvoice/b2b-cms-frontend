@@ -130,7 +130,7 @@ import DateIcon from '../../../../assets/images/date-icon.png';
 import ChangesIcon from '../../../../assets/images/changes-icon.png';
 import { ref, watch, onMounted } from 'vue';
 import { lessons } from '../dummyData/lessons';
-import AddLessonDialog from './AddLessonDialog.vue';
+import AddLessonDialog from '~app/modules/lessons/components/AddLessonDialog.vue';
 
 const lessonsList = ref(lessons);
 const title = ref('');

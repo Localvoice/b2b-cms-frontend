@@ -7,6 +7,7 @@ import { NAMESPACE, CoursesListState } from './state';
 // import lessonListApi from '../service/lessonList.api';
 import CourseModel from '../models/course';
 import { courses } from '../dummyData/courses';
+import { lessons } from '../../lessons/dummyData/lessons';
 
 const createAction = createActionFactory<CoursesListState, RootState>();
 
@@ -18,6 +19,10 @@ export const actions = {
     //   console.log('data from chatbots', data);
     //   commit(lessonListMutations.setLessonList.local, data);
     // });
+  }),
+  fetchLessonsList: createAction(({ commit }, { pagination, sort, filters } = {}) => {
+    // TODO: add pagination, sort, filters
+    commit(coursesListMutations.setLessonsList.local, lessons);
   })
 };
 
