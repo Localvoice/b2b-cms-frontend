@@ -1,6 +1,6 @@
 <template>
   <v-row class="w-full">
-    <v-col lg="3">
+    <v-col cols="12" md="4" lg="3">
       <v-card class="pa-8" color="grey-lighten-5" border rounded="lg">
         <p class="card-label mb-4">IKONA KURSU</p>
         <img class="w-full mb-4" :src="imageUrl" alt="course-image" />
@@ -8,7 +8,7 @@
         <input type="file" ref="fileInput" accept="image/*" @change="handleFileChange" class="d-none" />
       </v-card>
     </v-col>
-    <v-col lg="9">
+    <v-col cols="12" md="8" lg="9">
       <v-card class="pa-8" color="grey-lighten-5" border rounded="lg">
         <p class="card-label mb-4">USTAWIENIA KURSU</p>
         <form>

@@ -1,20 +1,20 @@
 <template>
   <v-row>
-    <v-col lg="5">
+    <v-col cols="12" lg="5">
       <Card>
         <h5 class="mb-8">Informacje o kursie</h5>
         <v-row class="w-full mb-8">
-          <v-col lg="3">
+          <v-col cols="12" lg="3">
             <img :src="CourseImage" alt="course-image" />
           </v-col>
-          <v-col lg="9">
+          <v-col cols="12" lg="9">
             <h5 class="mb-3">Wsiadanie, bilety, przesiadki - rozmówki w autobusie</h5>
             <p class="muted-text mb-3">W tym kursie nauczysz się słownictwa przydatnego przy podróżowaniu</p>
             <v-chip color="pink">Przygotowania do egzaminu</v-chip>
           </v-col>
         </v-row>
         <v-row class="w-full">
-          <v-col lg="6">
+          <v-col cols="12" lg="6">
             <v-card class="pa-4" border rounded="lg">
               <div class="d-flex align-center">
                 <img class="mr-4" :src="LessonsIcon" alt="lessons-icon" />
@@ -25,7 +25,7 @@
               </div>
             </v-card>
           </v-col>
-          <v-col lg="6">
+          <v-col cols="12" lg="6">
             <v-card class="pa-4" border rounded="lg">
               <div class="d-flex align-center">
                 <img class="mr-4" :src="StudentsIcon" alt="lessons-icon" />
@@ -36,7 +36,7 @@
               </div>
             </v-card>
           </v-col>
-          <v-col lg="6">
+          <v-col cols="12" lg="6">
             <v-card class="pa-4" border rounded="lg">
               <div class="d-flex align-center">
                 <img class="mr-4" :src="DateIcon" alt="lessons-icon" />
@@ -47,7 +47,7 @@
               </div>
             </v-card>
           </v-col>
-          <v-col lg="6">
+          <v-col cols="12" lg="6">
             <v-card class="pa-4" border rounded="lg">
               <div class="d-flex align-center">
                 <img class="mr-4" :src="ChangesIcon" alt="lessons-icon" />
@@ -61,7 +61,7 @@
         </v-row>
       </Card>
     </v-col>
-    <v-col lg="7">
+    <v-col cols="12" lg="7">
       <v-card class="pa-4" color="grey-lighten-5" border rounded="lg">
         <v-row class="mb-8" justify="space-between" align="center">
           <v-col cols="auto">
