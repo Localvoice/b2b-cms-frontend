@@ -78,7 +78,7 @@
             <v-btn class="delete-btn" rounded>Usuń kurs</v-btn>
           </v-col>
           <v-col cols="auto">
-            <v-btn color="purple" variant="tonal" rounded>Odepnij lekcję od kursu</v-btn>
+            <v-btn class="remove-btn" color="purple" variant="tonal" rounded>Odepnij lekcję od kursu</v-btn>
           </v-col>
         </v-row>
       </v-card>
@@ -164,5 +164,10 @@ const isEditing = computed(() => store.getters[lessonDetailsGetters.getEditingSt
   font-size: 14px;
   color: #fff;
   text-transform: initial;
+}
+.remove-btn {
+  text-transform: initial;
+  font-weight: 700;
+  font-size: 14px;
 }
 </style>
