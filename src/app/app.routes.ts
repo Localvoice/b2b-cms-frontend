@@ -33,6 +33,11 @@ export const appRoutes: RouteRecordRaw[] = [
         path: '/app/lessons/lesson-id',
         meta: { title: 'Zawartość lekcji' },
         component: () => import(/* webpackChunkName: "lesson-id" */ '~app/modules/lessons/views/LessonDetails.vue')
+      },
+      {
+        path: '/app/stats',
+        meta: { title: 'Statystyki' },
+        component: () => import(/* webpackChunkName: "stats" */ '~app/modules/stats/views/index.vue')
       }
     ]
   },

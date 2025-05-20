@@ -4,6 +4,7 @@ import '../modules/voicebot/lesson';
 import { navigationInitializer } from '~app/navigation';
 import { SysToastPlugin } from '~app/shared/toast';
 import vuetify from '~app/shared/vuetify';
+import VueApexCharts from 'vue3-apexcharts';
 import { LayoutLoader } from '~app/layout';
 import { appRoutes } from '../app.routes';
 import App from '../app.vue';
@@ -58,6 +59,7 @@ export function bootstrap(elementOrSelector?: Element | string): Promise<void> {
       autoClose: 3000,
       position: 'bottom-center'
     } as ToastContainerOptions);
+    root.use(VueApexCharts);
 
     import('../shared/vendors').then((m) => root.use(m.VendorsPlugin));
     import('../shared/facebook').then((m) => root.use(m.FacebookSDKPlugin));

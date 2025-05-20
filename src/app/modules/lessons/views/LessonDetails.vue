@@ -3,7 +3,7 @@
     <v-row align="center" justify="space-between" class="mb-8">
       <v-col cols="auto">
         <div class="d-flex align-center">
-          <router-link to="/app/courses">
+          <router-link to="/app/lessons">
             <v-btn class="outlined-btn mr-4" rounded="lg" variant="outlined" icon="mdi-arrow-left"></v-btn>
           </router-link>
           <h4 class="course-title mb-0">Wsiadanie, bilety, przesiadki - rozmówki w autobusie</h4>
