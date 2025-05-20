@@ -38,6 +38,11 @@ export const appRoutes: RouteRecordRaw[] = [
         path: '/app/stats',
         meta: { title: 'Statystyki' },
         component: () => import(/* webpackChunkName: "stats" */ '~app/modules/stats/views/index.vue')
+      },
+      {
+        path: '/app/settings',
+        meta: { title: 'Ustawienia' },
+        component: () => import(/* webpackChunkName: "settings" */ '~app/modules/settings/views/index.vue')
       }
     ]
   },
