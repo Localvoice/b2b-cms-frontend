@@ -27,6 +27,17 @@
           <Search />
         </div>
         <FiltersDialog />
+        <div>
+          <v-select
+            :items="['5', '10', '15']"
+            density="compact"
+            v-model="limit"
+            bg-color="white"
+            rounded
+            class="select"
+          >
+          </v-select>
+        </div>
       </v-col>
     </v-row>
     <v-tabs class="tabs mb-3 w-full" v-model="activeTab" @update:modelValue="onTabChange">
@@ -36,43 +47,36 @@
     <div class="w-full mb-12">
       <Table />
     </div>
-    <v-row class="w-full" justify="space-between" align="center">
-      <v-col cols="auto">
-        <v-btn variant="outlined" class="outlined-btn">Poprzednia strona</v-btn>
-      </v-col>
-      <v-col cols="auto">
-        <p class="pagination-text">Strona 1 z 10</p>
-      </v-col>
-      <v-col cols="auto">
-        <v-btn variant="outlined" class="outlined-btn">Następna strona</v-btn>
-      </v-col>
-    </v-row>
+    <Pagination />
   </Card>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Card from '~app/shared/base/Card.vue';
 import Search from '~app/shared/base/Search.vue';
 import StatsTile from '~app/shared/stats/StatsTile.vue';
 import FiltersDialog from '../components/FiltersDialog.vue';
+import Pagination from '../components/Pagination.vue';
 import Table from '../components/Table.vue';
-import { coursesListActions } from '../store';
+import { coursesListActions, coursesListGetters } from '../store';
 import { useStore } from 'vuex';
 import { overviewStats } from '../dummyData/overviewStats';
-import { ref, watch, nextTick, onMounted } from 'vue';
+import { ref, watch, nextTick, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const store = useStore();
 const route = useRoute();
 const router = useRouter();
 
-const fetchCoursesList = () => store.dispatch(coursesListActions.fetchCoursesList, { pagination: 1 });
-const fetchLessonsList = () => store.dispatch(coursesListActions.fetchLessonsList, { pagination: 1 });
-const setActiveView = (activeView) => store.dispatch(coursesListActions.setActiveView, { activeView });
+const fetchCoursesList = () => store.dispatch(coursesListActions.fetchCoursesList);
+const fetchLessonsList = () => store.dispatch(coursesListActions.fetchLessonsList);
+const setActiveView = (activeView: string) => store.dispatch(coursesListActions.setActiveView, { activeView });
+const setCoursesLimit = (limit: number) => store.dispatch(coursesListActions.setCoursesLimit, { limit });
 
 const activeTab = ref(route.query.tab || 'courses');
+const limit = ref('5');
 
-const onTabChange = (newTab) => {
+const onTabChange = (newTab: string) => {
   router.replace({
     query: {
       ...route.query,
@@ -87,30 +91,28 @@ watch(
     if (newTab && newTab !== activeTab.value) {
       activeTab.value = newTab;
     }
-    setActiveView(newTab);
+    if (typeof newTab === 'string') {
+      setActiveView(newTab);
+    }
   }
 );
+
+watch(limit, (newLimit) => {
+  setCoursesLimit(Number(newLimit));
+});
 
 onMounted(() => {
   fetchCoursesList();
   fetchLessonsList();
-  setActiveView(route.query.tab || 'courses');
+  if (route.query.tab) {
+    setActiveView(route.query.tab.toString());
+  } else {
+    setActiveView('courses');
+  }
 });
 </script>
 
 <style lang="scss">
-.outlined-btn {
-  border-color: #f2f0ff;
-  color: #6b708a;
-  text-transform: initial;
-  font-size: 13px;
-  font-weight: 600;
-}
-.pagination-text {
-  font-weight: 600;
-  font-size: 14px;
-  color: #6b708a;
-}
 .tabs {
   border-bottom: 1px solid #f2f0ff;
 }
@@ -128,5 +130,16 @@ onMounted(() => {
   color: #fe5b14;
   font-weight: 600;
   font-size: 14px;
+}
+.select {
+  margin-top: 20px;
+}
+.select .v-field__outline {
+  display: none;
+}
+.muted-text {
+  color: #6b708a;
+  font-weight: 600;
+  font-size: 12px;
 }
 </style>

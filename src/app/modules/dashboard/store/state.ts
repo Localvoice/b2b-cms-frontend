@@ -10,7 +10,15 @@ export const NAMESPACE = 'coursesList';
 export interface CoursesListState {
   activeView: ActiveView;
   courses: {
+    allCourses: CourseModel[];
     coursesList: CourseModel[];
+    pagintation: {
+      activePage: number;
+      totalPages: number;
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+      limit: number;
+    };
   };
   lessons: {
     lessonsList: LessonModel[];
@@ -23,7 +31,15 @@ export function initialState(): CoursesListState {
   return {
     activeView: 'courses',
     courses: {
-      coursesList: []
+      allCourses: [],
+      coursesList: [],
+      pagintation: {
+        activePage: 1,
+        totalPages: 1,
+        hasNextPage: false,
+        hasPreviousPage: false,
+        limit: 5
+      }
     },
     lessons: {
       lessonsList: []

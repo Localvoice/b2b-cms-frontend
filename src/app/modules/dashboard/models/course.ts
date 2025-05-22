@@ -1,21 +1,27 @@
 class CourseModel {
   id: string | undefined = undefined;
 
+  teacherId: string | undefined = undefined;
+
+  languageId: string | undefined = undefined;
+
   title: string | undefined = undefined;
 
-  lessonsCount: number | undefined = undefined;
+  categories: string[] = [];
 
-  type: string | undefined = undefined;
+  status: 'ACTIVE' | 'INACTIVE' | undefined = undefined;
 
-  level: string | undefined = undefined;
+  contentType: 'COURSE' | 'PRONUNCIATION_LESSON' | 'DIALOGUE_LESSON' | 'GRAMMAR_LESSON' = 'COURSE';
 
-  category: string | undefined = undefined;
+  proficiencyLevel: 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2' | undefined = undefined;
 
-  isPremium: boolean | undefined = undefined;
+  subscriptionModel: 'FREE' | 'PREMIUM' | 'PARTIALLY_FREE' | undefined = undefined;
 
-  version: string | undefined = undefined;
+  iconUrl: string | undefined = undefined;
 
-  status: string | undefined = undefined;
+  createdAt: string | undefined = undefined;
+
+  updatedAt: string | undefined = undefined;
 }
 
 export default CourseModel;

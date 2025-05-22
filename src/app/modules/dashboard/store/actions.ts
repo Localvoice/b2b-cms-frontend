@@ -12,20 +12,30 @@ import { lessons } from '../../lessons/dummyData/lessons';
 const createAction = createActionFactory<CoursesListState, RootState>();
 
 export const actions = {
-  fetchCoursesList: createAction(({ commit }, { pagination, sort, filters } = {}) => {
-    // TODO: add pagination, sort, filters
-    commit(coursesListMutations.setCoursesList.local, courses);
+  fetchCoursesList: createAction(({ commit }) => {
+    commit(coursesListMutations.setAllCourses.local, courses);
+    // commit(coursesListMutations.setCoursesList.local, coursesList);
     // lessonListApi.getLessonsList().then((data) => {
     //   console.log('data from chatbots', data);
     //   commit(lessonListMutations.setLessonList.local, data);
     // });
   }),
-  fetchLessonsList: createAction(({ commit }, { pagination, sort, filters } = {}) => {
-    // TODO: add pagination, sort, filters
+  fetchLessonsList: createAction(({ commit }) => {
     commit(coursesListMutations.setLessonsList.local, lessons);
   }),
   setActiveView: createAction(({ commit }, { activeView }) => {
     commit(coursesListMutations.setActiveView.local, activeView);
+  }),
+  goToNextPage: createAction(({ commit, state }) => {
+    const nextPage = state.courses.pagintation.activePage + 1;
+    commit(coursesListMutations.updateActivePage.local, nextPage);
+  }),
+  goToPreviousPage: createAction(({ commit, state }) => {
+    const prevPage = state.courses.pagintation.activePage - 1;
+    commit(coursesListMutations.updateActivePage.local, prevPage);
+  }),
+  setCoursesLimit: createAction(({ commit }, { limit }) => {
+    commit(coursesListMutations.setCoursesLimit.local, limit);
   })
 };
 
