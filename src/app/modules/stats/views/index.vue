@@ -27,7 +27,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12" md="6" lg="7">
+      <v-col cols="12" lg="7">
         <v-card class="pa-4 h-full d-flex flex-column" border rounded="lg">
           <div class="d-flex align-center justify-space-between">
             <div class="mr-4">
@@ -41,7 +41,7 @@
           </div>
         </v-card>
       </v-col>
-      <v-col cols="12" md="6" lg="5">
+      <v-col cols="12" lg="5">
         <v-card class="pa-4 w-full mb-4" border rounded="lg">
           <v-row align="center" class="w-full">
             <v-col cols="12" lg="7">
@@ -50,7 +50,7 @@
               <p class="muted-text">Lekcji nauk wymowy było w sumie 20, a lekcji gramatyki 10.</p>
             </v-col>
             <v-col cols="12" lg="5">
-              <div class="d-flex align-center">
+              <div class="d-flex d-lg-block d-xl-flex align-center">
                 <div class="mr-2">
                   <DonutChart :series="[80, 20]" :labels="['Nauka Wymowy', 'Gramatyka']" :width="120" :height="120" />
                 </div>
