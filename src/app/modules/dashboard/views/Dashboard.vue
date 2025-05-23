@@ -27,17 +27,6 @@
           <Search />
         </div>
         <FiltersDialog />
-        <div>
-          <v-select
-            :items="['5', '10', '15']"
-            density="compact"
-            v-model="limit"
-            bg-color="white"
-            rounded
-            class="select"
-          >
-          </v-select>
-        </div>
       </v-col>
     </v-row>
     <v-tabs class="tabs mb-3 w-full" v-model="activeTab" @update:modelValue="onTabChange">
@@ -71,10 +60,8 @@ const router = useRouter();
 const fetchCoursesList = () => store.dispatch(coursesListActions.fetchCoursesList);
 const fetchLessonsList = () => store.dispatch(coursesListActions.fetchLessonsList);
 const setActiveView = (activeView: string) => store.dispatch(coursesListActions.setActiveView, { activeView });
-const setCoursesLimit = (limit: number) => store.dispatch(coursesListActions.setCoursesLimit, { limit });
 
 const activeTab = ref(route.query.tab || 'courses');
-const limit = ref('5');
 
 const onTabChange = (newTab: string) => {
   router.replace({
@@ -96,10 +83,6 @@ watch(
     }
   }
 );
-
-watch(limit, (newLimit) => {
-  setCoursesLimit(Number(newLimit));
-});
 
 onMounted(() => {
   fetchCoursesList();
@@ -130,16 +113,5 @@ onMounted(() => {
   color: #fe5b14;
   font-weight: 600;
   font-size: 14px;
-}
-.select {
-  margin-top: 20px;
-}
-.select .v-field__outline {
-  display: none;
-}
-.muted-text {
-  color: #6b708a;
-  font-weight: 600;
-  font-size: 12px;
 }
 </style>
