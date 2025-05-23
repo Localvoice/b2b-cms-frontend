@@ -38,7 +38,7 @@ export const mutations = {
     }
   }),
   setLessonsList: createMutation((state, lessonsList: LessonModel[]) => {
-    state.lessons.lessonsList = lessonsList;
+    state.lessons.allLessons = lessonsList;
     state.lessons.lessonsList = lessonsList.slice(0, state.pagintation.limit);
 
     state.pagintation.activePage = 1;

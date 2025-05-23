@@ -6,7 +6,7 @@ import { coursesListMutations } from './mutations';
 import { NAMESPACE, CourseDetailsState } from './state';
 // import lessonListApi from '../service/lessonList.api';
 import CourseModel from '../models/course';
-import { courses } from '../dummyData/courses';
+import { courses } from '../../dashboard/dummyData/courses';
 
 const createAction = createActionFactory<CourseDetailsState, RootState>();
 

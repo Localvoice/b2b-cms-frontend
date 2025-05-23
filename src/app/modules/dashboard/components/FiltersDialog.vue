@@ -37,7 +37,7 @@
           <v-row class="w-full row">
             <v-chip
               :key="category"
-              v-for="category in availableCategories"
+              v-for="category in categories"
               :color="filters.category.includes(category) ? 'purple' : 'white'"
               :variant="!filters.category.includes(category) ? 'elevated' : 'tonal'"
             >
@@ -52,80 +52,99 @@
             </v-chip>
           </v-row>
           <p class="filter-label mb-3">Poziom trudności</p>
-          <v-radio-group v-model="filters.difficulty" hide-details>
-            <v-row class="w-full row">
-              <v-chip
-                :color="filters.difficulty === 'easy' ? 'purple' : 'white'"
-                :variant="filters.difficulty === 'easy' ? 'tonal' : 'elevated'"
-              >
-                <v-radio
-                  :color="filters.difficulty === 'easy' ? 'purple' : 'gray'"
-                  density="compact"
-                  hide-details
-                  label="Łatwy (A1-A2)"
-                  value="easy"
-                ></v-radio>
-              </v-chip>
-              <v-chip
-                :color="filters.difficulty === 'medium' ? 'purple' : 'white'"
-                :variant="filters.difficulty === 'medium' ? 'tonal' : 'elevated'"
-              >
-                <v-radio
-                  :color="filters.difficulty === 'medium' ? 'purple' : 'gray'"
-                  density="compact"
-                  hide-details
-                  label="Średni (B1-B2)"
-                  value="medium"
-                ></v-radio>
-              </v-chip>
-              <v-chip
-                :color="filters.difficulty === 'hard' ? 'purple' : 'white'"
-                :variant="filters.difficulty === 'hard' ? 'tonal' : 'elevated'"
-              >
-                <v-radio
-                  :color="filters.difficulty === 'hard' ? 'purple' : 'gray'"
-                  density="compact"
-                  hide-details
-                  label="Trudny (C1-C2)"
-                  value="hard"
-                ></v-radio>
-              </v-chip>
-            </v-row>
-          </v-radio-group>
-          <p class="filter-label mb-3">Który poziom?</p>
-          <v-radio-group v-model="filters.level" hide-details>
-            <v-row class="w-full row">
-              <v-chip
-                :color="filters.level === 'B1' ? 'purple' : 'white'"
-                :variant="filters.level === 'B1' ? 'tonal' : 'elevated'"
-              >
-                <v-radio
-                  :color="filters.level === 'B1' ? 'purple' : 'gray'"
-                  density="compact"
-                  hide-details
-                  label="B1"
-                  value="B1"
-                ></v-radio>
-              </v-chip>
-              <v-chip
-                :color="filters.level === 'B2' ? 'purple' : 'white'"
-                :variant="filters.level === 'B2' ? 'tonal' : 'elevated'"
-              >
-                <v-radio
-                  :color="filters.level === 'B2' ? 'purple' : 'gray'"
-                  density="compact"
-                  hide-details
-                  label="B2"
-                  value="B2"
-                ></v-radio>
-              </v-chip>
+          <v-radio-group v-model="filters.difficultyLevel" hide-details>
+            <v-row class="w-full mt-1 mb-4">
+              <v-col cols="auto" class="pa-1">
+                <v-chip
+                  :color="filters.difficultyLevel === 'a1' ? 'purple' : 'white'"
+                  :variant="filters.difficultyLevel === 'a1' ? 'tonal' : 'elevated'"
+                >
+                  <v-radio
+                    :color="filters.difficultyLevel === 'a1' ? 'purple' : 'gray'"
+                    density="compact"
+                    hide-details
+                    label="A1"
+                    value="a1"
+                  ></v-radio>
+                </v-chip>
+              </v-col>
+              <v-col cols="auto" class="pa-1">
+                <v-chip
+                  :color="filters.difficultyLevel === 'a2' ? 'purple' : 'white'"
+                  :variant="filters.difficultyLevel === 'a2' ? 'tonal' : 'elevated'"
+                >
+                  <v-radio
+                    :color="filters.difficultyLevel === 'a2' ? 'purple' : 'gray'"
+                    density="compact"
+                    hide-details
+                    label="A2"
+                    value="a2"
+                  ></v-radio>
+                </v-chip>
+              </v-col>
+              <v-col cols="auto" class="pa-1">
+                <v-chip
+                  :color="filters.difficultyLevel === 'b1' ? 'purple' : 'white'"
+                  :variant="filters.difficultyLevel === 'b1' ? 'tonal' : 'elevated'"
+                >
+                  <v-radio
+                    :color="filters.difficultyLevel === 'b1' ? 'purple' : 'gray'"
+                    density="compact"
+                    hide-details
+                    label="B1"
+                    value="b1"
+                  ></v-radio>
+                </v-chip>
+              </v-col>
+              <v-col cols="auto" class="pa-1">
+                <v-chip
+                  :color="filters.difficultyLevel === 'b2' ? 'purple' : 'white'"
+                  :variant="filters.difficultyLevel === 'b2' ? 'tonal' : 'elevated'"
+                >
+                  <v-radio
+                    :color="filters.difficultyLevel === 'b2' ? 'purple' : 'gray'"
+                    density="compact"
+                    hide-details
+                    label="B2"
+                    value="b2"
+                  ></v-radio>
+                </v-chip>
+              </v-col>
+              <v-col cols="auto" class="pa-1">
+                <v-chip
+                  :color="filters.difficultyLevel === 'c1' ? 'purple' : 'white'"
+                  :variant="filters.difficultyLevel === 'c1' ? 'tonal' : 'elevated'"
+                >
+                  <v-radio
+                    :color="filters.difficultyLevel === 'c1' ? 'purple' : 'gray'"
+                    density="compact"
+                    hide-details
+                    label="C1"
+                    value="c1"
+                  ></v-radio>
+                </v-chip>
+              </v-col>
+              <v-col cols="auto" class="pa-1">
+                <v-chip
+                  :color="filters.difficultyLevel === 'c2' ? 'purple' : 'white'"
+                  :variant="filters.difficultyLevel === 'c2' ? 'tonal' : 'elevated'"
+                >
+                  <v-radio
+                    :color="filters.difficultyLevel === 'c2' ? 'purple' : 'gray'"
+                    density="compact"
+                    hide-details
+                    label="C2"
+                    value="c2"
+                  ></v-radio>
+                </v-chip>
+              </v-col>
             </v-row>
           </v-radio-group>
           <p class="filter-label mb-3">Typ lekcji</p>
           <v-row class="w-full row">
             <v-chip
               :key="type"
-              v-for="type in availableTypes"
+              v-for="type in contentTypes"
               :color="filters.type.includes(type) ? 'purple' : 'white'"
               :variant="!filters.type.includes(type) ? 'elevated' : 'tonal'"
             >
@@ -198,12 +217,16 @@ import { reactive, computed, watch, ref } from 'vue';
 import { coursesListGetters } from '../store/index';
 import { useStore } from 'vuex';
 import CourseModel from '../models/course';
+import { getUniqueCategories } from '../dummyData/categories';
+import { getUniqueContentTypes } from '../dummyData/contentTypes';
+
+const categories = getUniqueCategories();
+const contentTypes = getUniqueContentTypes();
 
 const store = useStore();
 const initialFilters = {
   category: [],
   difficulty: null,
-  level: null,
   type: [],
   subscriptionType: [],
   status: [],
@@ -212,8 +235,6 @@ const initialFilters = {
 
 const filtersCount = ref(0);
 const courses = computed<CourseModel[]>(() => store.getters[coursesListGetters.getCoursesList]);
-const availableCategories = computed(() => [...new Set(courses.value.map((course) => course.category))]);
-const availableTypes = computed(() => [...new Set(courses.value.map((course) => course.type))]);
 const subscriptionTypes = ['Darmowy', 'Premium'];
 const statusTypes = ['Opublikowane', 'Testowane', 'Robocze'];
 
