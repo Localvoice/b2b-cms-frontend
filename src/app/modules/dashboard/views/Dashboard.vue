@@ -57,8 +57,7 @@ const store = useStore();
 const route = useRoute();
 const router = useRouter();
 
-const fetchCoursesList = () => store.dispatch(coursesListActions.fetchCoursesList);
-const fetchLessonsList = () => store.dispatch(coursesListActions.fetchLessonsList);
+const fetchDashboardData = () => store.dispatch(coursesListActions.fetchDashboardData);
 const setActiveView = (activeView: string) => store.dispatch(coursesListActions.setActiveView, { activeView });
 
 const activeTab = ref(route.query.tab || 'courses');
@@ -85,8 +84,7 @@ watch(
 );
 
 onMounted(() => {
-  fetchCoursesList();
-  fetchLessonsList();
+  fetchDashboardData();
   if (route.query.tab) {
     setActiveView(route.query.tab.toString());
   } else {

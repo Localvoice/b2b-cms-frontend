@@ -9,18 +9,19 @@ export const NAMESPACE = 'coursesList';
 
 export interface CoursesListState {
   activeView: ActiveView;
+  pagintation: {
+    activePage: number;
+    totalPages: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+    limit: number;
+  };
   courses: {
     allCourses: CourseModel[];
     coursesList: CourseModel[];
-    pagintation: {
-      activePage: number;
-      totalPages: number;
-      hasNextPage: boolean;
-      hasPreviousPage: boolean;
-      limit: number;
-    };
   };
   lessons: {
+    allLessons: LessonModel[];
     lessonsList: LessonModel[];
   };
 }
@@ -30,18 +31,19 @@ export const CoursesListEntityAdapter: EntityAdapter<CourseModel> = createEntity
 export function initialState(): CoursesListState {
   return {
     activeView: 'courses',
+    pagintation: {
+      activePage: 1,
+      totalPages: 1,
+      hasNextPage: false,
+      hasPreviousPage: false,
+      limit: 5
+    },
     courses: {
       allCourses: [],
-      coursesList: [],
-      pagintation: {
-        activePage: 1,
-        totalPages: 1,
-        hasNextPage: false,
-        hasPreviousPage: false,
-        limit: 5
-      }
+      coursesList: []
     },
     lessons: {
+      allLessons: [],
       lessonsList: []
     }
   };

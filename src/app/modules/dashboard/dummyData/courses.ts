@@ -2,7 +2,7 @@ import CourseModel from '../models/course';
 
 const courses: CourseModel[] = [
   {
-    id: 'course-001',
+    courseId: 'course-001',
     teacherId: 'teacher-101',
     languageId: 'en',
     title: 'Basic English Grammar',
@@ -16,7 +16,7 @@ const courses: CourseModel[] = [
     updatedAt: '2024-03-15T10:00:00Z'
   },
   {
-    id: 'course-002',
+    courseId: 'course-002',
     teacherId: 'teacher-102',
     languageId: 'fr',
     title: 'French Pronunciation Essentials',
@@ -30,7 +30,7 @@ const courses: CourseModel[] = [
     updatedAt: '2024-05-01T09:30:00Z'
   },
   {
-    id: 'course-003',
+    courseId: 'course-003',
     teacherId: 'teacher-103',
     languageId: 'es',
     title: 'Conversational Spanish',
@@ -44,7 +44,7 @@ const courses: CourseModel[] = [
     updatedAt: '2024-01-22T11:00:00Z'
   },
   {
-    id: 'course-004',
+    courseId: 'course-004',
     teacherId: 'teacher-104',
     languageId: 'de',
     title: 'German Course for Beginners',
@@ -58,7 +58,7 @@ const courses: CourseModel[] = [
     updatedAt: '2024-03-12T15:45:00Z'
   },
   {
-    id: 'course-005',
+    courseId: 'course-005',
     teacherId: 'teacher-105',
     languageId: 'it',
     title: 'Italian Grammar Crash Course',
@@ -72,7 +72,7 @@ const courses: CourseModel[] = [
     updatedAt: '2024-04-01T13:20:00Z'
   },
   {
-    id: 'course-006',
+    courseId: 'course-006',
     teacherId: 'teacher-106',
     languageId: 'ja',
     title: 'Japanese Pronunciation Basics',
@@ -86,7 +86,7 @@ const courses: CourseModel[] = [
     updatedAt: '2024-01-25T16:00:00Z'
   },
   {
-    id: 'course-007',
+    courseId: 'course-007',
     teacherId: 'teacher-107',
     languageId: 'ru',
     title: 'Russian for Travelers',
@@ -100,7 +100,7 @@ const courses: CourseModel[] = [
     updatedAt: '2024-04-20T12:00:00Z'
   },
   {
-    id: 'course-008',
+    courseId: 'course-008',
     teacherId: 'teacher-108',
     languageId: 'zh',
     title: 'Mandarin Grammar Intermediate',
@@ -114,7 +114,7 @@ const courses: CourseModel[] = [
     updatedAt: '2024-03-11T10:15:00Z'
   },
   {
-    id: 'course-009',
+    courseId: 'course-009',
     teacherId: 'teacher-109',
     languageId: 'en',
     title: 'Advanced English Dialogue',
@@ -128,7 +128,7 @@ const courses: CourseModel[] = [
     updatedAt: '2024-01-10T13:00:00Z'
   },
   {
-    id: 'course-010',
+    courseId: 'course-010',
     teacherId: 'teacher-110',
     languageId: 'ko',
     title: 'Korean Beginner Course',
@@ -142,7 +142,7 @@ const courses: CourseModel[] = [
     updatedAt: '2024-04-15T14:30:00Z'
   },
   {
-    id: 'course-011',
+    courseId: 'course-011',
     teacherId: 'teacher-111',
     languageId: 'pt',
     title: 'Portuguese for Beginners',
@@ -156,7 +156,7 @@ const courses: CourseModel[] = [
     updatedAt: '2024-02-10T11:00:00Z'
   },
   {
-    id: 'course-012',
+    courseId: 'course-012',
     teacherId: 'teacher-112',
     languageId: 'ar',
     title: 'Arabic Grammar Essentials',
@@ -170,7 +170,7 @@ const courses: CourseModel[] = [
     updatedAt: '2024-04-01T14:00:00Z'
   },
   {
-    id: 'course-013',
+    courseId: 'course-013',
     teacherId: 'teacher-113',
     languageId: 'hi',
     title: 'Hindi Pronunciation Guide',
@@ -184,7 +184,7 @@ const courses: CourseModel[] = [
     updatedAt: '2024-01-10T10:30:00Z'
   },
   {
-    id: 'course-014',
+    courseId: 'course-014',
     teacherId: 'teacher-114',
     languageId: 'tr',
     title: 'Turkish Daily Conversations',
@@ -198,7 +198,7 @@ const courses: CourseModel[] = [
     updatedAt: '2024-03-20T15:00:00Z'
   },
   {
-    id: 'course-015',
+    courseId: 'course-015',
     teacherId: 'teacher-115',
     languageId: 'pl',
     title: 'Polish Language Starter Pack',

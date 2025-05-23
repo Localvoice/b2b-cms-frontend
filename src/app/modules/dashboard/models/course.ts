@@ -1,5 +1,5 @@
 class CourseModel {
-  id: string | undefined = undefined;
+  courseId: string | undefined = undefined;
 
   teacherId: string | undefined = undefined;
 

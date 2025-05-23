@@ -35,17 +35,7 @@
     <div class="w-full mb-12">
       <Table />
     </div>
-    <v-row class="w-full" justify="space-between" align="center">
-      <v-col cols="auto">
-        <v-btn variant="outlined" class="outlined-btn">Poprzednia strona</v-btn>
-      </v-col>
-      <v-col cols="auto">
-        <p class="pagination-text">Strona 1 z 10</p>
-      </v-col>
-      <v-col cols="auto">
-        <v-btn variant="outlined" class="outlined-btn">Następna strona</v-btn>
-      </v-col>
-    </v-row>
+    <Pagination />
   </Card>
 </template>
 
@@ -56,6 +46,7 @@ import StatsTile from '~app/shared/stats/StatsTile.vue';
 import FiltersDialog from '../../dashboard/components/FiltersDialog.vue';
 import AddCourseDialog from '../components/AddCourseDialog.vue';
 import Table from '../../dashboard/components/Table.vue';
+import Pagination from '../../dashboard/components/Pagination.vue';
 import { coursesListActions } from '../../dashboard/store';
 import { useStore } from 'vuex';
 import { overviewStats } from '../dummyData/overviewStats';
@@ -67,7 +58,7 @@ const store = useStore();
 const route = useRoute();
 const router = useRouter();
 
-const fetchCoursesList = () => store.dispatch(coursesListActions.fetchCoursesList, { pagination: 1 });
+const fetchCoursesList = () => store.dispatch(coursesListActions.fetchCoursesList);
 const setActiveView = (activeView) => store.dispatch(coursesListActions.setActiveView, { activeView });
 
 onMounted(() => {
@@ -81,17 +72,5 @@ onMounted(() => {
   color: #6b708a;
   font-size: 14px;
   font-weight: 600;
-}
-.outlined-btn {
-  border-color: #f2f0ff;
-  color: #6b708a;
-  text-transform: initial;
-  font-size: 13px;
-  font-weight: 600;
-}
-.pagination-text {
-  font-weight: 600;
-  font-size: 14px;
-  color: #6b708a;
 }
 </style>

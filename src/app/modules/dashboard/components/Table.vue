@@ -61,7 +61,7 @@
       </tr>
     </thead>
     <tbody v-if="activeView === 'courses'">
-      <tr v-for="course in courses" :key="course.id">
+      <tr v-for="course in courses" :key="course.courseId">
         <td>
           <div>
             <router-link to="/app/courses/course-id" class="d-inline-block">
@@ -111,7 +111,7 @@
       </tr>
     </tbody>
     <tbody v-if="activeView === 'lessons'">
-      <tr v-for="lesson in lessons" :key="lesson.id">
+      <tr v-for="lesson in lessons" :key="lesson.lessonId">
         <td>
           <div>
             <router-link to="/app/lessons/lesson-id" class="d-inline-block">
@@ -120,13 +120,17 @@
           </div>
         </td>
         <td>
-          <p class="table-text">{{ lesson.type }}</p>
+          <p class="table-text">{{ formatEnumString(lesson.contentType) }}</p>
         </td>
         <td>
           <div class="d-flex align-center">
-            <v-icon :class="`text-${difficulty[lesson.level].color} mr-2`" icon="mdi-poll" size="x-small"></v-icon>
+            <v-icon
+              :class="`text-${proficiencyLevelMatcher[lesson.proficiencyLevel].color} mr-2`"
+              icon="mdi-poll"
+              size="x-small"
+            ></v-icon>
             <span class="table-text">
-              {{ difficulty[lesson.level].label }}
+              {{ proficiencyLevelMatcher[lesson.proficiencyLevel].label }}
             </span>
           </div>
         </td>
@@ -138,14 +142,19 @@
           </v-tooltip>
         </td>
         <td>
-          <v-chip size="small" :color="lesson.isPremium ? 'purple' : 'grey'">
-            <v-icon v-if="lesson.isPremium" class="text-warning mr-1" icon="mdi-seal" size="medium"></v-icon>
-            {{ lesson.isPremium ? 'Premium' : 'Darmowy' }}
+          <v-chip size="small" :color="subscriptionModelMatcher[lesson.subscriptionModel].color">
+            <v-icon
+              v-if="lesson.subscriptionModel === 'PREMIUM'"
+              class="text-warning mr-1"
+              icon="mdi-seal"
+              size="medium"
+            ></v-icon>
+            {{ subscriptionModelMatcher[lesson.subscriptionModel].label }}
           </v-chip>
         </td>
         <td>
           <div class="d-flex align-center">
-            <p class="table-text">{{ lesson.version }}</p>
+            <p class="table-text">1.1</p>
             <v-btn class="ml-auto" variant="plain" icon="mdi-dots-horizontal" size="x-small"></v-btn>
           </div>
         </td>
@@ -179,6 +188,14 @@ const activeView = computed(() => store.getters[coursesListGetters.getActiveView
 
 const truncate = (text: string, maxLength = 10) => {
   return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+};
+
+const formatEnumString = (input: string): string => {
+  return input
+    .toLowerCase()
+    .split('_')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 };
 </script>
 

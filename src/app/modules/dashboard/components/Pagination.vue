@@ -53,7 +53,7 @@
 <script setup lang="ts">
 import { coursesListActions, coursesListGetters } from '../store';
 import { useStore } from 'vuex';
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 
 const store = useStore();
 const goToNextPage = () => store.dispatch(coursesListActions.goToNextPage);
@@ -63,11 +63,17 @@ const activePage = computed(() => store.getters[coursesListGetters.getActivePage
 const totalPages = computed(() => store.getters[coursesListGetters.getTotalPages]);
 const hasNextPage = computed(() => store.getters[coursesListGetters.hasNextPage]);
 const hasPrevPage = computed(() => store.getters[coursesListGetters.hasPreviousPage]);
-const setCoursesLimit = (limit: number) => store.dispatch(coursesListActions.setCoursesLimit, { limit });
+const resultsLimit = computed(() => store.getters[coursesListGetters.getResultsLimit]);
+
+const setDisplayLimit = (limit: number) => store.dispatch(coursesListActions.setDisplayLimit, { limit });
 const limit = ref('5');
 
 watch(limit, (newLimit) => {
-  setCoursesLimit(Number(newLimit));
+  setDisplayLimit(Number(newLimit));
+});
+
+onMounted(() => {
+  limit.value = resultsLimit.value.toString();
 });
 </script>
 
