@@ -52,89 +52,89 @@
             </v-chip>
           </v-row>
           <p class="filter-label mb-3">Poziom trudności</p>
-          <v-radio-group v-model="filters.difficultyLevel" hide-details>
+          <v-radio-group v-model="filters.proficiencyLevel" hide-details>
             <v-row class="w-full mt-1 mb-4">
               <v-col cols="auto" class="pa-1">
                 <v-chip
-                  :color="filters.difficultyLevel === 'a1' ? 'purple' : 'white'"
-                  :variant="filters.difficultyLevel === 'a1' ? 'tonal' : 'elevated'"
+                  :color="filters.proficiencyLevel === 'A1' ? 'purple' : 'white'"
+                  :variant="filters.proficiencyLevel === 'A1' ? 'tonal' : 'elevated'"
                 >
                   <v-radio
-                    :color="filters.difficultyLevel === 'a1' ? 'purple' : 'gray'"
+                    :color="filters.proficiencyLevel === 'A1' ? 'purple' : 'gray'"
                     density="compact"
                     hide-details
                     label="A1"
-                    value="a1"
+                    value="A1"
                   ></v-radio>
                 </v-chip>
               </v-col>
               <v-col cols="auto" class="pa-1">
                 <v-chip
-                  :color="filters.difficultyLevel === 'a2' ? 'purple' : 'white'"
-                  :variant="filters.difficultyLevel === 'a2' ? 'tonal' : 'elevated'"
+                  :color="filters.proficiencyLevel === 'A2' ? 'purple' : 'white'"
+                  :variant="filters.proficiencyLevel === 'A2' ? 'tonal' : 'elevated'"
                 >
                   <v-radio
-                    :color="filters.difficultyLevel === 'a2' ? 'purple' : 'gray'"
+                    :color="filters.proficiencyLevel === 'A2' ? 'purple' : 'gray'"
                     density="compact"
                     hide-details
                     label="A2"
-                    value="a2"
+                    value="A2"
                   ></v-radio>
                 </v-chip>
               </v-col>
               <v-col cols="auto" class="pa-1">
                 <v-chip
-                  :color="filters.difficultyLevel === 'b1' ? 'purple' : 'white'"
-                  :variant="filters.difficultyLevel === 'b1' ? 'tonal' : 'elevated'"
+                  :color="filters.proficiencyLevel === 'B1' ? 'purple' : 'white'"
+                  :variant="filters.proficiencyLevel === 'B1' ? 'tonal' : 'elevated'"
                 >
                   <v-radio
-                    :color="filters.difficultyLevel === 'b1' ? 'purple' : 'gray'"
+                    :color="filters.proficiencyLevel === 'B1' ? 'purple' : 'gray'"
                     density="compact"
                     hide-details
                     label="B1"
-                    value="b1"
+                    value="B1"
                   ></v-radio>
                 </v-chip>
               </v-col>
               <v-col cols="auto" class="pa-1">
                 <v-chip
-                  :color="filters.difficultyLevel === 'b2' ? 'purple' : 'white'"
-                  :variant="filters.difficultyLevel === 'b2' ? 'tonal' : 'elevated'"
+                  :color="filters.proficiencyLevel === 'B2' ? 'purple' : 'white'"
+                  :variant="filters.proficiencyLevel === 'B2' ? 'tonal' : 'elevated'"
                 >
                   <v-radio
-                    :color="filters.difficultyLevel === 'b2' ? 'purple' : 'gray'"
+                    :color="filters.proficiencyLevel === 'B2' ? 'purple' : 'gray'"
                     density="compact"
                     hide-details
                     label="B2"
-                    value="b2"
+                    value="B2"
                   ></v-radio>
                 </v-chip>
               </v-col>
               <v-col cols="auto" class="pa-1">
                 <v-chip
-                  :color="filters.difficultyLevel === 'c1' ? 'purple' : 'white'"
-                  :variant="filters.difficultyLevel === 'c1' ? 'tonal' : 'elevated'"
+                  :color="filters.proficiencyLevel === 'C1' ? 'purple' : 'white'"
+                  :variant="filters.proficiencyLevel === 'C1' ? 'tonal' : 'elevated'"
                 >
                   <v-radio
-                    :color="filters.difficultyLevel === 'c1' ? 'purple' : 'gray'"
+                    :color="filters.proficiencyLevel === 'C1' ? 'purple' : 'gray'"
                     density="compact"
                     hide-details
                     label="C1"
-                    value="c1"
+                    value="C1"
                   ></v-radio>
                 </v-chip>
               </v-col>
               <v-col cols="auto" class="pa-1">
                 <v-chip
-                  :color="filters.difficultyLevel === 'c2' ? 'purple' : 'white'"
-                  :variant="filters.difficultyLevel === 'c2' ? 'tonal' : 'elevated'"
+                  :color="filters.proficiencyLevel === 'C2' ? 'purple' : 'white'"
+                  :variant="filters.proficiencyLevel === 'C2' ? 'tonal' : 'elevated'"
                 >
                   <v-radio
-                    :color="filters.difficultyLevel === 'c2' ? 'purple' : 'gray'"
+                    :color="filters.proficiencyLevel === 'C2' ? 'purple' : 'gray'"
                     density="compact"
                     hide-details
                     label="C2"
-                    value="c2"
+                    value="C2"
                   ></v-radio>
                 </v-chip>
               </v-col>
@@ -145,12 +145,12 @@
             <v-chip
               :key="type"
               v-for="type in contentTypes"
-              :color="filters.type.includes(type) ? 'purple' : 'white'"
-              :variant="!filters.type.includes(type) ? 'elevated' : 'tonal'"
+              :color="filters.contentType.includes(type) ? 'purple' : 'white'"
+              :variant="!filters.contentType.includes(type) ? 'elevated' : 'tonal'"
             >
               <v-checkbox
-                v-model="filters.type"
-                :color="filters.type.includes(type) ? 'purple' : 'gray'"
+                v-model="filters.contentType"
+                :color="filters.contentType.includes(type) ? 'purple' : 'gray'"
                 density="compact"
                 hide-details
                 :label="type"
@@ -162,16 +162,16 @@
           <v-row class="w-full row">
             <v-chip
               :key="subscription"
-              v-for="subscription in subscriptionTypes"
-              :color="filters.subscriptionType.includes(subscription) ? 'purple' : 'white'"
-              :variant="!filters.subscriptionType.includes(subscription) ? 'elevated' : 'tonal'"
+              v-for="subscription in subscriptionModels"
+              :color="filters.subscriptionModel.includes(subscription) ? 'purple' : 'white'"
+              :variant="!filters.subscriptionModel.includes(subscription) ? 'elevated' : 'tonal'"
             >
               <v-checkbox
-                v-model="filters.subscriptionType"
-                :color="filters.subscriptionType.includes(subscription) ? 'purple' : 'gray'"
+                v-model="filters.subscriptionModel"
+                :color="filters.subscriptionModel.includes(subscription) ? 'purple' : 'gray'"
                 density="compact"
                 hide-details
-                :label="subscription"
+                :label="subscriptionModelMatcher[subscription]"
                 :value="subscription"
               ></v-checkbox>
             </v-chip>
@@ -214,8 +214,6 @@
 
 <script setup lang="ts">
 import { reactive, computed, watch, ref } from 'vue';
-import { coursesListGetters } from '../store/index';
-import { useStore } from 'vuex';
 import CourseModel from '../models/course';
 import { getUniqueCategories } from '../dummyData/categories';
 import { getUniqueContentTypes } from '../dummyData/contentTypes';
@@ -223,20 +221,23 @@ import { getUniqueContentTypes } from '../dummyData/contentTypes';
 const categories = getUniqueCategories();
 const contentTypes = getUniqueContentTypes();
 
-const store = useStore();
 const initialFilters = {
   category: [],
-  difficulty: null,
-  type: [],
-  subscriptionType: [],
+  proficiencyLevel: null,
+  contentType: [],
+  subscriptionModel: [],
   status: [],
   latestVersions: true
 };
 
 const filtersCount = ref(0);
-const courses = computed<CourseModel[]>(() => store.getters[coursesListGetters.getCoursesList]);
-const subscriptionTypes = ['Darmowy', 'Premium'];
+const subscriptionModels = ['FREE', 'PREMIUM'];
 const statusTypes = ['Opublikowane', 'Testowane', 'Robocze'];
+
+const subscriptionModelMatcher = {
+  FREE: 'Darmowy',
+  PREMIUM: 'Premium'
+};
 
 const filters = reactive({
   ...initialFilters
