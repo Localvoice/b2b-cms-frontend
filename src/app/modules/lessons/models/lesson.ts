@@ -34,6 +34,8 @@ class LessonModel {
   createdAt: string | undefined = undefined;
 
   updatedAt: string | undefined = undefined;
+
+  version: string | undefined = undefined;
 }
 
 export default LessonModel;

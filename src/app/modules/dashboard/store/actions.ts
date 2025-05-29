@@ -39,6 +39,12 @@ export const actions = {
   }),
   setDisplayLimit: createAction(({ commit }, { limit }) => {
     commit(coursesListMutations.setCoursesLimit.local, limit);
+  }),
+  toggleDateSorting: createAction(({ commit }) => {
+    commit(coursesListMutations.toggleDateSorting.local);
+  }),
+  toggleSortField: createAction(({ commit }, { field }) => {
+    commit(coursesListMutations.toggleSortField.local, field);
   })
 };
 

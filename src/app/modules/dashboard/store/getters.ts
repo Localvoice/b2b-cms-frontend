@@ -16,7 +16,10 @@ export const getters = {
   getCoursesList: createGetter((state) => state.courses.coursesList),
   getLessonsList: createGetter((state) => state.lessons.lessonsList),
   getActiveView: createGetter((state) => state.activeView),
-  getResultsLimit: createGetter((state) => state.pagintation.limit)
+  getResultsLimit: createGetter((state) => state.pagintation.limit),
+  getDateSortingDirection: createGetter((state) => state.sort.dateSortDirection),
+  getSortingField: createGetter((state) => state.sort.field),
+  getSortingDirection: createGetter((state) => state.sort.direction)
 };
 
 export const coursesListGetters = createGetterMap<typeof getters, CoursesListState, RootState>(NAMESPACE, getters);

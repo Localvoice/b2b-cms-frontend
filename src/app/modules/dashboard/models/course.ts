@@ -17,6 +17,8 @@ class CourseModel {
 
   subscriptionModel: 'FREE' | 'PREMIUM' | 'PARTIALLY_FREE' | undefined = undefined;
 
+  version: string | undefined = undefined;
+
   iconUrl: string | undefined = undefined;
 
   createdAt: string | undefined = undefined;

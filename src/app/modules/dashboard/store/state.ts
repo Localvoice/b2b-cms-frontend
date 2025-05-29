@@ -3,6 +3,9 @@ import { createEntityAdapter, EntityAdapter } from '~app/shared/vuex';
 import CourseModel from '../models/course';
 import LessonModel from '../../lessons/models/lesson';
 
+export type CourseWithSingleCategory = Omit<CourseModel, 'categories'> & {
+  category: string;
+};
 export type ActiveView = 'courses' | 'lessons';
 
 export const NAMESPACE = 'coursesList';
@@ -16,9 +19,14 @@ export interface CoursesListState {
     hasPreviousPage: boolean;
     limit: number;
   };
+  sort: {
+    field: string | null;
+    direction: 'asc' | 'desc' | null;
+    dateSortDirection: 'asc' | 'desc';
+  };
   courses: {
-    allCourses: CourseModel[];
-    coursesList: CourseModel[];
+    allCourses: CourseWithSingleCategory[];
+    coursesList: CourseWithSingleCategory[];
   };
   lessons: {
     allLessons: LessonModel[];
@@ -37,6 +45,11 @@ export function initialState(): CoursesListState {
       hasNextPage: false,
       hasPreviousPage: false,
       limit: 5
+    },
+    sort: {
+      field: null,
+      direction: null,
+      dateSortDirection: 'asc'
     },
     courses: {
       allCourses: [],

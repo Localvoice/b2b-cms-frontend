@@ -2,60 +2,136 @@
   <v-table class="w-full" rounded="lg">
     <thead v-if="activeView === 'courses'">
       <tr>
-        <th class="text-left">KURS</th>
         <th class="text-left">
-          <div class="d-flex align-center">
-            <span class="mr-1">LEKCJE</span>
-            <v-btn icon="mdi-swap-vertical" variant="plain" size="x-small"></v-btn>
+          <div class="d-inline-flex align-center cursor-pointer" @click="toggleSortField('title')">
+            <span class="mr-1">KURS</span>
+            <v-icon
+              v-if="sortingField === 'title'"
+              :icon="sortingDirection === 'asc' ? 'mdi-arrow-up-thin' : 'mdi-arrow-down-thin'"
+              class="text-body-1"
+            ></v-icon>
           </div>
         </th>
         <th class="text-left">
-          <div class="d-flex align-center">
+          <div class="d-inline-flex align-center cursor-pointer" @click="toggleSortField('proficiencyLevel')">
             <span class="mr-1">POZIOM</span>
-            <v-btn icon="mdi-swap-vertical" variant="plain" size="x-small"></v-btn>
+            <v-icon
+              v-if="sortingField === 'proficiencyLevel'"
+              :icon="sortingDirection === 'asc' ? 'mdi-arrow-up-thin' : 'mdi-arrow-down-thin'"
+              class="text-body-1"
+            ></v-icon>
           </div>
         </th>
-        <th class="text-left">KATEGORIA</th>
         <th class="text-left">
-          <div class="d-flex align-center">
+          <div class="d-inline-flex align-center cursor-pointer" @click="toggleSortField('category')">
+            <span class="mr-1">KATEGORIA</span>
+            <v-icon
+              v-if="sortingField === 'category'"
+              :icon="sortingDirection === 'asc' ? 'mdi-arrow-up-thin' : 'mdi-arrow-down-thin'"
+              class="text-body-1"
+            ></v-icon>
+          </div>
+        </th>
+        <th class="text-left">
+          <div class="d-inline-flex align-center cursor-pointer" @click="toggleSortField('subscriptionModel')">
             <span class="mr-1">PLAN</span>
-            <v-btn icon="mdi-swap-vertical" variant="plain" size="x-small"></v-btn>
+            <v-icon
+              v-if="sortingField === 'subscriptionModel'"
+              :icon="sortingDirection === 'asc' ? 'mdi-arrow-up-thin' : 'mdi-arrow-down-thin'"
+              class="text-body-1"
+            ></v-icon>
           </div>
         </th>
         <th class="text-left">
-          <div class="d-flex align-center">
+          <div class="d-inline-flex align-center cursor-pointer" @click="toggleSortField('version')">
             <span class="mr-1">WERSJA</span>
-            <v-btn icon="mdi-swap-vertical" variant="plain" size="x-small"></v-btn>
+            <v-icon
+              v-if="sortingField === 'version'"
+              :icon="sortingDirection === 'asc' ? 'mdi-arrow-up-thin' : 'mdi-arrow-down-thin'"
+              class="text-body-1"
+            ></v-icon>
+          </div>
+        </th>
+        <th class="text-left">
+          <div class="d-inline-flex align-center cursor-pointer" @click="toggleDateSorting">
+            <span class="mr-1">DATA EDYCJI</span>
+            <v-icon
+              :icon="dateSortingDirection === 'asc' ? 'mdi-arrow-up-thin' : 'mdi-arrow-down-thin'"
+              class="text-body-1"
+            ></v-icon>
           </div>
         </th>
       </tr>
     </thead>
     <thead v-if="activeView === 'lessons'">
       <tr>
-        <th class="text-left">KURS</th>
         <th class="text-left">
-          <div class="d-flex align-center">
+          <div class="d-inline-flex align-center cursor-pointer" @click="toggleSortField('title')">
+            <span class="mr-1">KURS</span>
+            <v-icon
+              v-if="sortingField === 'title'"
+              :icon="sortingDirection === 'asc' ? 'mdi-arrow-up-thin' : 'mdi-arrow-down-thin'"
+              class="text-body-1"
+            ></v-icon>
+          </div>
+        </th>
+        <th class="text-left">
+          <div class="d-inline-flex align-center cursor-pointer" @click="toggleSortField('contentType')">
             <span class="mr-1">TYP</span>
-            <v-btn icon="mdi-swap-vertical" variant="plain" size="x-small"></v-btn>
+            <v-icon
+              v-if="sortingField === 'contentType'"
+              :icon="sortingDirection === 'asc' ? 'mdi-arrow-up-thin' : 'mdi-arrow-down-thin'"
+              class="text-body-1"
+            ></v-icon>
           </div>
         </th>
         <th class="text-left">
-          <div class="d-flex align-center">
+          <div class="d-inline-flex align-center cursor-pointer" @click="toggleSortField('proficiencyLevel')">
             <span class="mr-1">POZIOM</span>
-            <v-btn icon="mdi-swap-vertical" variant="plain" size="x-small"></v-btn>
+            <v-icon
+              v-if="sortingField === 'proficiencyLevel'"
+              :icon="sortingDirection === 'asc' ? 'mdi-arrow-up-thin' : 'mdi-arrow-down-thin'"
+              class="text-body-1"
+            ></v-icon>
           </div>
         </th>
-        <th class="text-left">KATEGORIA</th>
         <th class="text-left">
-          <div class="d-flex align-center">
+          <div class="d-inline-flex align-center cursor-pointer" @click="toggleSortField('category')">
+            <span class="mr-1">KATEGORIA</span>
+            <v-icon
+              v-if="sortingField === 'category'"
+              :icon="sortingDirection === 'asc' ? 'mdi-arrow-up-thin' : 'mdi-arrow-down-thin'"
+              class="text-body-1"
+            ></v-icon>
+          </div>
+        </th>
+        <th class="text-left">
+          <div class="d-inline-flex align-center cursor-pointer" @click="toggleSortField('subscriptionModel')">
             <span class="mr-1">PLAN</span>
-            <v-btn icon="mdi-swap-vertical" variant="plain" size="x-small"></v-btn>
+            <v-icon
+              v-if="sortingField === 'subscriptionModel'"
+              :icon="sortingDirection === 'asc' ? 'mdi-arrow-up-thin' : 'mdi-arrow-down-thin'"
+              class="text-body-1"
+            ></v-icon>
           </div>
         </th>
         <th class="text-left">
-          <div class="d-flex align-center">
+          <div class="d-inline-flex align-center cursor-pointer" @click="toggleSortField('version')">
             <span class="mr-1">WERSJA</span>
-            <v-btn icon="mdi-swap-vertical" variant="plain" size="x-small"></v-btn>
+            <v-icon
+              v-if="sortingField === 'version'"
+              :icon="sortingDirection === 'asc' ? 'mdi-arrow-up-thin' : 'mdi-arrow-down-thin'"
+              class="text-body-1"
+            ></v-icon>
+          </div>
+        </th>
+        <th class="text-left">
+          <div class="d-inline-flex align-center cursor-pointer" @click="toggleDateSorting">
+            <span class="mr-1">DATA EDYCJI</span>
+            <v-icon
+              :icon="dateSortingDirection === 'asc' ? 'mdi-arrow-up-thin' : 'mdi-arrow-down-thin'"
+              class="text-body-1"
+            ></v-icon>
           </div>
         </th>
       </tr>
@@ -68,9 +144,7 @@
               <h6 class="table-text">{{ course.title }}</h6>
             </router-link>
           </div>
-        </td>
-        <td>
-          <p class="table-text">0</p>
+          <div class="resize-trigger"></div>
         </td>
         <td>
           <div class="d-flex align-center">
@@ -85,9 +159,9 @@
           </div>
         </td>
         <td>
-          <v-tooltip :text="course.categories[0]" location="bottom">
+          <v-tooltip :text="course.category" location="bottom">
             <template v-slot:activator="{ props }">
-              <v-chip size="small" color="pink" v-bind="props">{{ truncate(course.categories[0]) }}</v-chip>
+              <v-chip size="small" color="pink" v-bind="props">{{ truncate(course.category) }}</v-chip>
             </template>
           </v-tooltip>
         </td>
@@ -103,8 +177,11 @@
           </v-chip>
         </td>
         <td>
+          <p class="table-text">{{ course.version }}</p>
+        </td>
+        <td>
           <div class="d-flex align-center">
-            <p class="table-text">1.1</p>
+            <p class="table-text">{{ formatDateString(course.updatedAt) }}</p>
             <v-btn class="ml-auto" variant="plain" icon="mdi-dots-horizontal" size="x-small"></v-btn>
           </div>
         </td>
@@ -153,8 +230,11 @@
           </v-chip>
         </td>
         <td>
+          <p class="table-text">{{ lesson.version }}</p>
+        </td>
+        <td>
           <div class="d-flex align-center">
-            <p class="table-text">1.1</p>
+            <p class="table-text">{{ formatDateString(lesson.updatedAt) }}</p>
             <v-btn class="ml-auto" variant="plain" icon="mdi-dots-horizontal" size="x-small"></v-btn>
           </div>
         </td>
@@ -185,6 +265,12 @@ const subscriptionModelMatcher = {
 const courses = computed(() => store.getters[coursesListGetters.getCoursesList]);
 const lessons = computed(() => store.getters[coursesListGetters.getLessonsList]);
 const activeView = computed(() => store.getters[coursesListGetters.getActiveView]);
+const dateSortingDirection = computed(() => store.getters[coursesListGetters.getDateSortingDirection]);
+const sortingField = computed(() => store.getters[coursesListGetters.getSortingField]);
+const sortingDirection = computed(() => store.getters[coursesListGetters.getSortingDirection]);
+
+const toggleDateSorting = () => store.dispatch(coursesListActions.toggleDateSorting);
+const toggleSortField = (field: string) => store.dispatch(coursesListActions.toggleSortField, { field });
 
 const truncate = (text: string, maxLength = 10) => {
   return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
@@ -197,11 +283,19 @@ const formatEnumString = (input: string): string => {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 };
+
+const formatDateString = (date: string) => {
+  return date.split('T')[0];
+};
 </script>
 
 <style lang="scss">
 thead {
   background-color: #f9f9fb;
+}
+th,
+td {
+  position: relative;
 }
 th {
   text-transform: uppercase;
@@ -211,6 +305,15 @@ th {
 }
 td {
   padding: 16px !important;
+}
+.resize-trigger {
+  position: absolute;
+  height: 100%;
+  width: 2px;
+  background-color: #f2f0ff;
+  right: 0;
+  top: 0;
+  cursor: w-resize;
 }
 .table-text {
   color: #3b4471;

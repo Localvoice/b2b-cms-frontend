@@ -1,23 +1,27 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable array-callback-return */
 import { createMutationFactory, createMutationMap } from '~app/shared/vuex';
-import { NAMESPACE, CoursesListState, ActiveView } from './state';
+import { NAMESPACE, CoursesListState, ActiveView, CourseWithSingleCategory } from './state';
 import CourseModel from '../models/course';
 import LessonModel from '../../lessons/models/lesson';
+import { getTotalPages, mapCoursesToTableData, sortByDateAndField } from './helpers';
 
 const createMutation = createMutationFactory<CoursesListState>();
 
 export const mutations = {
   setDashboardData: createMutation(
     (state, { coursesList, lessonsList }: { coursesList: CourseModel[]; lessonsList: LessonModel[] }) => {
-      state.courses.allCourses = coursesList;
-      state.lessons.allLessons = lessonsList;
+      const sortDirection = state.sort.dateSortDirection;
+      const sortedCourses = sortByDateAndField(mapCoursesToTableData(coursesList), null, sortDirection, null);
+      const sortedLessons = sortByDateAndField(lessonsList, null, sortDirection, null);
 
-      state.courses.coursesList = coursesList.slice(0, state.pagintation.limit);
-      state.lessons.lessonsList = lessonsList.slice(0, state.pagintation.limit);
+      state.courses.allCourses = sortedCourses;
+      state.lessons.allLessons = sortedLessons;
+      state.courses.coursesList = sortedCourses.slice(0, state.pagintation.limit);
+      state.lessons.lessonsList = sortedLessons.slice(0, state.pagintation.limit);
       state.pagintation.activePage = 1;
 
-      const totalPages = Math.ceil(coursesList.length / state.pagintation.limit);
+      const totalPages = getTotalPages(coursesList.length, state.pagintation.limit);
       state.pagintation.totalPages = totalPages;
       if (totalPages > 1) {
         state.pagintation.hasNextPage = true;
@@ -25,13 +29,14 @@ export const mutations = {
     }
   ),
   setCoursesList: createMutation((state, coursesList: CourseModel[]) => {
-    state.courses.allCourses = coursesList;
-    state.courses.coursesList = coursesList.slice(0, state.pagintation.limit);
+    const mappedCourses = mapCoursesToTableData(coursesList);
+    state.courses.allCourses = mappedCourses;
+    state.courses.coursesList = mappedCourses.slice(0, state.pagintation.limit);
 
     state.pagintation.activePage = 1;
     state.pagintation.hasPreviousPage = false;
 
-    const totalPages = Math.ceil(coursesList.length / state.pagintation.limit);
+    const totalPages = getTotalPages(coursesList.length, state.pagintation.limit);
     state.pagintation.totalPages = totalPages;
     if (totalPages > 1) {
       state.pagintation.hasNextPage = true;
@@ -44,7 +49,7 @@ export const mutations = {
     state.pagintation.activePage = 1;
     state.pagintation.hasPreviousPage = false;
 
-    const totalPages = Math.ceil(lessonsList.length / state.pagintation.limit);
+    const totalPages = getTotalPages(lessonsList.length, state.pagintation.limit);
     state.pagintation.totalPages = totalPages;
     if (totalPages > 1) {
       state.pagintation.hasNextPage = true;
@@ -63,7 +68,7 @@ export const mutations = {
     }
   }),
   updateCourses: createMutation((state, courses: CourseModel[]) => {
-    state.courses.coursesList = courses;
+    state.courses.coursesList = mapCoursesToTableData(courses);
   }),
   updateActivePage: createMutation((state, page: number) => {
     state.pagintation.activePage = page;
@@ -92,9 +97,9 @@ export const mutations = {
     }
   }),
   setCoursesLimit: createMutation((state, limit: number) => {
-    let totalPages = Math.ceil(state.courses.allCourses.length / limit);
+    let totalPages = getTotalPages(state.courses.allCourses.length, limit);
     if (state.activeView === 'lessons') {
-      totalPages = Math.ceil(state.lessons.allLessons.length / limit);
+      totalPages = getTotalPages(state.lessons.allLessons.length, limit);
     }
 
     state.pagintation = {
@@ -111,6 +116,90 @@ export const mutations = {
     } else {
       state.lessons.lessonsList = state.lessons.allLessons.slice(0, limit);
     }
+  }),
+  toggleDateSorting: createMutation((state) => {
+    const sortDirection = state.sort.dateSortDirection === 'asc' ? 'desc' : 'asc';
+    const start = (state.pagintation.activePage - 1) * state.pagintation.limit;
+    const end = start + state.pagintation.limit;
+    state.sort.dateSortDirection = sortDirection;
+
+    let sortedCourses: CourseWithSingleCategory[] = sortByDateAndField(
+      state.courses.allCourses,
+      null,
+      state.sort.dateSortDirection,
+      null
+    );
+    let sortedLessons: LessonModel[] = sortByDateAndField(
+      state.lessons.allLessons,
+      null,
+      state.sort.dateSortDirection,
+      null
+    );
+
+    if (state.sort.field && state.sort.direction) {
+      sortedCourses = sortByDateAndField(
+        state.courses.allCourses,
+        state.sort.field as keyof CourseWithSingleCategory,
+        state.sort.dateSortDirection,
+        state.sort.direction
+      );
+      sortedLessons = sortByDateAndField(
+        state.lessons.allLessons,
+        state.sort.field as keyof LessonModel,
+        state.sort.dateSortDirection,
+        state.sort.direction
+      );
+    }
+
+    state.courses.allCourses = sortedCourses;
+    state.courses.coursesList = sortedCourses.slice(start, end);
+    state.lessons.allLessons = sortedLessons;
+    state.lessons.lessonsList = sortedLessons.slice(start, end);
+  }),
+  toggleSortField: createMutation((state, field: string) => {
+    const start = (state.pagintation.activePage - 1) * state.pagintation.limit;
+    const end = start + state.pagintation.limit;
+    let direction = state.sort.direction;
+    let sortField = state.sort.field;
+
+    if (state.sort.field === null || state.sort.field !== field) {
+      sortField = field;
+      direction = 'asc';
+    } else if (state.sort.direction === 'asc' && state.sort.field === field) {
+      direction = 'desc';
+    } else if (state.sort.direction === 'desc' && state.sort.field === field) {
+      sortField = null;
+      direction = null;
+    }
+
+    state.sort.field = sortField;
+    state.sort.direction = direction;
+
+    let sortedCourses: CourseWithSingleCategory[] = state.courses.allCourses;
+    let sortedLessons: LessonModel[] = state.lessons.allLessons;
+
+    if (sortField && direction) {
+      sortedCourses = sortByDateAndField(
+        state.courses.allCourses,
+        sortField as keyof CourseWithSingleCategory,
+        state.sort.dateSortDirection,
+        direction
+      );
+      sortedLessons = sortByDateAndField(
+        state.lessons.allLessons,
+        sortField as keyof LessonModel,
+        state.sort.dateSortDirection,
+        direction
+      );
+    } else {
+      sortedCourses = sortByDateAndField(state.courses.allCourses, null, state.sort.dateSortDirection, null);
+      sortedLessons = sortByDateAndField(state.lessons.allLessons, null, state.sort.dateSortDirection, null);
+    }
+
+    state.courses.allCourses = sortedCourses;
+    state.courses.coursesList = sortedCourses.slice(start, end);
+    state.lessons.allLessons = sortedLessons;
+    state.lessons.lessonsList = sortedLessons.slice(start, end);
   })
 };
 

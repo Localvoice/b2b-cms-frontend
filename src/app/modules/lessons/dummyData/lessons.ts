@@ -19,7 +19,8 @@ export const lessons: LessonModel[] = [
     isContentDuringTesting: false,
     isContentPublished: true,
     createdAt: '2024-01-01T10:00:00Z',
-    updatedAt: '2024-01-05T10:00:00Z'
+    updatedAt: '2024-01-05T10:00:00Z',
+    version: '1.1'
   },
   {
     lessonId: 'lesson-002',
@@ -39,7 +40,8 @@ export const lessons: LessonModel[] = [
     isContentDuringTesting: false,
     isContentPublished: true,
     createdAt: '2024-02-01T11:00:00Z',
-    updatedAt: '2024-02-02T11:00:00Z'
+    updatedAt: '2024-02-02T11:00:00Z',
+    version: '2.1'
   },
   {
     lessonId: 'lesson-003',
@@ -59,7 +61,8 @@ export const lessons: LessonModel[] = [
     isContentDuringTesting: false,
     isContentPublished: true,
     createdAt: '2024-03-10T14:00:00Z',
-    updatedAt: '2024-03-12T14:00:00Z'
+    updatedAt: '2024-03-12T14:00:00Z',
+    version: '1.1'
   },
   {
     lessonId: 'lesson-004',
@@ -79,7 +82,8 @@ export const lessons: LessonModel[] = [
     isContentDuringTesting: true,
     isContentPublished: false,
     createdAt: '2024-01-20T10:00:00Z',
-    updatedAt: '2024-01-22T10:00:00Z'
+    updatedAt: '2024-01-22T10:00:00Z',
+    version: '1.2'
   },
   {
     lessonId: 'lesson-005',
@@ -99,7 +103,8 @@ export const lessons: LessonModel[] = [
     isContentDuringTesting: false,
     isContentPublished: true,
     createdAt: '2023-12-05T09:00:00Z',
-    updatedAt: '2023-12-06T09:00:00Z'
+    updatedAt: '2023-12-06T09:00:00Z',
+    version: '1.4'
   },
   {
     lessonId: 'lesson-006',
@@ -119,7 +124,8 @@ export const lessons: LessonModel[] = [
     isContentDuringTesting: false,
     isContentPublished: false,
     createdAt: '2024-01-10T08:00:00Z',
-    updatedAt: '2024-01-15T08:00:00Z'
+    updatedAt: '2024-01-15T08:00:00Z',
+    version: '1.2'
   },
   {
     lessonId: 'lesson-007',
@@ -139,7 +145,8 @@ export const lessons: LessonModel[] = [
     isContentDuringTesting: false,
     isContentPublished: true,
     createdAt: '2024-03-01T10:00:00Z',
-    updatedAt: '2024-03-03T10:00:00Z'
+    updatedAt: '2024-03-03T10:00:00Z',
+    version: '1.1'
   },
   {
     lessonId: 'lesson-008',
@@ -159,7 +166,8 @@ export const lessons: LessonModel[] = [
     isContentDuringTesting: true,
     isContentPublished: false,
     createdAt: '2024-02-15T12:00:00Z',
-    updatedAt: '2024-02-18T12:00:00Z'
+    updatedAt: '2024-02-18T12:00:00Z',
+    version: '3.1'
   },
   {
     lessonId: 'lesson-009',
@@ -179,7 +187,8 @@ export const lessons: LessonModel[] = [
     isContentDuringTesting: false,
     isContentPublished: false,
     createdAt: '2023-11-05T10:00:00Z',
-    updatedAt: '2023-11-07T10:00:00Z'
+    updatedAt: '2023-11-07T10:00:00Z',
+    version: '1.1'
   },
   {
     lessonId: 'lesson-010',
@@ -199,7 +208,8 @@ export const lessons: LessonModel[] = [
     isContentDuringTesting: false,
     isContentPublished: true,
     createdAt: '2024-04-01T09:00:00Z',
-    updatedAt: '2024-04-03T09:00:00Z'
+    updatedAt: '2024-04-03T09:00:00Z',
+    version: '1.1'
   },
   {
     lessonId: 'lesson-011',
@@ -219,7 +229,8 @@ export const lessons: LessonModel[] = [
     isContentDuringTesting: false,
     isContentPublished: true,
     createdAt: '2024-01-25T10:00:00Z',
-    updatedAt: '2024-01-30T11:00:00Z'
+    updatedAt: '2024-01-30T11:00:00Z',
+    version: '1.4'
   },
   {
     lessonId: 'lesson-012',
@@ -239,7 +250,8 @@ export const lessons: LessonModel[] = [
     isContentDuringTesting: false,
     isContentPublished: true,
     createdAt: '2024-02-18T13:00:00Z',
-    updatedAt: '2024-02-25T13:00:00Z'
+    updatedAt: '2024-02-25T13:00:00Z',
+    version: '2.1'
   },
   {
     lessonId: 'lesson-013',
@@ -259,7 +271,8 @@ export const lessons: LessonModel[] = [
     isContentDuringTesting: false,
     isContentPublished: false,
     createdAt: '2023-12-15T09:30:00Z',
-    updatedAt: '2023-12-20T10:00:00Z'
+    updatedAt: '2023-12-20T10:00:00Z',
+    version: '1.1'
   },
   {
     lessonId: 'lesson-014',
@@ -279,7 +292,8 @@ export const lessons: LessonModel[] = [
     isContentDuringTesting: false,
     isContentPublished: true,
     createdAt: '2024-01-20T10:30:00Z',
-    updatedAt: '2024-01-25T10:30:00Z'
+    updatedAt: '2024-01-25T10:30:00Z',
+    version: '1.3'
   },
   {
     lessonId: 'lesson-015',
@@ -299,6 +313,7 @@ export const lessons: LessonModel[] = [
     isContentDuringTesting: false,
     isContentPublished: true,
     createdAt: '2024-04-03T08:30:00Z',
-    updatedAt: '2024-04-10T09:00:00Z'
+    updatedAt: '2024-04-10T09:00:00Z',
+    version: '1.1'
   }
 ];

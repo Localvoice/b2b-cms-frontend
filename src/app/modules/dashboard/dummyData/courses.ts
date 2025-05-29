@@ -13,7 +13,8 @@ const courses: CourseModel[] = [
     subscriptionModel: 'FREE',
     iconUrl: 'https://example.com/icons/grammar1.png',
     createdAt: '2024-01-10T12:00:00Z',
-    updatedAt: '2024-03-15T10:00:00Z'
+    updatedAt: '2024-03-15T10:00:00Z',
+    version: '1.1'
   },
   {
     courseId: 'course-002',
@@ -27,7 +28,8 @@ const courses: CourseModel[] = [
     subscriptionModel: 'PREMIUM',
     iconUrl: 'https://example.com/icons/french1.png',
     createdAt: '2024-02-05T08:00:00Z',
-    updatedAt: '2024-05-01T09:30:00Z'
+    updatedAt: '2024-05-01T09:30:00Z',
+    version: '1.3'
   },
   {
     courseId: 'course-003',
@@ -41,7 +43,8 @@ const courses: CourseModel[] = [
     subscriptionModel: 'PARTIALLY_FREE',
     iconUrl: 'https://example.com/icons/spanish1.png',
     createdAt: '2023-12-20T14:00:00Z',
-    updatedAt: '2024-01-22T11:00:00Z'
+    updatedAt: '2024-01-22T11:00:00Z',
+    version: '1.2'
   },
   {
     courseId: 'course-004',
@@ -55,7 +58,8 @@ const courses: CourseModel[] = [
     subscriptionModel: 'FREE',
     iconUrl: 'https://example.com/icons/german1.png',
     createdAt: '2024-01-15T10:30:00Z',
-    updatedAt: '2024-03-12T15:45:00Z'
+    updatedAt: '2024-03-12T15:45:00Z',
+    version: '2.0'
   },
   {
     courseId: 'course-005',
@@ -69,7 +73,8 @@ const courses: CourseModel[] = [
     subscriptionModel: 'PREMIUM',
     iconUrl: 'https://example.com/icons/italian1.png',
     createdAt: '2023-11-10T12:20:00Z',
-    updatedAt: '2024-04-01T13:20:00Z'
+    updatedAt: '2024-04-01T13:20:00Z',
+    version: '1.4'
   },
   {
     courseId: 'course-006',
@@ -83,7 +88,8 @@ const courses: CourseModel[] = [
     subscriptionModel: 'FREE',
     iconUrl: 'https://example.com/icons/japanese1.png',
     createdAt: '2024-01-01T08:00:00Z',
-    updatedAt: '2024-01-25T16:00:00Z'
+    updatedAt: '2024-01-25T16:00:00Z',
+    version: '1.1'
   },
   {
     courseId: 'course-007',
@@ -97,7 +103,8 @@ const courses: CourseModel[] = [
     subscriptionModel: 'PARTIALLY_FREE',
     iconUrl: 'https://example.com/icons/russian1.png',
     createdAt: '2024-03-10T10:00:00Z',
-    updatedAt: '2024-04-20T12:00:00Z'
+    updatedAt: '2024-04-20T12:00:00Z',
+    version: '1.2'
   },
   {
     courseId: 'course-008',
@@ -111,7 +118,8 @@ const courses: CourseModel[] = [
     subscriptionModel: 'PREMIUM',
     iconUrl: 'https://example.com/icons/mandarin1.png',
     createdAt: '2024-02-11T09:00:00Z',
-    updatedAt: '2024-03-11T10:15:00Z'
+    updatedAt: '2024-03-11T10:15:00Z',
+    version: '2.1'
   },
   {
     courseId: 'course-009',
@@ -125,7 +133,8 @@ const courses: CourseModel[] = [
     subscriptionModel: 'PREMIUM',
     iconUrl: 'https://example.com/icons/english2.png',
     createdAt: '2023-09-10T11:00:00Z',
-    updatedAt: '2024-01-10T13:00:00Z'
+    updatedAt: '2024-01-10T13:00:00Z',
+    version: '3.1'
   },
   {
     courseId: 'course-010',
@@ -139,7 +148,8 @@ const courses: CourseModel[] = [
     subscriptionModel: 'FREE',
     iconUrl: 'https://example.com/icons/korean1.png',
     createdAt: '2024-03-05T15:00:00Z',
-    updatedAt: '2024-04-15T14:30:00Z'
+    updatedAt: '2024-04-15T14:30:00Z',
+    version: '1.3'
   },
   {
     courseId: 'course-011',
@@ -153,7 +163,8 @@ const courses: CourseModel[] = [
     subscriptionModel: 'PARTIALLY_FREE',
     iconUrl: 'https://example.com/icons/portuguese1.png',
     createdAt: '2024-01-20T10:00:00Z',
-    updatedAt: '2024-02-10T11:00:00Z'
+    updatedAt: '2024-02-10T11:00:00Z',
+    version: '1.1'
   },
   {
     courseId: 'course-012',
@@ -167,7 +178,8 @@ const courses: CourseModel[] = [
     subscriptionModel: 'PREMIUM',
     iconUrl: 'https://example.com/icons/arabic1.png',
     createdAt: '2024-02-15T12:00:00Z',
-    updatedAt: '2024-04-01T14:00:00Z'
+    updatedAt: '2024-04-01T14:00:00Z',
+    version: '4.1'
   },
   {
     courseId: 'course-013',
@@ -181,7 +193,8 @@ const courses: CourseModel[] = [
     subscriptionModel: 'FREE',
     iconUrl: 'https://example.com/icons/hindi1.png',
     createdAt: '2023-12-10T09:00:00Z',
-    updatedAt: '2024-01-10T10:30:00Z'
+    updatedAt: '2024-01-10T10:30:00Z',
+    version: '1.3'
   },
   {
     courseId: 'course-014',
@@ -195,7 +208,8 @@ const courses: CourseModel[] = [
     subscriptionModel: 'PARTIALLY_FREE',
     iconUrl: 'https://example.com/icons/turkish1.png',
     createdAt: '2024-01-18T14:00:00Z',
-    updatedAt: '2024-03-20T15:00:00Z'
+    updatedAt: '2024-03-20T15:00:00Z',
+    version: '1.1'
   },
   {
     courseId: 'course-015',
@@ -209,7 +223,8 @@ const courses: CourseModel[] = [
     subscriptionModel: 'FREE',
     iconUrl: 'https://example.com/icons/polish1.png',
     createdAt: '2024-04-01T08:00:00Z',
-    updatedAt: '2024-05-01T09:00:00Z'
+    updatedAt: '2024-05-01T09:00:00Z',
+    version: '1.3'
   }
 ];
 
