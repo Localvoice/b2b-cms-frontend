@@ -268,7 +268,7 @@
         <td :style="columnWidths[6] ? { width: columnWidths[6] + 'px' } : {}" :ref="(el) => setColRef(el, 6)">
           <div class="d-flex align-center">
             <p class="table-text">{{ formatDateString(course.updatedAt) }}</p>
-            <v-btn class="ml-auto" variant="plain" icon="mdi-dots-horizontal" size="x-small"></v-btn>
+            <CourseOptions :courseId="course.courseId" />
           </div>
         </td>
       </tr>
@@ -327,7 +327,7 @@
         <td :style="columnWidths[6] ? { width: columnWidths[6] + 'px' } : {}" :ref="(el) => setColRef(el, 6)">
           <div class="d-flex align-center">
             <p class="table-text">{{ formatDateString(lesson.updatedAt) }}</p>
-            <v-btn class="ml-auto" variant="plain" icon="mdi-dots-horizontal" size="x-small"></v-btn>
+            <LessonOptions :lessonId="lesson.lessonId" />
           </div>
         </td>
       </tr>
@@ -339,15 +339,17 @@
 import { useStore } from 'vuex';
 import { coursesListGetters, coursesListActions } from '../store';
 import { computed, ref, onMounted, nextTick, watch } from 'vue';
+import CourseOptions from './CourseOptions.vue';
+import LessonOptions from './LessonOptions.vue';
 
 const store = useStore();
 const proficiencyLevelMatcher = {
-  A1: { label: 'Łatwy', color: 'success' },
-  A2: { label: 'Łatwy', color: 'success' },
-  B1: { label: 'Średni', color: 'warning' },
-  B2: { label: 'Średni', color: 'warning' },
-  C1: { label: 'Trudny', color: 'error' },
-  C2: { label: 'Trudny', color: 'error' }
+  A1: { label: 'Łatwy (A1)', color: 'success' },
+  A2: { label: 'Łatwy (A2)', color: 'success' },
+  B1: { label: 'Średni (B1)', color: 'warning' },
+  B2: { label: 'Średni (B2)', color: 'warning' },
+  C1: { label: 'Trudny (C1)', color: 'error' },
+  C2: { label: 'Trudny (C2)', color: 'error' }
 };
 const subscriptionModelMatcher = {
   FREE: { label: 'Darmowy', color: 'grey' },
