@@ -14,19 +14,28 @@ export const sortByDateAndField = <T extends { updatedAt: string | undefined }>(
       const aVal = a[secondaryField];
       const bVal = b[secondaryField];
 
-      const aStr =
-        Array.isArray(aVal) && typeof aVal[0] === 'string' ? aVal[0] : typeof aVal === 'string' ? aVal : null;
+      const getComparableValue = (val: any): string | number | null => {
+        if (Array.isArray(val)) val = val[0];
+        if (typeof val === 'string' || typeof val === 'number') return val;
+        return null;
+      };
 
-      const bStr =
-        Array.isArray(bVal) && typeof bVal[0] === 'string' ? bVal[0] : typeof bVal === 'string' ? bVal : null;
+      const aComp = getComparableValue(aVal);
+      const bComp = getComparableValue(bVal);
 
-      if (aStr !== null && bStr !== null) {
-        const comp = aStr.localeCompare(bStr);
+      if (aComp !== null && bComp !== null) {
+        let comp = 0;
+        if (typeof aComp === 'number' && typeof bComp === 'number') {
+          comp = aComp - bComp;
+        } else {
+          comp = String(aComp).localeCompare(String(bComp));
+        }
+
         if (comp !== 0) {
           return secondaryDirection === 'desc' ? -comp : comp;
         }
-      } else if (aStr !== bStr) {
-        return aStr === null ? 1 : -1;
+      } else if (aComp !== bComp) {
+        return aComp === null ? 1 : -1;
       }
     }
 
@@ -48,6 +57,7 @@ export const mapCoursesToTableData = (coursesList: CourseModel[]): CourseWithSin
     teacherId: course.teacherId,
     languageId: course.languageId,
     title: course.title,
+    lessonCount: course.lessonCount,
     category: course.categories[0] ? course.categories[0] : '',
     status: course.status,
     contentType: course.contentType,

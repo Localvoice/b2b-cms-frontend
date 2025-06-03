@@ -7,6 +7,8 @@ class CourseModel {
 
   title: string | undefined = undefined;
 
+  lessonCount: number | undefined = undefined;
+
   categories: string[] = [];
 
   status: 'ACTIVE' | 'INACTIVE' | undefined = undefined;
