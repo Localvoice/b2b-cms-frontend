@@ -45,7 +45,7 @@ defineProps<{
 }>();
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .dialog-card {
   background-color: #f9f9fb;
 }
@@ -65,6 +65,7 @@ defineProps<{
   color: white;
   font-weight: 700;
   font-size: 14px;
+  text-transform: initial;
 }
 .menu-btn {
   text-transform: initial;
