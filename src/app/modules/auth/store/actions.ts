@@ -15,6 +15,8 @@ export const actions = {
   fetchUser: createAction(({ commit }) => {
     const tokenStorage = new TokenStorage();
     tokenStorage.load().then((token) => {
+      console.log('accessToken', token?.accessToken);
+      console.log('userId', token?.userId);
       // TODO: fetch user with accessToken
       // return api
       //   .get<AuthUser>('/api/user')

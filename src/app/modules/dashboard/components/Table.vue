@@ -82,10 +82,10 @@
           :style="columnWidths[5] ? { width: columnWidths[5] + 'px' } : {}"
           :ref="(el) => setColRef(el, 5)"
         >
-          <div class="d-inline-flex align-center cursor-pointer" @click="toggleSortField('version')">
-            <span class="mr-1">WERSJA</span>
+          <div class="d-inline-flex align-center cursor-pointer" @click="toggleSortField('status')">
+            <span class="mr-1">STATUS</span>
             <v-icon
-              v-if="sortingField === 'version'"
+              v-if="sortingField === 'status'"
               :icon="sortingDirection === 'asc' ? 'mdi-arrow-up-thin' : 'mdi-arrow-down-thin'"
               class="text-body-1"
             ></v-icon>
@@ -96,6 +96,21 @@
           class="text-left"
           :style="columnWidths[6] ? { width: columnWidths[6] + 'px' } : {}"
           :ref="(el) => setColRef(el, 6)"
+        >
+          <div class="d-inline-flex align-center cursor-pointer" @click="toggleSortField('version')">
+            <span class="mr-1">WERSJA</span>
+            <v-icon
+              v-if="sortingField === 'version'"
+              :icon="sortingDirection === 'asc' ? 'mdi-arrow-up-thin' : 'mdi-arrow-down-thin'"
+              class="text-body-1"
+            ></v-icon>
+          </div>
+          <div class="resize-trigger" @mousedown="startResizing($event, 6)"></div>
+        </th>
+        <th
+          class="text-left"
+          :style="columnWidths[7] ? { width: columnWidths[7] + 'px' } : {}"
+          :ref="(el) => setColRef(el, 7)"
         >
           <div class="d-inline-flex align-center cursor-pointer" @click="toggleDateSorting">
             <span class="mr-1">DATA EDYCJI</span>
@@ -189,10 +204,10 @@
           :style="columnWidths[5] ? { width: columnWidths[5] + 'px' } : {}"
           :ref="(el) => setColRef(el, 5)"
         >
-          <div class="d-inline-flex align-center cursor-pointer" @click="toggleSortField('version')">
-            <span class="mr-1">WERSJA</span>
+          <div class="d-inline-flex align-center cursor-pointer" @click="toggleSortField('status')">
+            <span class="mr-1">STATUS</span>
             <v-icon
-              v-if="sortingField === 'version'"
+              v-if="sortingField === 'status'"
               :icon="sortingDirection === 'asc' ? 'mdi-arrow-up-thin' : 'mdi-arrow-down-thin'"
               class="text-body-1"
             ></v-icon>
@@ -203,6 +218,21 @@
           class="text-left"
           :style="columnWidths[6] ? { width: columnWidths[6] + 'px' } : {}"
           :ref="(el) => setColRef(el, 6)"
+        >
+          <div class="d-inline-flex align-center cursor-pointer" @click="toggleSortField('version')">
+            <span class="mr-1">WERSJA</span>
+            <v-icon
+              v-if="sortingField === 'version'"
+              :icon="sortingDirection === 'asc' ? 'mdi-arrow-up-thin' : 'mdi-arrow-down-thin'"
+              class="text-body-1"
+            ></v-icon>
+          </div>
+          <div class="resize-trigger" @mousedown="startResizing($event, 6)"></div>
+        </th>
+        <th
+          class="text-left"
+          :style="columnWidths[7] ? { width: columnWidths[7] + 'px' } : {}"
+          :ref="(el) => setColRef(el, 7)"
         >
           <div class="d-inline-flex align-center cursor-pointer" @click="toggleDateSorting">
             <span class="mr-1">DATA EDYCJI</span>
@@ -262,10 +292,17 @@
           <div class="resize-trigger" @mousedown="startResizing($event, 4)"></div>
         </td>
         <td :style="columnWidths[5] ? { width: columnWidths[5] + 'px' } : {}" :ref="(el) => setColRef(el, 5)">
-          <p class="table-text">{{ course.version }}</p>
+          <div class="d-flex align-center">
+            <div :class="['mr-2 status-dot', course.status === 'ACTIVE' ? 'active' : 'inactive']"></div>
+            <p class="table-text">{{ statusMatcher[course.status].label }}</p>
+          </div>
           <div class="resize-trigger" @mousedown="startResizing($event, 5)"></div>
         </td>
         <td :style="columnWidths[6] ? { width: columnWidths[6] + 'px' } : {}" :ref="(el) => setColRef(el, 6)">
+          <p class="table-text">{{ course.version }}</p>
+          <div class="resize-trigger" @mousedown="startResizing($event, 6)"></div>
+        </td>
+        <td :style="columnWidths[7] ? { width: columnWidths[7] + 'px' } : {}" :ref="(el) => setColRef(el, 7)">
           <div class="d-flex align-center">
             <p class="table-text">{{ formatDateString(course.updatedAt) }}</p>
             <CourseOptions :courseId="course.courseId" />
@@ -321,10 +358,17 @@
           <div class="resize-trigger" @mousedown="startResizing($event, 4)"></div>
         </td>
         <td :style="columnWidths[5] ? { width: columnWidths[5] + 'px' } : {}" :ref="(el) => setColRef(el, 5)">
-          <p class="table-text">{{ lesson.version }}</p>
+          <div class="d-flex align-center">
+            <div :class="['mr-2 status-dot', lesson.status === 'ACTIVE' ? 'active' : 'inactive']"></div>
+            <p class="table-text">{{ statusMatcher[lesson.status].label }}</p>
+          </div>
           <div class="resize-trigger" @mousedown="startResizing($event, 5)"></div>
         </td>
         <td :style="columnWidths[6] ? { width: columnWidths[6] + 'px' } : {}" :ref="(el) => setColRef(el, 6)">
+          <p class="table-text">{{ lesson.version }}</p>
+          <div class="resize-trigger" @mousedown="startResizing($event, 6)"></div>
+        </td>
+        <td :style="columnWidths[7] ? { width: columnWidths[7] + 'px' } : {}" :ref="(el) => setColRef(el, 7)">
           <div class="d-flex align-center">
             <p class="table-text">{{ formatDateString(lesson.updatedAt) }}</p>
             <LessonOptions :lessonId="lesson.lessonId" />
@@ -355,6 +399,10 @@ const subscriptionModelMatcher = {
   FREE: { label: 'Darmowy', color: 'grey' },
   PARTIALLY_FREE: { label: 'Darmowy', color: 'grey' },
   PREMIUM: { label: 'Premium', color: 'purple' }
+};
+const statusMatcher = {
+  ACTIVE: { label: 'Opublikowane' },
+  INACTIVE: { label: 'Wersja robocza' }
 };
 const columnWidths = ref<number[]>([]);
 const colRefs = ref<(HTMLTableCellElement | null)[]>([]);
@@ -459,5 +507,18 @@ td {
   color: #3b4471;
   font-weight: 600;
   font-size: 13px;
+}
+.status-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  &.active {
+    background-color: #05c22d;
+    border: 4px solid #f0fbf3;
+  }
+  &.inactive {
+    background-color: #d27306;
+    border: 4px solid #fef7ed;
+  }
 }
 </style>

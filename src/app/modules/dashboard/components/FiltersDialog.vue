@@ -52,94 +52,23 @@
             </v-chip>
           </v-row>
           <p class="filter-label mb-3">Poziom trudności</p>
-          <v-radio-group v-model="filters.proficiencyLevel" hide-details>
-            <v-row class="w-full mt-1 mb-4">
-              <v-col cols="auto" class="pa-1">
-                <v-chip
-                  :color="filters.proficiencyLevel === 'A1' ? 'purple' : 'white'"
-                  :variant="filters.proficiencyLevel === 'A1' ? 'tonal' : 'elevated'"
-                >
-                  <v-radio
-                    :color="filters.proficiencyLevel === 'A1' ? 'purple' : 'gray'"
-                    density="compact"
-                    hide-details
-                    label="A1"
-                    value="A1"
-                  ></v-radio>
-                </v-chip>
-              </v-col>
-              <v-col cols="auto" class="pa-1">
-                <v-chip
-                  :color="filters.proficiencyLevel === 'A2' ? 'purple' : 'white'"
-                  :variant="filters.proficiencyLevel === 'A2' ? 'tonal' : 'elevated'"
-                >
-                  <v-radio
-                    :color="filters.proficiencyLevel === 'A2' ? 'purple' : 'gray'"
-                    density="compact"
-                    hide-details
-                    label="A2"
-                    value="A2"
-                  ></v-radio>
-                </v-chip>
-              </v-col>
-              <v-col cols="auto" class="pa-1">
-                <v-chip
-                  :color="filters.proficiencyLevel === 'B1' ? 'purple' : 'white'"
-                  :variant="filters.proficiencyLevel === 'B1' ? 'tonal' : 'elevated'"
-                >
-                  <v-radio
-                    :color="filters.proficiencyLevel === 'B1' ? 'purple' : 'gray'"
-                    density="compact"
-                    hide-details
-                    label="B1"
-                    value="B1"
-                  ></v-radio>
-                </v-chip>
-              </v-col>
-              <v-col cols="auto" class="pa-1">
-                <v-chip
-                  :color="filters.proficiencyLevel === 'B2' ? 'purple' : 'white'"
-                  :variant="filters.proficiencyLevel === 'B2' ? 'tonal' : 'elevated'"
-                >
-                  <v-radio
-                    :color="filters.proficiencyLevel === 'B2' ? 'purple' : 'gray'"
-                    density="compact"
-                    hide-details
-                    label="B2"
-                    value="B2"
-                  ></v-radio>
-                </v-chip>
-              </v-col>
-              <v-col cols="auto" class="pa-1">
-                <v-chip
-                  :color="filters.proficiencyLevel === 'C1' ? 'purple' : 'white'"
-                  :variant="filters.proficiencyLevel === 'C1' ? 'tonal' : 'elevated'"
-                >
-                  <v-radio
-                    :color="filters.proficiencyLevel === 'C1' ? 'purple' : 'gray'"
-                    density="compact"
-                    hide-details
-                    label="C1"
-                    value="C1"
-                  ></v-radio>
-                </v-chip>
-              </v-col>
-              <v-col cols="auto" class="pa-1">
-                <v-chip
-                  :color="filters.proficiencyLevel === 'C2' ? 'purple' : 'white'"
-                  :variant="filters.proficiencyLevel === 'C2' ? 'tonal' : 'elevated'"
-                >
-                  <v-radio
-                    :color="filters.proficiencyLevel === 'C2' ? 'purple' : 'gray'"
-                    density="compact"
-                    hide-details
-                    label="C2"
-                    value="C2"
-                  ></v-radio>
-                </v-chip>
-              </v-col>
-            </v-row>
-          </v-radio-group>
+          <v-row class="w-full row">
+            <v-chip
+              :key="proficiencyLevel"
+              v-for="proficiencyLevel in proficiencyLevels"
+              :color="filters.proficiencyLevel.includes(proficiencyLevel) ? 'purple' : 'white'"
+              :variant="!filters.proficiencyLevel.includes(proficiencyLevel) ? 'elevated' : 'tonal'"
+            >
+              <v-checkbox
+                v-model="filters.proficiencyLevel"
+                :color="filters.proficiencyLevel.includes(proficiencyLevel) ? 'purple' : 'gray'"
+                density="compact"
+                hide-details
+                :label="proficiencyLevel"
+                :value="proficiencyLevel"
+              ></v-checkbox>
+            </v-chip>
+          </v-row>
           <p class="filter-label mb-3">Typ lekcji</p>
           <v-row class="w-full row">
             <v-chip
@@ -189,7 +118,7 @@
                 :color="filters.status.includes(status) ? 'purple' : 'gray'"
                 density="compact"
                 hide-details
-                :label="status"
+                :label="statusTypeMatcher[status]"
                 :value="status"
               ></v-checkbox>
             </v-chip>
@@ -217,13 +146,19 @@ import { reactive, computed, watch, ref } from 'vue';
 import CourseModel from '../models/course';
 import { getUniqueCategories } from '../dummyData/categories';
 import { getUniqueContentTypes } from '../dummyData/contentTypes';
+import { useStore } from 'vuex';
+import { coursesListActions, DataFilters } from '../store';
 
+const store = useStore();
 const categories = getUniqueCategories();
 const contentTypes = getUniqueContentTypes();
 
+const applyFiltersAction = (filters: DataFilters) => store.dispatch(coursesListActions.applyFilters, { filters });
+const clearFiltersAction = () => store.dispatch(coursesListActions.clearFilters);
+
 const initialFilters = {
   category: [],
-  proficiencyLevel: null,
+  proficiencyLevel: [],
   contentType: [],
   subscriptionModel: [],
   status: [],
@@ -232,11 +167,17 @@ const initialFilters = {
 
 const filtersCount = ref(0);
 const subscriptionModels = ['FREE', 'PREMIUM'];
-const statusTypes = ['Opublikowane', 'Testowane', 'Robocze'];
+const statusTypes = ['ACTIVE', 'INACTIVE'];
+const proficiencyLevels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 
 const subscriptionModelMatcher = {
   FREE: 'Darmowy',
   PREMIUM: 'Premium'
+};
+
+const statusTypeMatcher = {
+  ACTIVE: 'Opublikowane',
+  INACTIVE: 'Testowane'
 };
 
 const filters = reactive({
@@ -255,14 +196,19 @@ watch(filters, (newFilters) => {
 const clearFilters = (e: Event) => {
   e.stopPropagation();
   Object.assign(filters, initialFilters);
+  clearFiltersAction();
 };
 
 const applyFilters = () => {
-  console.log(filters);
+  if (filtersCount.value > 0) {
+    applyFiltersAction(filters);
+  } else {
+    clearFiltersAction();
+  }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .dialog-card {
   background-color: #f9f9fb;
 }

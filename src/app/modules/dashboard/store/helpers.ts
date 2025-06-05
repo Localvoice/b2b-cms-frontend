@@ -1,5 +1,6 @@
+import LessonModel from '~app/modules/lessons/models/lesson';
 import CourseModel from '../models/course';
-import { CourseWithSingleCategory } from './state';
+import { CourseWithSingleCategory, DataFilters } from './state';
 
 type SortDirection = 'asc' | 'desc';
 
@@ -68,4 +69,40 @@ export const mapCoursesToTableData = (coursesList: CourseModel[]): CourseWithSin
     updatedAt: course.updatedAt,
     version: course.version
   }));
+};
+
+export const filterCourses = (courses: CourseWithSingleCategory[], filters: DataFilters) => {
+  return courses.filter((course) => {
+    const { category, proficiencyLevel, contentType, subscriptionModel, status } = filters;
+
+    if (!course.proficiencyLevel || !course.subscriptionModel || !course.status) {
+      return courses;
+    }
+
+    const matchCategory = !category.length || category.some((cat) => cat === course.category);
+    const matchProficiency = !proficiencyLevel.length || proficiencyLevel.includes(course.proficiencyLevel);
+    const matchContentType = !contentType.length || contentType.includes(course.contentType);
+    const matchSubscription = !subscriptionModel.length || subscriptionModel.includes(course.subscriptionModel);
+    const matchStatus = !status.length || status.includes(course.status);
+
+    return matchCategory && matchProficiency && matchContentType && matchSubscription && matchStatus;
+  });
+};
+
+export const filterLessons = (lessons: LessonModel[], filters: DataFilters) => {
+  return lessons.filter((lesson) => {
+    const { category, proficiencyLevel, contentType, subscriptionModel, status } = filters;
+
+    if (!lesson.proficiencyLevel || !lesson.subscriptionModel || !lesson.status) {
+      return false;
+    }
+
+    const matchCategory = !category.length || category.some((cat) => cat === lesson.category);
+    const matchProficiency = !proficiencyLevel.length || proficiencyLevel.includes(lesson.proficiencyLevel);
+    const matchContentType = !contentType.length || contentType.includes(lesson.contentType || '');
+    const matchSubscription = !subscriptionModel.length || subscriptionModel.includes(lesson.subscriptionModel);
+    const matchStatus = !status.length || status.includes(lesson.status);
+
+    return matchCategory && matchProficiency && matchContentType && matchSubscription && matchStatus;
+  });
 };

@@ -1,26 +1,32 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable array-callback-return */
 import { createMutationFactory, createMutationMap } from '~app/shared/vuex';
-import { NAMESPACE, CoursesListState, ActiveView, CourseWithSingleCategory } from './state';
+import { NAMESPACE, CoursesListState, ActiveView, CourseWithSingleCategory, DataFilters } from './state';
 import CourseModel from '../models/course';
 import LessonModel from '../../lessons/models/lesson';
-import { getTotalPages, mapCoursesToTableData, sortByDateAndField } from './helpers';
+import { filterCourses, filterLessons, getTotalPages, mapCoursesToTableData, sortByDateAndField } from './helpers';
 
 const createMutation = createMutationFactory<CoursesListState>();
 
 export const mutations = {
   setDashboardData: createMutation(
     (state, { coursesList, lessonsList }: { coursesList: CourseModel[]; lessonsList: LessonModel[] }) => {
+      const initialCourses = mapCoursesToTableData(coursesList);
+      const initialLessons = lessonsList;
+
       const sortDirection = state.sort.dateSortDirection;
-      const sortedCourses = sortByDateAndField(mapCoursesToTableData(coursesList), null, sortDirection, null);
+      const sortedCourses = sortByDateAndField(initialCourses, null, sortDirection, null);
       const sortedLessons = sortByDateAndField(lessonsList, null, sortDirection, null);
 
+      state.courses.initialCourses = initialCourses;
       state.courses.allCourses = sortedCourses;
-      state.lessons.allLessons = sortedLessons;
       state.courses.coursesList = sortedCourses.slice(0, state.pagintation.limit);
-      state.lessons.lessonsList = sortedLessons.slice(0, state.pagintation.limit);
-      state.pagintation.activePage = 1;
 
+      state.lessons.initialLessons = initialLessons;
+      state.lessons.allLessons = sortedLessons;
+      state.lessons.lessonsList = sortedLessons.slice(0, state.pagintation.limit);
+
+      state.pagintation.activePage = 1;
       const totalPages = getTotalPages(coursesList.length, state.pagintation.limit);
       state.pagintation.totalPages = totalPages;
       if (totalPages > 1) {
@@ -30,6 +36,7 @@ export const mutations = {
   ),
   setCoursesList: createMutation((state, coursesList: CourseModel[]) => {
     const mappedCourses = mapCoursesToTableData(coursesList);
+    state.courses.initialCourses = mappedCourses;
     state.courses.allCourses = mappedCourses;
     state.courses.coursesList = mappedCourses.slice(0, state.pagintation.limit);
 
@@ -43,6 +50,7 @@ export const mutations = {
     }
   }),
   setLessonsList: createMutation((state, lessonsList: LessonModel[]) => {
+    state.lessons.initialLessons = lessonsList;
     state.lessons.allLessons = lessonsList;
     state.lessons.lessonsList = lessonsList.slice(0, state.pagintation.limit);
 
@@ -200,6 +208,52 @@ export const mutations = {
     state.courses.coursesList = sortedCourses.slice(start, end);
     state.lessons.allLessons = sortedLessons;
     state.lessons.lessonsList = sortedLessons.slice(start, end);
+  }),
+  applyFilters: createMutation((state, filters: DataFilters) => {
+    const filteredCourses = filterCourses(state.courses.initialCourses, filters);
+    const filteredLessons = filterLessons(state.lessons.initialLessons, filters);
+    let totalPages = getTotalPages(filteredCourses.length, state.pagintation.limit);
+
+    if (state.activeView === 'lessons') {
+      totalPages = getTotalPages(filteredLessons.length, state.pagintation.limit);
+    }
+
+    state.pagintation.activePage = 1;
+    state.pagintation.hasPreviousPage = false;
+    if (totalPages > 1) {
+      state.pagintation.hasNextPage = true;
+    } else {
+      state.pagintation.hasNextPage = false;
+    }
+    state.pagintation.totalPages = totalPages;
+
+    state.courses.allCourses = filteredCourses;
+    state.courses.coursesList = filteredCourses.slice(0, state.pagintation.limit);
+
+    state.lessons.allLessons = filteredLessons;
+    state.lessons.lessonsList = filteredLessons.slice(0, state.pagintation.limit);
+  }),
+  clearFilters: createMutation((state) => {
+    state.courses.allCourses = [...state.courses.initialCourses];
+    state.courses.coursesList = state.courses.initialCourses.slice(0, state.pagintation.limit);
+
+    state.lessons.allLessons = [...state.lessons.initialLessons];
+    state.lessons.lessonsList = state.lessons.initialLessons.slice(0, state.pagintation.limit);
+
+    let totalPages = getTotalPages(state.courses.initialCourses.length, state.pagintation.limit);
+
+    if (state.activeView === 'lessons') {
+      totalPages = getTotalPages(state.lessons.initialLessons.length, state.pagintation.limit);
+    }
+
+    state.pagintation.activePage = 1;
+    state.pagintation.hasPreviousPage = false;
+    if (totalPages > 1) {
+      state.pagintation.hasNextPage = true;
+    } else {
+      state.pagintation.hasNextPage = false;
+    }
+    state.pagintation.totalPages = totalPages;
   })
 };
 

@@ -45,6 +45,12 @@ export const actions = {
   }),
   toggleSortField: createAction(({ commit }, { field }) => {
     commit(coursesListMutations.toggleSortField.local, field);
+  }),
+  applyFilters: createAction(({ commit }, { filters }) => {
+    commit(coursesListMutations.applyFilters.local, filters);
+  }),
+  clearFilters: createAction(({ commit }) => {
+    commit(coursesListMutations.clearFilters.local);
   })
 };
 
