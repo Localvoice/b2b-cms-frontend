@@ -27,6 +27,12 @@ export const menuItems = [
   },
   {
     id: 5,
+    title: 'Finanse',
+    icon: 'mdi-finance',
+    to: '/app/finances'
+  },
+  {
+    id: 6,
     title: 'Ustawienia',
     icon: 'mdi-cog',
     to: '/app/settings'
