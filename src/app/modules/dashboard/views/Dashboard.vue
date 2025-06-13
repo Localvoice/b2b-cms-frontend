@@ -1,6 +1,6 @@
 <template>
   <Card>
-    <v-row justify="space-between" align="center">
+    <v-row justify="space-between" align="center" class="mb-4">
       <v-col>
         <h4>Statystki</h4>
       </v-col>
@@ -8,6 +8,7 @@
         <router-link to="/" class="header-link">Pokaż wszystkie</router-link>
       </v-col>
     </v-row>
+    <AlertNotification />
     <v-row class="w-full mb-8">
       <v-col cols="12" md="6" lg="3" v-for="stats in overviewStats" :key="stats.id">
         <StatsTile
@@ -47,6 +48,7 @@ import StatsTile from '~app/shared/stats/StatsTile.vue';
 import FiltersDialog from '../components/FiltersDialog.vue';
 import Pagination from '../components/Pagination.vue';
 import Table from '../components/Table.vue';
+import AlertNotification from '~app/shared/alerts/AlertNotification';
 import { coursesListActions, coursesListGetters } from '../store';
 import { useStore } from 'vuex';
 import { overviewStats } from '../dummyData/overviewStats';
