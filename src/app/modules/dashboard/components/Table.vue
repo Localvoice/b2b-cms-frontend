@@ -292,10 +292,7 @@
           <div class="resize-trigger" @mousedown="startResizing($event, 4)"></div>
         </td>
         <td :style="columnWidths[5] ? { width: columnWidths[5] + 'px' } : {}" :ref="(el) => setColRef(el, 5)">
-          <div class="d-flex align-center">
-            <div :class="['mr-2 status-dot', course.status === 'ACTIVE' ? 'active' : 'inactive']"></div>
-            <p class="table-text">{{ statusMatcher[course.status].label }}</p>
-          </div>
+          <StatusBox :status="course.status" />
           <div class="resize-trigger" @mousedown="startResizing($event, 5)"></div>
         </td>
         <td :style="columnWidths[6] ? { width: columnWidths[6] + 'px' } : {}" :ref="(el) => setColRef(el, 6)">
@@ -358,10 +355,7 @@
           <div class="resize-trigger" @mousedown="startResizing($event, 4)"></div>
         </td>
         <td :style="columnWidths[5] ? { width: columnWidths[5] + 'px' } : {}" :ref="(el) => setColRef(el, 5)">
-          <div class="d-flex align-center">
-            <div :class="['mr-2 status-dot', lesson.status === 'ACTIVE' ? 'active' : 'inactive']"></div>
-            <p class="table-text">{{ statusMatcher[lesson.status].label }}</p>
-          </div>
+          <StatusBox :status="lesson.status" />
           <div class="resize-trigger" @mousedown="startResizing($event, 5)"></div>
         </td>
         <td :style="columnWidths[6] ? { width: columnWidths[6] + 'px' } : {}" :ref="(el) => setColRef(el, 6)">
@@ -385,6 +379,7 @@ import { coursesListGetters, coursesListActions } from '../store';
 import { computed, ref, onMounted, nextTick, watch } from 'vue';
 import CourseOptions from './CourseOptions.vue';
 import LessonOptions from './LessonOptions.vue';
+import StatusBox from '~app/shared/stats/StatusBox';
 
 const store = useStore();
 const proficiencyLevelMatcher = {
@@ -400,10 +395,7 @@ const subscriptionModelMatcher = {
   PARTIALLY_FREE: { label: 'Darmowy', color: 'grey' },
   PREMIUM: { label: 'Premium', color: 'purple' }
 };
-const statusMatcher = {
-  ACTIVE: { label: 'Opublikowane' },
-  INACTIVE: { label: 'Wersja robocza' }
-};
+
 const columnWidths = ref<number[]>([]);
 const colRefs = ref<(HTMLTableCellElement | null)[]>([]);
 const setColRef = (el: HTMLTableCellElement, index: number) => {
@@ -507,18 +499,5 @@ td {
   color: #3b4471;
   font-weight: 600;
   font-size: 13px;
-}
-.status-dot {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  &.active {
-    background-color: #05c22d;
-    border: 4px solid #f0fbf3;
-  }
-  &.inactive {
-    background-color: #d27306;
-    border: 4px solid #fef7ed;
-  }
 }
 </style>

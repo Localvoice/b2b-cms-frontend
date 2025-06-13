@@ -4,13 +4,20 @@
       <v-card class="pa-8" color="grey-lighten-5" border rounded="lg">
         <p class="card-label mb-4">IKONA LEKCJI</p>
         <img class="w-full mb-4" :src="imageUrl" alt="course-image" />
-        <v-btn @click="triggerFileInput" class="upload-btn w-full" rounded>Zmień zdjęcie</v-btn>
+        <v-btn @click="triggerFileInput" class="secondary-btn w-full" rounded>Zmień zdjęcie</v-btn>
         <input type="file" ref="fileInput" accept="image/*" @change="handleFileChange" class="d-none" />
       </v-card>
     </v-col>
     <v-col cols="12" md="8" lg="9">
       <v-card class="pa-8" color="grey-lighten-5" border rounded="lg">
-        <p class="card-label mb-4">USTAWIENIA LEKCJI</p>
+        <v-row class="mb-4" align="center" justify="space-between">
+          <v-col cols="auto">
+            <p class="card-label">USTAWIENIA LEKCJI</p>
+          </v-col>
+          <v-col cols="auto">
+            <v-btn class="secondary-btn" rounded>Zapisz zmiany</v-btn>
+          </v-col>
+        </v-row>
         <form>
           <h6 class="mb-2">Tytuł</h6>
           <v-text-field
@@ -148,7 +155,7 @@ const isEditing = computed(() => store.getters[lessonDetailsGetters.getEditingSt
   font-weight: 600;
   font-size: 12px;
 }
-.upload-btn {
+.secondary-btn {
   background-color: #7b62fe;
   font-weight: 700;
   font-size: 14px;

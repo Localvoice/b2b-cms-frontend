@@ -6,11 +6,22 @@
           <router-link to="/app/lessons">
             <v-btn class="outlined-btn mr-4" rounded="lg" variant="outlined" icon="mdi-arrow-left"></v-btn>
           </router-link>
-          <h4 class="course-title mb-0">Wsiadanie, bilety, przesiadki - rozmówki w autobusie</h4>
+          <h4 class="course-title mb-0">Jak się witać w restauracji?</h4>
         </div>
       </v-col>
-      <v-col cols="auto">
-        <v-btn v-if="isEditing" class="confirm-btn" rounded>Zapisz zmiany</v-btn>
+      <v-col cols="auto" v-if="activeTab === 'content'">
+        <div v-if="lessonsList.length < 2">
+          <v-tooltip text="Aby aktywować lekcję, dodaj co najmniej dwa przykłady" location="bottom">
+            <template v-slot:activator="{ props }">
+              <span v-bind="props">
+                <v-btn class="secondary-btn" disabled rounded>Aktywuj lekcję</v-btn>
+              </span>
+            </template>
+          </v-tooltip>
+        </div>
+        <div v-else>
+          <v-btn class="secondary-btn" rounded>Aktywuj lekcję</v-btn>
+        </div>
       </v-col>
     </v-row>
 
@@ -19,6 +30,9 @@
       <v-tab value="statistics">Statystyki</v-tab>
       <v-tab value="settings">Ustawienia</v-tab>
     </v-tabs>
+    <div class="w-full" v-if="activeTab === 'content'">
+      <LessonContent />
+    </div>
     <div class="w-full" v-if="activeTab === 'settings'">
       <LessonSettings />
     </div>
@@ -32,6 +46,7 @@ import { ref, watch, onMounted, computed } from 'vue';
 import { useStore } from 'vuex';
 import { lessonDetailsActions, lessonDetailsGetters } from '~app/modules/lessons/store';
 import LessonSettings from '../components/LessonSettings.vue';
+import LessonContent from '../components/LessonContent.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -41,6 +56,7 @@ const fetchLessonDetails = () => store.dispatch(lessonDetailsActions.fetchLesson
 const setLessonEditing = () => store.dispatch(lessonDetailsActions.setLessonEditing);
 const leaveLessonEditing = () => store.dispatch(lessonDetailsActions.leaveLessonEditing);
 
+const lessonsList = ref([]);
 const activeTab = ref(route.query.tab || 'content');
 const isEditing = computed(() => store.getters[lessonDetailsGetters.getEditingState]);
 
@@ -90,6 +106,19 @@ onMounted(() => {
   border-color: #f2f0ff;
   color: #fe5b14;
 }
+.secondary-btn {
+  background-color: #7b62fe;
+  font-weight: 700;
+  font-size: 14px;
+  color: #fff;
+  text-transform: initial;
+
+  &:disabled {
+    opacity: 0.25;
+    background-color: #7b62fe;
+    color: #fff;
+  }
+}
 .course-title {
   color: #161d40;
 }
@@ -105,5 +134,15 @@ onMounted(() => {
   font-size: 14px;
   color: #6b708a;
   text-transform: initial;
+}
+.v-tooltip.v-overlay > .v-overlay__content {
+  background: white;
+  color: #6b708a;
+  box-shadow:
+    0px 18px 39px 0px #0000001a,
+    0px 72px 72px 0px #00000017,
+    0px 161px 97px 0px #0000000d,
+    0px 286px 114px 0px #00000003,
+    0px 447px 125px 0px #00000000;
 }
 </style>
