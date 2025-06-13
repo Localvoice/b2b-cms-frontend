@@ -62,61 +62,66 @@
       </Card>
     </v-col>
     <v-col cols="12" lg="7">
-      <v-card class="pa-4" color="grey-lighten-5" border rounded="lg">
-        <v-row class="mb-8" justify="space-between" align="center">
-          <v-col cols="auto">
-            <h5 class="mb-2">Lekcje w kursie</h5>
-            <p class="muted-text">3 lekcje</p>
-          </v-col>
-          <v-col cols="auto">
-            <AddLessonDialog />
-          </v-col>
-        </v-row>
-        <draggable :list="lessonsList" handle="#drag-handle" item-key="id" @end="onDragEnd">
-          <template #item="{ element, index }">
-            <v-card class="pa-2 mb-4" rounded="lg" border>
-              <v-row justify="space-between" align="center">
-                <v-col cols="auto">
-                  <div class="d-flex align-center">
-                    <v-icon id="drag-handle" icon="mdi-drag-vertical" class="cursor-grab mr-1"></v-icon>
-                    <v-chip class="lesson-chip mr-2" color="purple" variant="tonal">{{ index + 1 }}</v-chip>
-                    <p class="muted-text">{{ element.title }}</p>
-                  </div>
-                </v-col>
-                <v-col cols="auto">
-                  <div class="d-flex align-center">
-                    <div :class="['status-indicatior mr-2', getStatusClass(element.status)]"></div>
-                    <p :class="['status-text', getStatusClass(element.status)]">
-                      {{ getStatusLabel(element.status) }}
-                    </p>
-                  </div>
-                </v-col>
-                <v-col cols="auto">
-                  <v-menu location="start">
-                    <template v-slot:activator="{ props }">
-                      <v-btn variant="plain" icon="mdi-dots-horizontal" v-bind="props"></v-btn>
-                    </template>
-                    <v-list class="py-0">
-                      <v-list-item class="pa-0">
-                        <v-btn class="menu-btn" variant="plain">Edytuj</v-btn>
-                      </v-list-item>
-                      <v-list-item class="pa-0">
-                        <v-btn class="menu-btn" variant="plain">Odepnij lekcję od tego kursu</v-btn>
-                      </v-list-item>
-                      <v-divider></v-divider>
-                      <v-list-item class="pa-0">
-                        <v-btn class="menu-btn text-error" variant="plain" append-icon="mdi-trash-can-outline"
-                          >Usuń</v-btn
-                        >
-                      </v-list-item>
-                    </v-list>
-                  </v-menu>
-                </v-col>
-              </v-row>
-            </v-card>
-          </template>
-        </draggable>
-      </v-card>
+      <div v-if="lessonsList.length > 0">
+        <v-card class="pa-4" color="grey-lighten-5" border rounded="lg">
+          <v-row class="mb-8" justify="space-between" align="center">
+            <v-col cols="auto">
+              <h5 class="mb-2">Lekcje w kursie</h5>
+              <p class="muted-text">3 lekcje</p>
+            </v-col>
+            <v-col cols="auto">
+              <AddLessonDialog />
+            </v-col>
+          </v-row>
+          <draggable :list="lessonsList" handle="#drag-handle" item-key="id" @end="onDragEnd">
+            <template #item="{ element, index }">
+              <v-card class="pa-2 mb-4" rounded="lg" border>
+                <v-row justify="space-between" align="center">
+                  <v-col cols="auto">
+                    <div class="d-flex align-center">
+                      <v-icon id="drag-handle" icon="mdi-drag-vertical" class="cursor-grab mr-1"></v-icon>
+                      <v-chip class="lesson-chip mr-2" color="purple" variant="tonal">{{ index + 1 }}</v-chip>
+                      <p class="muted-text">{{ element.title }}</p>
+                    </div>
+                  </v-col>
+                  <v-col cols="auto">
+                    <div class="d-flex align-center">
+                      <div :class="['status-indicatior mr-2', getStatusClass(element.status)]"></div>
+                      <p :class="['status-text', getStatusClass(element.status)]">
+                        {{ getStatusLabel(element.status) }}
+                      </p>
+                    </div>
+                  </v-col>
+                  <v-col cols="auto">
+                    <v-menu location="start">
+                      <template v-slot:activator="{ props }">
+                        <v-btn variant="plain" icon="mdi-dots-horizontal" v-bind="props"></v-btn>
+                      </template>
+                      <v-list class="py-0">
+                        <v-list-item class="pa-0">
+                          <v-btn class="menu-btn" variant="plain">Edytuj</v-btn>
+                        </v-list-item>
+                        <v-list-item class="pa-0">
+                          <v-btn class="menu-btn" variant="plain">Odepnij lekcję od tego kursu</v-btn>
+                        </v-list-item>
+                        <v-divider></v-divider>
+                        <v-list-item class="pa-0">
+                          <v-btn class="menu-btn text-error" variant="plain" append-icon="mdi-trash-can-outline"
+                            >Usuń</v-btn
+                          >
+                        </v-list-item>
+                      </v-list>
+                    </v-menu>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </template>
+          </draggable>
+        </v-card>
+      </div>
+      <div v-else>
+        <EmptyView />
+      </div>
     </v-col>
   </v-row>
 </template>
@@ -128,9 +133,10 @@ import LessonsIcon from '../../../../assets/images/lessons-icon.png';
 import StudentsIcon from '../../../../assets/images/students-icon.png';
 import DateIcon from '../../../../assets/images/date-icon.png';
 import ChangesIcon from '../../../../assets/images/changes-icon.png';
-import { ref, watch, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { lessons } from '../dummyData/lessons';
 import AddLessonDialog from '~app/modules/lessons/components/AddLessonDialog.vue';
+import EmptyView from './EmptyView';
 
 const lessonsList = ref(lessons);
 const title = ref('');
@@ -165,10 +171,6 @@ const getStatusClass = (status: string) => {
 const onDragEnd = () => {
   console.log('Drag end', lessonsList.value);
 };
-
-watch(lessonsList, (newLessonsList) => {
-  console.log('lessonsList', newLessonsList);
-});
 </script>
 
 <style lang="scss">
