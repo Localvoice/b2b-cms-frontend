@@ -10,7 +10,14 @@
         </div>
       </v-col>
       <v-col cols="auto">
-        <v-btn v-if="isEditing" class="confirm-btn" rounded>Zapisz zmiany</v-btn>
+        <v-row>
+          <v-col cols="auto">
+            <v-btn class="light-btn" rounded>Zapisz jako wersję roboczą</v-btn>
+          </v-col>
+          <v-col cols="auto">
+            <v-btn class="secondary-btn" rounded>Opublikuj kurs</v-btn>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
 
@@ -46,7 +53,6 @@ const setCourseEditing = () => store.dispatch(courseDetailsActions.setCourseEdit
 const leaveCourseEditing = () => store.dispatch(courseDetailsActions.leaveCourseEditing);
 
 const activeTab = ref(route.query.tab || 'content');
-const isEditing = computed(() => store.getters[courseDetailsGetters.getEditingState]);
 
 const onTabChange = (newTab: string) => {
   router.replace({
@@ -109,5 +115,20 @@ onMounted(() => {
   font-size: 14px;
   color: #6b708a;
   text-transform: initial;
+}
+.secondary-btn {
+  background-color: #7b62fe;
+  font-weight: 700;
+  font-size: 14px;
+  color: #fff;
+  text-transform: initial;
+}
+.light-btn {
+  background-color: #f2f0ff;
+  font-weight: 700;
+  font-size: 14px;
+  color: #7b62fe;
+  text-transform: initial;
+  box-shadow: none;
 }
 </style>
