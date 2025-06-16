@@ -14,7 +14,7 @@ export const actions = {
       let accessedItems = items;
       if (hasFeature('permissions')) {
         accessedItems = items.filter((item) => {
-          if (item.permissions) return userHasAccess(item.permissions, 'OR');
+          // if (item.permissions) return userHasAccess(item.permissions, 'OR');
           return true;
         });
       }

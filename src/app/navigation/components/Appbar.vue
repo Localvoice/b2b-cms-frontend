@@ -31,9 +31,12 @@
 import Logoipsum from '../../../assets/images/Logo.png';
 import AvatarPlaceholder from '../../../assets/images/avatar.png';
 import Account from './Account.vue';
-import { menuItems } from '../data/menu-items';
+import { getMenuItems } from '../data/menu-items';
 import { useRoute } from 'vue-router';
+import { computed } from 'vue';
 const route = useRoute();
+
+const menuItems = computed(() => getMenuItems());
 </script>
 
 <style lang="scss">

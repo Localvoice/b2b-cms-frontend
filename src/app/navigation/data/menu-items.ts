@@ -1,6 +1,6 @@
 import { AuthPermission } from '~app/modules/auth';
 
-export const menuItems = [
+export const getMenuItems = () => [
   {
     id: 1,
     title: 'Strona główna',

@@ -1,27 +1,23 @@
-import CoursesIcon from '../../../../assets/images/courses-icon-block.png';
-import GrammarIcon from '../../../../assets/images/grammar-icon-block.png';
-import SpellIcon from '../../../../assets/images/spell-icon-block.png';
-
 export const overviewStats = [
   {
     id: 1,
     heading: 'Ilość lekcji',
     text: '12',
     percentageDifference: 40,
-    iconUrl: CoursesIcon
+    iconUrl: '/images/courses-icon-block.png'
   },
   {
     id: 2,
     heading: 'Ilość lekcji wymowy',
     text: '5',
     percentageDifference: 40,
-    iconUrl: GrammarIcon
+    iconUrl: '/images/grammar-icon-block.png'
   },
   {
     id: 3,
     heading: 'Ilość lekcji gramatyki',
     text: '7',
     percentageDifference: 40,
-    iconUrl: SpellIcon
+    iconUrl: '/images/spell-icon-block.png'
   }
 ];
