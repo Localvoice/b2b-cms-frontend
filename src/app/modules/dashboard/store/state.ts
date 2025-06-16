@@ -16,7 +16,7 @@ export type DataFilters = {
   latestVersions: boolean;
 };
 
-export const NAMESPACE = 'coursesList';
+export const NAMESPACE = 'dashboard';
 
 export interface CoursesListState {
   activeView: ActiveView;
