@@ -182,13 +182,7 @@ const registerUser = () => {
       const tokenStorage = new TokenStorage();
       await tokenStorage.store(data);
 
-      const urlParams = new URLSearchParams(route.fullPath.split('?')[1]);
-
-      if (urlParams.has('ReturnUrl')) {
-        router.push(urlParams.get('ReturnUrl'));
-      } else {
-        router.push('/');
-      }
+      router.push('/session/onboarding');
     })
     .catch((error) => {
       console.log('sign-up error', error);

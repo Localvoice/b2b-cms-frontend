@@ -69,6 +69,13 @@ export const appRoutes: RouteRecordRaw[] = [
         name: 'sign-up',
         meta: { title: 'Zarejestruj się' },
         component: () => import(/* webpackChunkName: "session-signup" */ '~app/modules/session/views/SignUp.vue')
+      },
+      {
+        path: 'onboarding',
+        name: 'onboarding',
+        meta: { title: 'Onboarding' },
+        component: () =>
+          import(/* webpackChunkName: "session-onboarding" */ '~app/modules/onboarding/views/Onboarding.vue')
       }
     ]
   },
