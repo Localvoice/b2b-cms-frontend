@@ -180,7 +180,14 @@ const statusTypeMatcher = {
   INACTIVE: 'Testowane'
 };
 
-const filters = reactive({
+const filters = reactive<{
+  category: string[];
+  proficiencyLevel: string[];
+  contentType: string[];
+  subscriptionModel: string[];
+  status: string[];
+  latestVersions: boolean;
+}>({
   ...initialFilters
 });
 

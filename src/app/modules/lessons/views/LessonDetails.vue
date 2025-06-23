@@ -60,7 +60,8 @@ const lessonsList = ref([]);
 const activeTab = ref(route.query.tab || 'content');
 const isEditing = computed(() => store.getters[lessonDetailsGetters.getEditingState]);
 
-const onTabChange = (newTab: string) => {
+const onTabChange = (newTab: unknown) => {
+  if (typeof newTab !== 'string') return;
   router.replace({
     query: {
       ...route.query,
