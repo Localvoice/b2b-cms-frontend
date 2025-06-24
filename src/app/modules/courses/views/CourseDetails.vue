@@ -22,12 +22,16 @@
     </v-row>
 
     <v-tabs class="tabs mb-8 w-full" v-model="activeTab" @update:modelValue="onTabChange">
-      <v-tab value="content">Zawartość kursu</v-tab>
+      <v-tab value="lessons">Lekcje</v-tab>
+      <v-tab value="examples">Przykłady</v-tab>
       <v-tab value="statistics">Statystyki</v-tab>
       <v-tab value="settings">Ustawienia</v-tab>
     </v-tabs>
-    <div class="w-full" v-if="activeTab === 'content'">
+    <div class="w-full" v-if="activeTab === 'lessons'">
       <CourseContent />
+    </div>
+    <div class="w-full" v-if="activeTab === 'examples'">
+      <CourseExamples />
     </div>
     <div class="w-full" v-if="activeTab === 'settings'">
       <CourseSettings />
@@ -43,6 +47,7 @@ import { useStore } from 'vuex';
 import { courseDetailsActions, courseDetailsGetters } from '~app/modules/courses/store';
 import CourseContent from '../components/CourseContent.vue';
 import CourseSettings from '../components/CourseSettings.vue';
+import CourseExamples from '../components/CourseExamples.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -52,7 +57,7 @@ const fetchCourseDetails = () => store.dispatch(courseDetailsActions.fetchCourse
 const setCourseEditing = () => store.dispatch(courseDetailsActions.setCourseEditing);
 const leaveCourseEditing = () => store.dispatch(courseDetailsActions.leaveCourseEditing);
 
-const activeTab = ref(route.query.tab || 'content');
+const activeTab = ref(route.query.tab || 'lessons');
 
 const onTabChange = (newTab: string) => {
   router.replace({
