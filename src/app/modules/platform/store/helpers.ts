@@ -1,6 +1,6 @@
-import LessonModel from '~app/modules/lessons/models/lesson';
-import CourseModel from '../models/course';
-import { CourseWithSingleCategory, DataFilters } from './state';
+import LessonModel from '../models/Lesson';
+import CourseModel from '../models/Course';
+import { CourseWithSingleCategory, DataFilters } from './types';
 
 type SortDirection = 'asc' | 'desc';
 

@@ -1,5 +1,5 @@
 <template>
-  <v-row>
+  <v-row v-if="activeCourse">
     <v-col cols="12" lg="5">
       <v-card class="pa-8" color="grey-lighten-5" border rounded="lg">
         <h5 class="mb-8">Informacje o kursie</h5>
@@ -9,9 +9,9 @@
               <img class="h-full object-cover" src="/images/placeholder-course-image.png" alt="course-image" />
             </v-col>
             <v-col cols="12" lg="8">
-              <h5 class="course-title mb-3">Wsiadanie, bilety, przesiadki - rozmówki w autobusie</h5>
+              <h5 class="course-title mb-3">{{ activeCourse.title }}</h5>
               <p class="muted-text mb-3">W tym kursie nauczysz się słownictwa przydatnego przy podróżowaniu</p>
-              <v-chip class="chip" color="pink">Przygotowania do egzaminu</v-chip>
+              <v-chip class="chip" color="pink">{{ activeCourse.categories[0] }}</v-chip>
             </v-col>
           </v-row>
         </v-card>
@@ -64,10 +64,10 @@
       </v-card>
     </v-col>
     <v-col cols="12" lg="7">
-      <div v-if="lessonsList.length > 0">
+      <div v-if="draggableLessons.length > 0">
         <v-card class="pa-8 h-full" color="grey-lighten-5" border rounded="lg">
           <h5 class="mb-8">Lekcje w kursie</h5>
-          <draggable :list="lessonsList" handle="#drag-handle" item-key="id" @end="onDragEnd">
+          <draggable :list="draggableLessons" handle="#drag-handle" item-key="id" @end="onDragEnd">
             <template #item="{ element }">
               <CourseLessonCard
                 :index="getIndex(element.lessonId)"
@@ -88,20 +88,32 @@
 
 <script setup lang="ts">
 import draggable from 'vuedraggable';
-import { ref } from 'vue';
-import { lessons } from '../../lessons/dummyData/lessons';
+import { ref, computed, watch } from 'vue';
 import EmptyView from './EmptyView.vue';
 import CourseLessonCard from './CourseLessonCard.vue';
+import CourseModel from '../models/Course';
+import { useStore } from 'vuex';
+import { courseDetailsGetters } from '../store';
+import LessonModel from '../models/Lesson';
 
-const lessonsList = ref([...lessons]);
+const store = useStore();
+
+const activeCourse = computed<CourseModel | null>(() => store.getters[courseDetailsGetters.getCourseDetails]);
+const courseLessons = computed<LessonModel[]>(() => store.getters[courseDetailsGetters.getCourseLessons]);
+
+const draggableLessons = ref([...courseLessons.value]);
 
 const getIndex = (id: string) => {
-  return lessons.findIndex((lesson) => lesson.lessonId === id);
+  return courseLessons.value.findIndex((lesson) => lesson.lessonId === id);
 };
 
 const onDragEnd = () => {
-  console.log('Drag end', lessonsList.value);
+  console.log('Drag end', draggableLessons.value);
 };
+
+watch(courseLessons, (newCourseLessons) => {
+  draggableLessons.value = newCourseLessons;
+});
 </script>
 
 <style lang="scss">

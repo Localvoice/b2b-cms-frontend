@@ -4,25 +4,28 @@ import { RootState } from '~app/core/store';
 import { createActionFactory, createActionMap } from '~app/shared/vuex';
 import { coursesListMutations } from './mutations';
 import { NAMESPACE, CourseDetailsState } from './state';
+import { courses } from '../dummyData/courses';
+import { lessons } from '../dummyData/lessons';
 // import lessonListApi from '../service/lessonList.api';
-import CourseModel from '../models/course';
-import { courses } from '../../dashboard/dummyData/courses';
 
 const createAction = createActionFactory<CourseDetailsState, RootState>();
 
 export const actions = {
-  fetchCourseDetails: createAction(({ commit }, { courseId } = {}) => {
-    commit(coursesListMutations.setActiveCourse.local, courses[0]);
+  fetchCourseDetails: createAction(({ commit }, { courseId }) => {
+    const courseDetails = courses.find((course) => course.courseId === courseId);
+    commit(coursesListMutations.setActiveCourse.local, courseDetails ? courseDetails : null);
+
+    const courseLessons = lessons.filter((lesson) => lesson.courseId === courseId);
+    console.log(courseLessons);
+    commit(coursesListMutations.setCourseLessons.local, courseLessons);
+
     // lessonListApi.getLessonsList().then((data) => {
     //   console.log('data from chatbots', data);
     //   commit(lessonListMutations.setLessonList.local, data);
     // });
   }),
-  setCourseEditing: createAction(({ commit }) => {
-    commit(coursesListMutations.setEditingActive.local);
-  }),
-  leaveCourseEditing: createAction(({ commit }) => {
-    commit(coursesListMutations.setEditingInactive.local);
+  selectLessonId: createAction(({ commit }, { lessonId }) => {
+    commit(coursesListMutations.setSelectedLessonId.local, lessonId);
   })
 };
 

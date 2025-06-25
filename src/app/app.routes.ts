@@ -1,4 +1,3 @@
-import { defineComponent } from 'vue';
 import { RouteRecordRaw } from 'vue-router';
 import { RouterView } from '~app/core/router';
 
@@ -12,25 +11,25 @@ export const appRoutes: RouteRecordRaw[] = [
       {
         path: '/app',
         meta: { title: 'Strona główna' },
-        component: () => import(/* webpackChunkName: "dashboard" */ '~app/modules/dashboard/views/Dashboard.vue')
+        component: () => import(/* webpackChunkName: "dashboard" */ '~app/modules/platform/views/Dashboard.vue')
       },
       {
         path: '/app/courses',
         meta: { title: 'Twoje Kursy' },
-        component: () => import(/* webpackChunkName: "courses" */ '~app/modules/courses/views/CoursesList.vue')
+        component: () => import(/* webpackChunkName: "courses" */ '~app/modules/platform/views/CoursesList.vue')
       },
       {
-        path: '/app/courses/course-id',
+        path: '/app/courses/:courseId',
         meta: { title: 'Zawartość kursu' },
         component: () => import(/* webpackChunkName: "course-id" */ '~app/modules/courses/views/CourseDetails.vue')
       },
       {
         path: '/app/lessons',
         meta: { title: 'Twoje Lekcje' },
-        component: () => import(/* webpackChunkName: "lessons" */ '~app/modules/lessons/views/LessonsList.vue')
+        component: () => import(/* webpackChunkName: "lessons" */ '~app/modules/platform/views/LessonsList.vue')
       },
       {
-        path: '/app/lessons/lesson-id',
+        path: '/app/lessons/:lessonId',
         meta: { title: 'Zawartość lekcji' },
         component: () => import(/* webpackChunkName: "lesson-id" */ '~app/modules/lessons/views/LessonDetails.vue')
       },

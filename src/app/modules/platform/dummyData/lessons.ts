@@ -31,7 +31,7 @@ export const lessons: LessonModel[] = [
     teacherId: 'teacher-002',
     languageId: 'lang-fr',
     title: 'French Vowel Sounds',
-    courseId: 'course-001',
+    courseId: 'course-002',
     courseTitle: 'French Pronunciation Basics',
     category: 'Pronunciation',
     contentType: 'PRONUNCIATION_LESSON',

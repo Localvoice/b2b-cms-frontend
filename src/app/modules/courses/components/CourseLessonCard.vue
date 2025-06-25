@@ -1,9 +1,14 @@
 <template>
-  <v-card class="pa-4 mb-4" rounded="lg" border>
+  <v-card
+    :class="[selectedLessonId === lessonId ? 'card-selected' : '', 'cursor-pointer pa-4 mb-4']"
+    rounded="lg"
+    border
+    @click="selectLessonId(lessonId)"
+  >
     <v-row justify="space-between" align="center">
       <v-col cols="auto">
         <div class="d-flex align-center">
-          <v-icon id="drag-handle" icon="mdi-drag-vertical" class="cursor-grab mr-1"></v-icon>
+          <v-icon id="drag-handle-lessons" icon="mdi-drag-vertical" class="cursor-grab mr-1"></v-icon>
           <v-chip class="chip mr-2" color="purple" variant="tonal">{{ index + 1 }}</v-chip>
         </div>
       </v-col>
@@ -40,6 +45,14 @@
 
 <script setup lang="ts">
 import StatusBox from '~app/shared/stats/StatusBox.vue';
+import { useStore } from 'vuex';
+import { computed } from 'vue';
+import { courseDetailsActions, courseDetailsGetters } from '../store';
+
+const store = useStore();
+
+const selectedLessonId = computed<string | null>(() => store.getters[courseDetailsGetters.getSelectedLessonId]);
+const selectLessonId = (lessonId: string) => store.dispatch(courseDetailsActions.selectLessonId, { lessonId });
 
 defineProps<{
   lessonId: string;
@@ -70,5 +83,8 @@ defineProps<{
   height: 32px;
   font-size: 12px;
   color: #6b708a;
+}
+.card-selected {
+  border: 3px solid #7b62fe;
 }
 </style>

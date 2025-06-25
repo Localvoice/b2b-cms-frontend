@@ -13,5 +13,5 @@ store.registerModule(NAMESPACE, {
 });
 
 export * from './state';
-export { coursesListGetters } from './getters';
-export { coursesListActions } from './actions';
+export { platformGetters } from './getters';
+export { platformActions } from './actions';

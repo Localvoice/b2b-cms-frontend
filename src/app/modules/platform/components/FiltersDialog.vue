@@ -142,21 +142,21 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, computed, watch, ref } from 'vue';
-import CourseModel from '../models/course';
+import { reactive, watch, ref } from 'vue';
 import { getUniqueCategories } from '../dummyData/categories';
 import { getUniqueContentTypes } from '../dummyData/contentTypes';
 import { useStore } from 'vuex';
-import { coursesListActions, DataFilters } from '../store';
+import { DataFilters } from '../store/types';
+import { platformActions } from '../store';
 
 const store = useStore();
 const categories = getUniqueCategories();
 const contentTypes = getUniqueContentTypes();
 
-const applyFiltersAction = (filters: DataFilters) => store.dispatch(coursesListActions.applyFilters, { filters });
-const clearFiltersAction = () => store.dispatch(coursesListActions.clearFilters);
+const applyFiltersAction = (filters: DataFilters) => store.dispatch(platformActions.applyFilters, { filters });
+const clearFiltersAction = () => store.dispatch(platformActions.clearFilters);
 
-const initialFilters = {
+const initialFilters: DataFilters = {
   category: [],
   proficiencyLevel: [],
   contentType: [],
@@ -165,9 +165,10 @@ const initialFilters = {
   latestVersions: true
 };
 
+const btn = ref<HTMLElement | null>(null);
 const filtersCount = ref(0);
-const subscriptionModels = ['FREE', 'PREMIUM'];
-const statusTypes = ['ACTIVE', 'INACTIVE'];
+const subscriptionModels: ['FREE', 'PREMIUM'] = ['FREE', 'PREMIUM'];
+const statusTypes: ['ACTIVE', 'INACTIVE'] = ['ACTIVE', 'INACTIVE'];
 const proficiencyLevels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 
 const subscriptionModelMatcher = {
@@ -180,14 +181,7 @@ const statusTypeMatcher = {
   INACTIVE: 'Testowane'
 };
 
-const filters = reactive<{
-  category: string[];
-  proficiencyLevel: string[];
-  contentType: string[];
-  subscriptionModel: string[];
-  status: string[];
-  latestVersions: boolean;
-}>({
+const filters = reactive({
   ...initialFilters
 });
 

@@ -248,7 +248,7 @@
       <tr v-for="course in courses" :key="course.courseId">
         <td :style="columnWidths[0] ? { width: columnWidths[0] + 'px' } : {}" :ref="(el) => setColRef(el, 0)">
           <div>
-            <router-link to="/app/courses/course-id" class="d-inline-block">
+            <router-link :to="`/app/courses/${course.courseId}`" class="d-inline-block">
               <h6 class="table-text">{{ course.title }}</h6>
             </router-link>
           </div>
@@ -259,7 +259,7 @@
           <div class="resize-trigger" @mousedown="startResizing($event, 1)"></div>
         </td>
         <td :style="columnWidths[2] ? { width: columnWidths[2] + 'px' } : {}" :ref="(el) => setColRef(el, 2)">
-          <div class="d-flex align-center">
+          <div class="d-flex align-center" v-if="course.proficiencyLevel">
             <v-icon
               :class="`text-${proficiencyLevelMatcher[course.proficiencyLevel].color} mr-2`"
               icon="mdi-poll"
@@ -280,7 +280,11 @@
           <div class="resize-trigger" @mousedown="startResizing($event, 3)"></div>
         </td>
         <td :style="columnWidths[4] ? { width: columnWidths[4] + 'px' } : {}" :ref="(el) => setColRef(el, 4)">
-          <v-chip size="small" :color="subscriptionModelMatcher[course.subscriptionModel].color">
+          <v-chip
+            v-if="course.subscriptionModel"
+            size="small"
+            :color="subscriptionModelMatcher[course.subscriptionModel].color"
+          >
             <v-icon
               v-if="course.subscriptionModel === 'PREMIUM'"
               class="text-warning mr-1"
@@ -291,7 +295,11 @@
           </v-chip>
           <div class="resize-trigger" @mousedown="startResizing($event, 4)"></div>
         </td>
-        <td :style="columnWidths[5] ? { width: columnWidths[5] + 'px' } : {}" :ref="(el) => setColRef(el, 5)">
+        <td
+          v-if="course.status"
+          :style="columnWidths[5] ? { width: columnWidths[5] + 'px' } : {}"
+          :ref="(el) => setColRef(el, 5)"
+        >
           <StatusBox :status="course.status" />
           <div class="resize-trigger" @mousedown="startResizing($event, 5)"></div>
         </td>
@@ -299,10 +307,14 @@
           <p class="table-text">{{ course.version }}</p>
           <div class="resize-trigger" @mousedown="startResizing($event, 6)"></div>
         </td>
-        <td :style="columnWidths[7] ? { width: columnWidths[7] + 'px' } : {}" :ref="(el) => setColRef(el, 7)">
+        <td
+          v-if="course.updatedAt && course.courseId"
+          :style="columnWidths[7] ? { width: columnWidths[7] + 'px' } : {}"
+          :ref="(el) => setColRef(el, 7)"
+        >
           <div class="d-flex align-center">
             <p class="table-text">{{ formatDateString(course.updatedAt) }}</p>
-            <CourseOptions :courseId="course.courseId" />
+            <CourseOptionsDropdown :courseId="course.courseId" />
           </div>
         </td>
       </tr>
@@ -317,11 +329,19 @@
           </div>
           <div class="resize-trigger" @mousedown="startResizing($event, 0)"></div>
         </td>
-        <td :style="columnWidths[1] ? { width: columnWidths[1] + 'px' } : {}" :ref="(el) => setColRef(el, 1)">
+        <td
+          v-if="lesson.contentType"
+          :style="columnWidths[1] ? { width: columnWidths[1] + 'px' } : {}"
+          :ref="(el) => setColRef(el, 1)"
+        >
           <p class="table-text">{{ formatEnumString(lesson.contentType) }}</p>
           <div class="resize-trigger" @mousedown="startResizing($event, 1)"></div>
         </td>
-        <td :style="columnWidths[2] ? { width: columnWidths[2] + 'px' } : {}" :ref="(el) => setColRef(el, 2)">
+        <td
+          v-if="lesson.proficiencyLevel"
+          :style="columnWidths[2] ? { width: columnWidths[2] + 'px' } : {}"
+          :ref="(el) => setColRef(el, 2)"
+        >
           <div class="d-flex align-center">
             <v-icon
               :class="`text-${proficiencyLevelMatcher[lesson.proficiencyLevel].color} mr-2`"
@@ -335,7 +355,7 @@
           <div class="resize-trigger" @mousedown="startResizing($event, 2)"></div>
         </td>
         <td :style="columnWidths[3] ? { width: columnWidths[3] + 'px' } : {}" :ref="(el) => setColRef(el, 3)">
-          <v-tooltip :text="lesson.category" location="bottom">
+          <v-tooltip v-if="lesson.category" :text="lesson.category" location="bottom">
             <template v-slot:activator="{ props }">
               <v-chip size="small" color="pink" v-bind="props">{{ truncate(lesson.category) }}</v-chip>
             </template>
@@ -343,7 +363,11 @@
           <div class="resize-trigger" @mousedown="startResizing($event, 3)"></div>
         </td>
         <td :style="columnWidths[4] ? { width: columnWidths[4] + 'px' } : {}" :ref="(el) => setColRef(el, 4)">
-          <v-chip size="small" :color="subscriptionModelMatcher[lesson.subscriptionModel].color">
+          <v-chip
+            v-if="lesson.subscriptionModel"
+            size="small"
+            :color="subscriptionModelMatcher[lesson.subscriptionModel].color"
+          >
             <v-icon
               v-if="lesson.subscriptionModel === 'PREMIUM'"
               class="text-warning mr-1"
@@ -354,7 +378,11 @@
           </v-chip>
           <div class="resize-trigger" @mousedown="startResizing($event, 4)"></div>
         </td>
-        <td :style="columnWidths[5] ? { width: columnWidths[5] + 'px' } : {}" :ref="(el) => setColRef(el, 5)">
+        <td
+          v-if="lesson.status"
+          :style="columnWidths[5] ? { width: columnWidths[5] + 'px' } : {}"
+          :ref="(el) => setColRef(el, 5)"
+        >
           <StatusBox :status="lesson.status" />
           <div class="resize-trigger" @mousedown="startResizing($event, 5)"></div>
         </td>
@@ -363,9 +391,9 @@
           <div class="resize-trigger" @mousedown="startResizing($event, 6)"></div>
         </td>
         <td :style="columnWidths[7] ? { width: columnWidths[7] + 'px' } : {}" :ref="(el) => setColRef(el, 7)">
-          <div class="d-flex align-center">
+          <div v-if="lesson.updatedAt && lesson.lessonId" class="d-flex align-center">
             <p class="table-text">{{ formatDateString(lesson.updatedAt) }}</p>
-            <LessonOptions :lessonId="lesson.lessonId" />
+            <LessonOptionsDropdown :lessonId="lesson.lessonId" />
           </div>
         </td>
       </tr>
@@ -375,11 +403,13 @@
 
 <script setup lang="ts">
 import { useStore } from 'vuex';
-import { coursesListGetters, coursesListActions } from '../store';
-import { computed, ref, onMounted, nextTick, watch } from 'vue';
-import CourseOptions from './CourseOptions.vue';
-import LessonOptions from './LessonOptions.vue';
-import StatusBox from '~app/shared/stats/StatusBox';
+import { platformGetters, platformActions } from '../store';
+import { computed, ref, onMounted, nextTick, ComponentPublicInstance } from 'vue';
+import CourseOptionsDropdown from './CourseOptionsDropdown.vue';
+import LessonOptionsDropdown from './LessonOptionsDropdown.vue';
+import StatusBox from '~app/shared/stats/StatusBox.vue';
+import LessonModel from '../models/Lesson';
+import { ActiveView, CourseWithSingleCategory } from '../store/types';
 
 const store = useStore();
 const proficiencyLevelMatcher = {
@@ -397,9 +427,9 @@ const subscriptionModelMatcher = {
 };
 
 const columnWidths = ref<number[]>([]);
-const colRefs = ref<(HTMLTableCellElement | null)[]>([]);
-const setColRef = (el: HTMLTableCellElement, index: number) => {
-  if (el) colRefs.value[index] = el;
+const colRefs = ref<(Element | null)[]>([]);
+const setColRef = (el: Element | ComponentPublicInstance | null, index: number) => {
+  if (el instanceof HTMLElement) colRefs.value[index] = el;
 };
 
 let isResizing = false;
@@ -432,15 +462,15 @@ const stopResizing = () => {
   document.removeEventListener('mouseup', stopResizing);
 };
 
-const courses = computed(() => store.getters[coursesListGetters.getCoursesList]);
-const lessons = computed(() => store.getters[coursesListGetters.getLessonsList]);
-const activeView = computed(() => store.getters[coursesListGetters.getActiveView]);
-const dateSortingDirection = computed(() => store.getters[coursesListGetters.getDateSortingDirection]);
-const sortingField = computed(() => store.getters[coursesListGetters.getSortingField]);
-const sortingDirection = computed(() => store.getters[coursesListGetters.getSortingDirection]);
+const courses = computed<CourseWithSingleCategory[]>(() => store.getters[platformGetters.getCoursesList]);
+const lessons = computed<LessonModel[]>(() => store.getters[platformGetters.getLessonsList]);
+const activeView = computed<ActiveView>(() => store.getters[platformGetters.getActiveView]);
+const dateSortingDirection = computed<'asc' | 'desc'>(() => store.getters[platformGetters.getDateSortingDirection]);
+const sortingField = computed<string>(() => store.getters[platformGetters.getSortingField]);
+const sortingDirection = computed<'asc' | 'desc'>(() => store.getters[platformGetters.getSortingDirection]);
 
-const toggleDateSorting = () => store.dispatch(coursesListActions.toggleDateSorting);
-const toggleSortField = (field: string) => store.dispatch(coursesListActions.toggleSortField, { field });
+const toggleDateSorting = () => store.dispatch(platformActions.toggleDateSorting);
+const toggleSortField = (field: string) => store.dispatch(platformActions.toggleSortField, { field });
 
 const truncate = (text: string, maxLength = 10) => {
   return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
@@ -461,7 +491,7 @@ const formatDateString = (date: string) => {
 onMounted(async () => {
   await nextTick();
   if (colRefs.value === null) return;
-  columnWidths.value = colRefs.value.map((col) => col?.offsetWidth || 100);
+  columnWidths.value = colRefs.value.map((col) => (col instanceof HTMLElement ? col.offsetWidth : 100));
 });
 </script>
 

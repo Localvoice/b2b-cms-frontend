@@ -2,7 +2,7 @@
   <Card>
     <h4 class="mb-8">Statystyki Twoich kursów</h4>
     <v-row class="w-full mb-8">
-      <v-col cols="12" md="6" lg="3" v-for="stats in overviewStats" :key="stats.id">
+      <v-col cols="12" md="6" lg="3" v-for="stats in lessonsStatistics" :key="stats.id">
         <StatsTile
           :heading="stats.heading"
           :text="stats.text"
@@ -14,7 +14,7 @@
         <v-card class="no-shadow pa-4" border rounded="lg">
           <p class="stat-header mb-4">Najpopularniejsza lekcja</p>
           <div class="d-flex align-center w-full">
-            <img class="mr-2" :src="PopularCourseIcon" alt="course-icon" />
+            <img class="mr-2" src="/images/course-icon-block.png" alt="course-icon" />
             <h6>Wsiadanie, bilety, przesiadki - rozmówki w autobusie</h6>
           </div>
         </v-card>
@@ -39,27 +39,24 @@
   </Card>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Card from '~app/shared/base/Card.vue';
 import Search from '~app/shared/base/Search.vue';
 import StatsTile from '~app/shared/stats/StatsTile.vue';
-import FiltersDialog from '../../dashboard/components/FiltersDialog.vue';
-import Table from '../../dashboard/components/Table.vue';
-import { coursesListActions } from '../../dashboard/store';
+import FiltersDialog from '../components/FiltersDialog.vue';
+import Table from '../components/Table.vue';
+import { platformActions } from '../store';
 import { useStore } from 'vuex';
-import { overviewStats } from '../dummyData/overviewStats';
+import { lessonsStatistics } from '../dummyData/stats';
 import { onMounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import PopularCourseIcon from '../../../../assets/images/popular-course-icon-block.png';
 import AddLessonDialog from '../components/AddLessonDialog.vue';
-import Pagination from '../../dashboard/components/Pagination.vue';
+import Pagination from '../components/Pagination.vue';
+import { ActiveView } from '../store/types';
 
 const store = useStore();
-const route = useRoute();
-const router = useRouter();
 
-const fetchLessonsList = () => store.dispatch(coursesListActions.fetchLessonsList);
-const setActiveView = (activeView) => store.dispatch(coursesListActions.setActiveView, { activeView });
+const fetchLessonsList = () => store.dispatch(platformActions.fetchLessonsList);
+const setActiveView = (activeView: ActiveView) => store.dispatch(platformActions.setActiveView, { activeView });
 
 onMounted(() => {
   fetchLessonsList();

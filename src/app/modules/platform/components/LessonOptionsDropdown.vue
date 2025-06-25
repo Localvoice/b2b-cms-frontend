@@ -9,7 +9,7 @@
       </v-list-item>
       <v-divider></v-divider>
       <v-list-item class="pa-0">
-        <v-dialog max-width="550" :activator="btn">
+        <v-dialog max-width="550" :activator="btn" v-if="btn">
           <template v-slot:activator="{ props: activatorProps }">
             <v-btn
               v-bind="activatorProps"
@@ -29,7 +29,7 @@
                   <v-btn icon="mdi-close" size="small" rounded="lg" @click="isActive.value = false"></v-btn>
                 </v-col>
               </v-row>
-              <p class="dialog-text mb-4">Czy na pewno chcesz usunąć ten kurs?</p>
+              <p class="dialog-text mb-4">Czy na pewno chcesz usunąć tą lekcję?</p>
               <v-btn class="w-full confirm-btn mt-4" rounded @click="isActive.value = false">Tak, usuń</v-btn>
             </v-card>
           </template>
@@ -40,9 +40,13 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+
 defineProps<{
-  courseId: string;
+  lessonId: string;
 }>();
+
+const btn = ref<HTMLElement | null>(null);
 </script>
 
 <style lang="scss" scoped>

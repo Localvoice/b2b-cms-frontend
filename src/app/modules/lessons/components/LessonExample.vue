@@ -1,13 +1,13 @@
 <template>
   <div class="d-flex mb-4">
     <div class="d-flex flex-column align-center mr-4">
-      <v-icon id="drag-handle" icon="mdi-drag-vertical" class="cursor-grab mb-4"></v-icon>
+      <v-icon id="drag-handle-examples" icon="mdi-drag-vertical" class="cursor-grab mb-4"></v-icon>
       <v-icon icon="mdi-trash-can-outline" class="cursor-pointer text-error" style="font-size: 18px"></v-icon>
     </div>
     <v-card class="pa-4 flex-1" rounded="lg" border>
       <div class="d-flex align-center mb-6">
         <v-chip class="lesson-chip mr-2" color="purple" variant="tonal">{{ index + 1 }}</v-chip>
-        <p class="muted-text">{{ title }}</p>
+        <p class="muted-text">Wymów zdanie</p>
       </div>
       <div class="d-flex align-center mb-2">
         <v-chip class="language-chip mr-4" color="blue" variant="tonal">ENG</v-chip>
@@ -19,6 +19,7 @@
           hide-details
           rounded
           variant="outlined"
+          v-model="phrase"
         ></v-text-field>
       </div>
       <div class="d-flex align-center mb-4">
@@ -31,6 +32,7 @@
           hide-details
           rounded
           variant="outlined"
+          v-model="translatedPhrase"
         ></v-text-field>
       </div>
       <v-row align="center">
@@ -58,13 +60,17 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-defineProps<{
-  title: string;
+const props = defineProps<{
+  phrase: string;
+  translatedPhrase: string;
+  tip: string | null;
   index: number;
 }>();
 
-const hintEnabled = ref(false);
-const hintContent = ref('');
+const phrase = ref(props.phrase);
+const translatedPhrase = ref(props.translatedPhrase);
+const hintEnabled = ref<boolean>(Boolean(props.tip));
+const hintContent = ref(props.tip);
 </script>
 
 <style lang="scss" scoped>

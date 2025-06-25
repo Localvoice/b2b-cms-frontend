@@ -4,9 +4,9 @@
 
 import { RootState } from '~app/core/store';
 import { createGetterFactory, createGetterMap } from '~app/shared/vuex';
-import { NAMESPACE, CoursesListState } from './state';
+import { NAMESPACE, PlatformState } from './state';
 
-const createGetter = createGetterFactory<CoursesListState, RootState>();
+const createGetter = createGetterFactory<PlatformState, RootState>();
 
 export const getters = {
   getActivePage: createGetter((state) => state.pagintation.activePage),
@@ -22,4 +22,4 @@ export const getters = {
   getSortingDirection: createGetter((state) => state.sort.direction)
 };
 
-export const coursesListGetters = createGetterMap<typeof getters, CoursesListState, RootState>(NAMESPACE, getters);
+export const platformGetters = createGetterMap<typeof getters, PlatformState, RootState>(NAMESPACE, getters);

@@ -1,4 +1,4 @@
-import CourseModel from '../models/course';
+import CourseModel from '../models/Course';
 
 const courses: CourseModel[] = [
   {

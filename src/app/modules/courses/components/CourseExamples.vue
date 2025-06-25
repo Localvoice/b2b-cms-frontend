@@ -3,10 +3,10 @@
     <v-col cols="12" lg="3">
       <v-card class="pa-8 h-full" color="grey-lighten-5" border rounded="lg">
         <h5 class="mb-8">Lekcje w kursie</h5>
-        <draggable :list="lessonsList" handle="#drag-handle" item-key="id" @end="onDragEnd">
+        <draggable :list="draggableLessons" handle="#drag-handle-lessons" item-key="lessonId">
           <template #item="{ element }">
             <CourseLessonCard
-              :index="getIndex(element.lessonId)"
+              :index="getLessonIndex(element.lessonId)"
               :lessonId="element.lessonId"
               :title="element.title"
               :status="element.status"
@@ -18,10 +18,15 @@
     <v-col cols="12" lg="9">
       <v-card class="pa-8 h-full" color="grey-lighten-5" border rounded="lg">
         <h5>Przykłady w kursie</h5>
-        <p class="muted-text mb-8">12 przykładów</p>
-        <draggable :list="lessonsList" handle="#drag-handle" item-key="id" @end="onDragEnd">
-          <template #item="{ element, index }">
-            <LessonExample :title="element.title" :index="index" />
+        <p class="muted-text mb-8">{{ draggableLessonsExamples.length }} przykładów</p>
+        <draggable :list="draggableLessonsExamples" handle="#drag-handle-examples" item-key="phrase">
+          <template #item="{ element }">
+            <LessonExample
+              :phrase="element.phrase"
+              :translatedPhrase="element.translatedPhrase"
+              :tip="element.tip"
+              :index="getLessonExampleIndex(element.phrase)"
+            />
           </template>
         </draggable>
       </v-card>
@@ -31,20 +36,41 @@
 
 <script setup lang="ts">
 import draggable from 'vuedraggable';
-import { ref } from 'vue';
-import { lessons } from '../../lessons/dummyData/lessons';
+import { ref, computed, onMounted, watch } from 'vue';
 import CourseLessonCard from './CourseLessonCard.vue';
 import LessonExample from '../../lessons/components/LessonExample.vue';
+import { useStore } from 'vuex';
+import { courseDetailsActions, courseDetailsGetters } from '../store';
+import LessonModel from '../models/Lesson';
+import LessonExampleModel from '../models/LessonExample';
 
-const lessonsList = ref([...lessons].slice(0, 5));
+const store = useStore();
+const selectLessonId = (lessonId: string) => store.dispatch(courseDetailsActions.selectLessonId, { lessonId });
 
-const getIndex = (id: string) => {
-  return lessons.findIndex((lesson) => lesson.lessonId === id);
+const courseLessons = computed<LessonModel[]>(() => store.getters[courseDetailsGetters.getCourseLessons]);
+const lessonExamples = computed<LessonExampleModel[]>(() => store.getters[courseDetailsGetters.getLessonExamples]);
+
+const draggableLessons = ref<LessonModel[]>([...courseLessons.value]);
+const draggableLessonsExamples = ref<LessonExampleModel[]>([...lessonExamples.value]);
+
+const getLessonIndex = (id: string) => {
+  return courseLessons.value.findIndex((lesson) => lesson.lessonId === id);
 };
 
-const onDragEnd = () => {
-  console.log('Drag end', lessonsList.value);
+const getLessonExampleIndex = (phrase: string) => {
+  return lessonExamples.value.findIndex((lesson) => lesson.phrase === phrase);
 };
+
+watch(lessonExamples, (newLessonExamples) => {
+  draggableLessonsExamples.value = [...newLessonExamples];
+});
+
+onMounted(() => {
+  const firstLessonId = courseLessons.value[0].lessonId;
+  if (firstLessonId) {
+    selectLessonId(firstLessonId);
+  }
+});
 </script>
 
 <style lang="scss" scoped></style>

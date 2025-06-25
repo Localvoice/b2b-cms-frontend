@@ -1,24 +1,12 @@
 /* eslint-disable import/no-cycle */
 import { createEntityAdapter, EntityAdapter } from '~app/shared/vuex';
-import CourseModel from '../models/course';
-import LessonModel from '../../lessons/models/lesson';
+import CourseModel from '../models/Course';
+import LessonModel from '../models/Lesson';
+import { ActiveView, CourseWithSingleCategory } from './types';
 
-export type CourseWithSingleCategory = Omit<CourseModel, 'categories'> & {
-  category: string;
-};
-export type ActiveView = 'courses' | 'lessons';
-export type DataFilters = {
-  category: string[];
-  proficiencyLevel: string[];
-  contentType: string[];
-  subscriptionModel: string[];
-  status: string[];
-  latestVersions: boolean;
-};
+export const NAMESPACE = 'platform';
 
-export const NAMESPACE = 'dashboard';
-
-export interface CoursesListState {
+export interface PlatformState {
   activeView: ActiveView;
   pagintation: {
     activePage: number;
@@ -44,9 +32,9 @@ export interface CoursesListState {
   };
 }
 
-export const CoursesListEntityAdapter: EntityAdapter<CourseModel> = createEntityAdapter<CourseModel>();
+export const PlatformEntityAdapter: EntityAdapter<CourseModel> = createEntityAdapter<CourseModel>();
 
-export function initialState(): CoursesListState {
+export function initialState(): PlatformState {
   return {
     activeView: 'courses',
     pagintation: {

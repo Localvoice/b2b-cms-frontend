@@ -51,21 +51,21 @@
 </template>
 
 <script setup lang="ts">
-import { coursesListActions, coursesListGetters } from '../store';
+import { platformActions, platformGetters } from '../store';
 import { useStore } from 'vuex';
 import { ref, computed, watch, onMounted } from 'vue';
 
 const store = useStore();
-const goToNextPage = () => store.dispatch(coursesListActions.goToNextPage);
-const goToPreviousPage = () => store.dispatch(coursesListActions.goToPreviousPage);
+const goToNextPage = () => store.dispatch(platformActions.goToNextPage);
+const goToPreviousPage = () => store.dispatch(platformActions.goToPreviousPage);
 
-const activePage = computed(() => store.getters[coursesListGetters.getActivePage]);
-const totalPages = computed(() => store.getters[coursesListGetters.getTotalPages]);
-const hasNextPage = computed(() => store.getters[coursesListGetters.hasNextPage]);
-const hasPrevPage = computed(() => store.getters[coursesListGetters.hasPreviousPage]);
-const resultsLimit = computed(() => store.getters[coursesListGetters.getResultsLimit]);
+const activePage = computed(() => store.getters[platformGetters.getActivePage]);
+const totalPages = computed(() => store.getters[platformGetters.getTotalPages]);
+const hasNextPage = computed(() => store.getters[platformGetters.hasNextPage]);
+const hasPrevPage = computed(() => store.getters[platformGetters.hasPreviousPage]);
+const resultsLimit = computed(() => store.getters[platformGetters.getResultsLimit]);
 
-const setDisplayLimit = (limit: number) => store.dispatch(coursesListActions.setDisplayLimit, { limit });
+const setDisplayLimit = (limit: number) => store.dispatch(platformActions.setDisplayLimit, { limit });
 const limit = ref('5');
 
 watch(limit, (newLimit) => {

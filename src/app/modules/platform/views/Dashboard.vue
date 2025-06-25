@@ -10,7 +10,7 @@
     </v-row>
     <AlertNotification />
     <v-row class="w-full mb-8">
-      <v-col cols="12" md="6" lg="3" v-for="stats in overviewStats" :key="stats.id">
+      <v-col cols="12" md="6" lg="3" v-for="stats in dashboardStatistics" :key="stats.id">
         <StatsTile
           :heading="stats.heading"
           :text="stats.text"
@@ -48,29 +48,31 @@ import StatsTile from '~app/shared/stats/StatsTile.vue';
 import FiltersDialog from '../components/FiltersDialog.vue';
 import Pagination from '../components/Pagination.vue';
 import Table from '../components/Table.vue';
-import AlertNotification from '~app/shared/alerts/AlertNotification';
-import { coursesListActions, coursesListGetters } from '../store';
+import AlertNotification from '~app/shared/alerts/AlertNotification.vue';
+import { platformActions } from '../store';
 import { useStore } from 'vuex';
-import { overviewStats } from '../dummyData/overviewStats';
-import { ref, watch, nextTick, onMounted, computed } from 'vue';
+import { dashboardStatistics } from '../dummyData/stats';
+import { ref, watch, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const store = useStore();
 const route = useRoute();
 const router = useRouter();
 
-const fetchDashboardData = () => store.dispatch(coursesListActions.fetchDashboardData);
-const setActiveView = (activeView: string) => store.dispatch(coursesListActions.setActiveView, { activeView });
+const fetchDashboardData = () => store.dispatch(platformActions.fetchDashboardData);
+const setActiveView = (activeView: string) => store.dispatch(platformActions.setActiveView, { activeView });
 
 const activeTab = ref(route.query.tab || 'courses');
 
-const onTabChange = (newTab: string) => {
-  router.replace({
-    query: {
-      ...route.query,
-      tab: newTab
-    }
-  });
+const onTabChange = (newTab: unknown) => {
+  if (typeof newTab === 'string' || typeof newTab === 'number') {
+    router.replace({
+      query: {
+        ...route.query,
+        tab: newTab
+      }
+    });
+  }
 };
 
 watch(

@@ -1,12 +1,13 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable array-callback-return */
 import { createMutationFactory, createMutationMap } from '~app/shared/vuex';
-import { NAMESPACE, CoursesListState, ActiveView, CourseWithSingleCategory, DataFilters } from './state';
-import CourseModel from '../models/course';
-import LessonModel from '../../lessons/models/lesson';
+import { NAMESPACE, PlatformState } from './state';
+import { ActiveView, CourseWithSingleCategory, DataFilters } from './types';
+import CourseModel from '../models/Course';
+import LessonModel from '../models/Lesson';
 import { filterCourses, filterLessons, getTotalPages, mapCoursesToTableData, sortByDateAndField } from './helpers';
 
-const createMutation = createMutationFactory<CoursesListState>();
+const createMutation = createMutationFactory<PlatformState>();
 
 export const mutations = {
   setDashboardData: createMutation(
@@ -257,4 +258,4 @@ export const mutations = {
   })
 };
 
-export const coursesListMutations = createMutationMap<typeof mutations, CoursesListState>(NAMESPACE, mutations);
+export const platformMutations = createMutationMap<typeof mutations, PlatformState>(NAMESPACE, mutations);
