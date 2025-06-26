@@ -82,7 +82,7 @@
               <p class="muted-text">{{ activeLesson.lessonExamples.length }} przykładów</p>
             </v-col>
           </v-row>
-          <draggable :list="draggableLessonExamples" handle="#drag-handle" item-key="phrase" @end="onDragEnd">
+          <draggable :list="draggableLessonExamples" handle="#drag-handle-examples" item-key="phrase" @end="onDragEnd">
             <template #item="{ element }">
               <LessonExample
                 :index="getLessonExampleIndex(element.phrase)"

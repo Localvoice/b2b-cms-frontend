@@ -118,6 +118,14 @@ onMounted(() => {
     color: #fff;
   }
 }
+.light-btn {
+  background-color: #f2f0ff;
+  font-weight: 700;
+  font-size: 14px;
+  color: #7b62fe;
+  text-transform: initial;
+  box-shadow: none;
+}
 .course-title {
   color: #161d40;
   font-size: 20px;

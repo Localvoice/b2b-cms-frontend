@@ -14,6 +14,13 @@
             <v-btn icon="mdi-close" size="small" rounded="lg" @click="isActive.value = false"></v-btn>
           </v-col>
         </v-row>
+        <div class="d-flex justify-center mb-10">
+          <div class="image-wrapper">
+            <img class="lesson-image" :src="imageUrl" alt="lesson-image" />
+            <v-btn @click="triggerFileInput" class="file-input-btn" icon="mdi-pencil-outline"></v-btn>
+            <input type="file" ref="fileInput" accept="image/*" @change="handleFileChange" class="d-none" />
+          </div>
+        </div>
         <v-form @submit.prevent="submitLesson">
           <h6 class="mb-2">Tytuł</h6>
           <v-text-field
@@ -169,6 +176,21 @@ const category = ref('');
 const enteredCategory = ref<string | null>(null);
 const lessonType = ref('Nauka wymowy');
 const btn = ref<HTMLElement | null>(null);
+const fileInput = ref<HTMLInputElement | null>(null);
+const imageUrl = ref<string>('/images/placeholder-course-image.png');
+
+const triggerFileInput = () => {
+  fileInput.value?.click();
+};
+
+const handleFileChange = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  const file = target.files?.[0];
+
+  if (file && file.type.startsWith('image/')) {
+    imageUrl.value = URL.createObjectURL(file);
+  }
+};
 
 const titleRules = {
   required: (v: string) => !!v || 'Tytuł jest wymagany'
@@ -210,5 +232,36 @@ const submitLesson = () => {
 }
 .select .v-field__outline {
   display: none;
+}
+.image-wrapper {
+  width: 140px;
+  height: 140px;
+  position: relative;
+  background-color: #f2f0ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lesson-image {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+.file-input-btn {
+  position: absolute;
+  left: 50%;
+  bottom: -25px;
+  transform: translateX(-50%);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #7b62fe;
+  color: #fff;
 }
 </style>

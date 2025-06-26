@@ -15,7 +15,14 @@
         <h5>Ilość studentów</h5>
       </v-col>
       <v-col cols="auto">
-        <v-select class="select" :items="['Ten miesiąc', 'Ten rok']" :value="'Ten miesiąc'" density="compact" rounded>
+        <v-select
+          class="select"
+          :items="['Ten miesiąc', 'Ten rok']"
+          :value="'Ten miesiąc'"
+          density="compact"
+          bg-color="white"
+          rounded
+        >
         </v-select>
       </v-col>
     </v-row>

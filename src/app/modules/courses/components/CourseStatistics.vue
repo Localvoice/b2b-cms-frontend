@@ -23,6 +23,7 @@
               :value="'Ten miesiąc'"
               density="compact"
               rounded
+              bg-color="white"
             >
             </v-select>
           </v-col>

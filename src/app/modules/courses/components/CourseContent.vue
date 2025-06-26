@@ -67,7 +67,7 @@
       <div v-if="draggableLessons.length > 0">
         <v-card class="pa-8 h-full" color="grey-lighten-5" border rounded="lg">
           <h5 class="mb-8">Lekcje w kursie</h5>
-          <draggable :list="draggableLessons" handle="#drag-handle" item-key="id" @end="onDragEnd">
+          <draggable :list="draggableLessons" handle="#drag-handle-examples" item-key="id" @end="onDragEnd">
             <template #item="{ element }">
               <CourseLessonCard
                 :index="getIndex(element.lessonId)"
