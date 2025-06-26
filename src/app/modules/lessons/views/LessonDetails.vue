@@ -6,22 +6,27 @@
           <router-link to="/app/lessons">
             <v-btn class="outlined-btn mr-4" rounded="lg" variant="outlined" icon="mdi-arrow-left"></v-btn>
           </router-link>
-          <h4 class="course-title mb-0">Jak się witać w restauracji?</h4>
+          <h4 v-if="activeLesson" class="course-title mb-0">{{ activeLesson.title }}</h4>
         </div>
       </v-col>
-      <v-col cols="auto" v-if="activeTab === 'content'">
-        <div v-if="lessonsList.length < 2">
-          <v-tooltip text="Aby aktywować lekcję, dodaj co najmniej dwa przykłady" location="bottom">
-            <template v-slot:activator="{ props }">
-              <span v-bind="props">
-                <v-btn class="secondary-btn" disabled rounded>Aktywuj lekcję</v-btn>
-              </span>
-            </template>
-          </v-tooltip>
-        </div>
-        <div v-else>
-          <v-btn class="secondary-btn" rounded>Aktywuj lekcję</v-btn>
-        </div>
+      <v-col cols="auto">
+        <v-row align="center">
+          <v-col cols="auto">
+            <v-btn class="light-btn" rounded>Zapisz jako wersję roboczą</v-btn>
+          </v-col>
+          <div v-if="activeLesson && activeLesson.lessonExamples.length < 2">
+            <v-tooltip text="Aby aktywować lekcję, dodaj co najmniej dwa przykłady" location="bottom">
+              <template v-slot:activator="{ props }">
+                <span v-bind="props">
+                  <v-btn class="secondary-btn" disabled rounded>Aktywuj lekcję</v-btn>
+                </span>
+              </template>
+            </v-tooltip>
+          </div>
+          <div v-else>
+            <v-btn class="secondary-btn" rounded>Aktywuj lekcję</v-btn>
+          </div>
+        </v-row>
       </v-col>
     </v-row>
 
@@ -32,6 +37,9 @@
     </v-tabs>
     <div class="w-full" v-if="activeTab === 'content'">
       <LessonContent />
+    </div>
+    <div class="w-full" v-if="activeTab === 'statistics'">
+      <LessonStatistics />
     </div>
     <div class="w-full" v-if="activeTab === 'settings'">
       <LessonSettings />
@@ -47,18 +55,16 @@ import { useStore } from 'vuex';
 import { lessonDetailsActions, lessonDetailsGetters } from '~app/modules/lessons/store';
 import LessonSettings from '../components/LessonSettings.vue';
 import LessonContent from '../components/LessonContent.vue';
+import LessonStatistics from '../components/LessonStatistics.vue';
+import LessonModel from '../models/Lesson';
 
 const route = useRoute();
 const router = useRouter();
 const store = useStore();
 
-const fetchLessonDetails = () => store.dispatch(lessonDetailsActions.fetchLessonDetails);
-const setLessonEditing = () => store.dispatch(lessonDetailsActions.setLessonEditing);
-const leaveLessonEditing = () => store.dispatch(lessonDetailsActions.leaveLessonEditing);
-
-const lessonsList = ref([]);
+const fetchLessonDetails = (lessonId: string) => store.dispatch(lessonDetailsActions.fetchLessonDetails, { lessonId });
+const activeLesson = computed<LessonModel | null>(() => store.getters[lessonDetailsGetters.getLessonDetails]);
 const activeTab = ref(route.query.tab || 'content');
-const isEditing = computed(() => store.getters[lessonDetailsGetters.getEditingState]);
 
 const onTabChange = (newTab: unknown) => {
   if (typeof newTab !== 'string') return;
@@ -79,18 +85,10 @@ watch(
   }
 );
 
-watch(activeTab, (newActiveTab) => {
-  if (newActiveTab === 'settings') {
-    setLessonEditing();
-  } else {
-    leaveLessonEditing();
-  }
-});
-
 onMounted(() => {
-  fetchLessonDetails();
-  if (activeTab.value === 'settings') {
-    setLessonEditing();
+  const lessonId = route.params.lessonId;
+  if (!Array.isArray(lessonId)) {
+    fetchLessonDetails(lessonId);
   }
 });
 </script>
@@ -122,6 +120,7 @@ onMounted(() => {
 }
 .course-title {
   color: #161d40;
+  font-size: 20px;
 }
 .tabs {
   border-bottom: 1px solid #f2f0ff;

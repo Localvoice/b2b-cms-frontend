@@ -9,7 +9,7 @@ defineProps<{
   series: {
     name: string;
     data: number[];
-  };
+  }[];
 }>();
 
 const chartOptions = ref({

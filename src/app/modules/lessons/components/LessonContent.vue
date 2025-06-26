@@ -4,17 +4,17 @@
       <Card>
         <v-card class="pa-4" color="grey-lighten-5" border rounded="lg">
           <h5 class="muted-text mb-8">INFORMACJE O LEKCJI</h5>
-          <v-card class="mb-8 pa-4" border rounded="lg">
+          <v-card v-if="activeLesson" class="mb-8 pa-4" border rounded="lg">
             <v-row class="w-full" align="center">
               <v-col cols="12" lg="3">
                 <img src="/images/placeholder-course-image.png" alt="course-image" />
               </v-col>
               <v-col cols="12" lg="9">
-                <h5 class="mb-3">Jak się witać w restauracji?</h5>
-                <div class="mb-3">
-                  <StatusBox :status="'INACTIVE'" />
+                <h5 class="mb-3">{{ activeLesson.title }}</h5>
+                <div v-if="activeLesson.status" class="mb-3">
+                  <StatusBox :status="activeLesson.status" />
                 </div>
-                <v-chip color="pink">Przygotowania do egzaminu</v-chip>
+                <v-chip color="pink">{{ activeLesson.category }}</v-chip>
               </v-col>
             </v-row>
           </v-card>
@@ -74,20 +74,22 @@
       </Card>
     </v-col>
     <v-col cols="12" lg="7">
-      <div v-if="lessonsList.length > 0">
+      <div v-if="activeLesson && activeLesson.lessonExamples.length > 0">
         <v-card class="pa-4" color="grey-lighten-5" border rounded="lg">
           <v-row class="mb-8" justify="space-between" align="center">
             <v-col cols="auto">
               <h5 class="mb-2">Przykłady w lekcji</h5>
-              <p class="muted-text">5 przykładów</p>
-            </v-col>
-            <v-col cols="auto">
-              <AddLessonDialog />
+              <p class="muted-text">{{ activeLesson.lessonExamples.length }} przykładów</p>
             </v-col>
           </v-row>
-          <draggable :list="lessonsList" handle="#drag-handle" item-key="id" @end="onDragEnd">
-            <template #item="{ element, index }">
-              <LessonExample :title="element.title" :index="index" />
+          <draggable :list="draggableLessonExamples" handle="#drag-handle" item-key="phrase" @end="onDragEnd">
+            <template #item="{ element }">
+              <LessonExample
+                :index="getLessonExampleIndex(element.phrase)"
+                :phrase="element.phrase"
+                :translatedPhrase="element.translatedPhrase"
+                :tip="element.tip"
+              />
             </template>
           </draggable>
           <v-btn class="add-btn w-full d-flex justify-center py-6">
@@ -104,18 +106,32 @@
 
 <script setup lang="ts">
 import draggable from 'vuedraggable';
-import { ref, onMounted } from 'vue';
-import { lessons } from '../dummyData/lessons';
-import AddLessonDialog from '~app/modules/lessons/components/AddLessonDialog.vue';
+import { ref, computed, watch } from 'vue';
 import EmptyView from './EmptyView.vue';
 import StatusBox from '~app/shared/stats/StatusBox.vue';
 import LessonExample from './LessonExample.vue';
+import LessonModel from '../models/Lesson';
+import { useStore } from 'vuex';
+import { lessonDetailsGetters } from '../store';
 
-const lessonsList = ref(lessons.slice(0, 5));
+const store = useStore();
+const activeLesson = computed<LessonModel | null>(() => store.getters[lessonDetailsGetters.getLessonDetails]);
+
+const draggableLessonExamples = ref(activeLesson.value ? [...activeLesson.value.lessonExamples] : []);
+
+const getLessonExampleIndex = (phrase: string) => {
+  if (!activeLesson.value) return 0;
+  return activeLesson.value.lessonExamples.findIndex((lesson) => lesson.phrase === phrase);
+};
 
 const onDragEnd = () => {
-  console.log('Drag end', lessonsList.value);
+  console.log('Drag end', draggableLessonExamples.value);
 };
+
+watch(activeLesson, (newActiveLesson) => {
+  if (!newActiveLesson) return;
+  draggableLessonExamples.value = newActiveLesson.lessonExamples;
+});
 </script>
 
 <style lang="scss" scoped>

@@ -1,4 +1,4 @@
-import LessonModel from '../models/lesson';
+import LessonModel from '../models/Lesson';
 
 export const lessons: LessonModel[] = [
   {
@@ -11,7 +11,11 @@ export const lessons: LessonModel[] = [
     category: 'Grammar',
     contentType: 'GRAMMAR_LESSON',
     subscriptionModel: 'FREE',
-    lessonExamples: ['I am', 'You are', 'He is'],
+    lessonExamples: [
+      { phrase: 'I am', translatedPhrase: 'Yo soy', tip: null, translatedTip: null },
+      { phrase: 'You are', translatedPhrase: 'Tú eres', tip: null, translatedTip: null },
+      { phrase: 'He is', translatedPhrase: 'Él es', tip: null, translatedTip: null }
+    ],
     status: 'ACTIVE',
     proficiencyLevel: 'A1',
     iconUrl: 'https://example.com/icons/grammar.png',
@@ -32,7 +36,11 @@ export const lessons: LessonModel[] = [
     category: 'Pronunciation',
     contentType: 'PRONUNCIATION_LESSON',
     subscriptionModel: 'FREE',
-    lessonExamples: ['é', 'è', 'ê'],
+    lessonExamples: [
+      { phrase: 'é', translatedPhrase: 'eh', tip: null, translatedTip: null },
+      { phrase: 'è', translatedPhrase: 'eh (open)', tip: null, translatedTip: null },
+      { phrase: 'ê', translatedPhrase: 'eh (closed)', tip: null, translatedTip: null }
+    ],
     status: 'ACTIVE',
     proficiencyLevel: 'C1',
     iconUrl: 'https://example.com/icons/pronunciation.png',
@@ -53,7 +61,10 @@ export const lessons: LessonModel[] = [
     category: 'Dialogue',
     contentType: 'DIALOGUE_LESSON',
     subscriptionModel: 'PREMIUM',
-    lessonExamples: ['Quisiera una mesa', 'La cuenta, por favor'],
+    lessonExamples: [
+      { phrase: 'Quisiera una mesa', translatedPhrase: 'I’d like a table', tip: null, translatedTip: null },
+      { phrase: 'La cuenta, por favor', translatedPhrase: 'The check, please', tip: null, translatedTip: null }
+    ],
     status: 'ACTIVE',
     proficiencyLevel: 'A2',
     iconUrl: 'https://example.com/icons/dialogue.png',
@@ -74,7 +85,10 @@ export const lessons: LessonModel[] = [
     category: 'Course',
     contentType: 'COURSE',
     subscriptionModel: 'PARTIALLY_FREE',
-    lessonExamples: ['A B C D', 'Ä Ö Ü'],
+    lessonExamples: [
+      { phrase: 'A B C D', translatedPhrase: 'A B C D', tip: null, translatedTip: null },
+      { phrase: 'Ä Ö Ü', translatedPhrase: 'Ä Ö Ü', tip: null, translatedTip: null }
+    ],
     status: 'ACTIVE',
     proficiencyLevel: 'B2',
     iconUrl: 'https://example.com/icons/course.png',
@@ -95,7 +109,10 @@ export const lessons: LessonModel[] = [
     category: 'Grammar',
     contentType: 'GRAMMAR_LESSON',
     subscriptionModel: 'PREMIUM',
-    lessonExamples: ['il ragazzo', 'la ragazza'],
+    lessonExamples: [
+      { phrase: 'il ragazzo', translatedPhrase: 'the boy', tip: null, translatedTip: null },
+      { phrase: 'la ragazza', translatedPhrase: 'the girl', tip: null, translatedTip: null }
+    ],
     status: 'ACTIVE',
     proficiencyLevel: 'C2',
     iconUrl: 'https://example.com/icons/grammar.png',
@@ -116,7 +133,11 @@ export const lessons: LessonModel[] = [
     category: 'Pronunciation',
     contentType: 'PRONUNCIATION_LESSON',
     subscriptionModel: 'FREE',
-    lessonExamples: ['ka', 'sa', 'ta'],
+    lessonExamples: [
+      { phrase: 'ka', translatedPhrase: 'ka', tip: null, translatedTip: null },
+      { phrase: 'sa', translatedPhrase: 'sa', tip: null, translatedTip: null },
+      { phrase: 'ta', translatedPhrase: 'ta', tip: null, translatedTip: null }
+    ],
     status: 'INACTIVE',
     proficiencyLevel: 'A1',
     iconUrl: 'https://example.com/icons/pronunciation.png',
@@ -137,7 +158,10 @@ export const lessons: LessonModel[] = [
     category: 'Dialogue',
     contentType: 'DIALOGUE_LESSON',
     subscriptionModel: 'PARTIALLY_FREE',
-    lessonExamples: ['Где туалет?', 'Сколько это стоит?'],
+    lessonExamples: [
+      { phrase: 'Где туалет?', translatedPhrase: 'Where is the bathroom?', tip: null, translatedTip: null },
+      { phrase: 'Сколько это стоит?', translatedPhrase: 'How much does it cost?', tip: null, translatedTip: null }
+    ],
     status: 'ACTIVE',
     proficiencyLevel: 'C1',
     iconUrl: 'https://example.com/icons/dialogue.png',
@@ -158,7 +182,10 @@ export const lessons: LessonModel[] = [
     category: 'Grammar',
     contentType: 'GRAMMAR_LESSON',
     subscriptionModel: 'PREMIUM',
-    lessonExamples: ['SVO pattern', '我喜欢吃饭'],
+    lessonExamples: [
+      { phrase: 'SVO pattern', translatedPhrase: 'Sujeto-Verbo-Objeto', tip: null, translatedTip: null },
+      { phrase: '我喜欢吃饭', translatedPhrase: 'I like to eat', tip: null, translatedTip: null }
+    ],
     status: 'ACTIVE',
     proficiencyLevel: 'B1',
     iconUrl: 'https://example.com/icons/grammar.png',
@@ -179,7 +206,20 @@ export const lessons: LessonModel[] = [
     category: 'Dialogue',
     contentType: 'DIALOGUE_LESSON',
     subscriptionModel: 'PREMIUM',
-    lessonExamples: ['Let’s schedule a meeting', 'I’ll follow up by email'],
+    lessonExamples: [
+      {
+        phrase: 'Let’s schedule a meeting',
+        translatedPhrase: 'Programemos una reunión',
+        tip: null,
+        translatedTip: null
+      },
+      {
+        phrase: 'I’ll follow up by email',
+        translatedPhrase: 'Haré seguimiento por correo electrónico',
+        tip: null,
+        translatedTip: null
+      }
+    ],
     status: 'INACTIVE',
     proficiencyLevel: 'B2',
     iconUrl: 'https://example.com/icons/dialogue.png',
@@ -200,7 +240,10 @@ export const lessons: LessonModel[] = [
     category: 'Course',
     contentType: 'COURSE',
     subscriptionModel: 'FREE',
-    lessonExamples: ['ㄱ, ㄴ, ㄷ', '안녕하세요'],
+    lessonExamples: [
+      { phrase: 'ㄱ, ㄴ, ㄷ', translatedPhrase: 'g, n, d', tip: null, translatedTip: null },
+      { phrase: '안녕하세요', translatedPhrase: 'Hello', tip: null, translatedTip: null }
+    ],
     status: 'ACTIVE',
     proficiencyLevel: 'A1',
     iconUrl: 'https://example.com/icons/course.png',
@@ -221,7 +264,10 @@ export const lessons: LessonModel[] = [
     category: 'Basics',
     contentType: 'COURSE',
     subscriptionModel: 'PARTIALLY_FREE',
-    lessonExamples: ['A B C D', 'Olá, tudo bem?'],
+    lessonExamples: [
+      { phrase: 'A B C D', translatedPhrase: 'A B C D', tip: null, translatedTip: null },
+      { phrase: 'Olá, tudo bem?', translatedPhrase: 'Hi, how are you?', tip: null, translatedTip: null }
+    ],
     status: 'ACTIVE',
     proficiencyLevel: 'A2',
     iconUrl: 'https://example.com/icons/portuguese1.png',
@@ -242,7 +288,10 @@ export const lessons: LessonModel[] = [
     category: 'Grammar',
     contentType: 'GRAMMAR_LESSON',
     subscriptionModel: 'PREMIUM',
-    lessonExamples: ['كَتَبَ', 'يَكْتُبُ'],
+    lessonExamples: [
+      { phrase: 'كَتَبَ', translatedPhrase: 'He wrote', tip: null, translatedTip: null },
+      { phrase: 'يَكْتُبُ', translatedPhrase: 'He writes', tip: null, translatedTip: null }
+    ],
     status: 'ACTIVE',
     proficiencyLevel: 'B2',
     iconUrl: 'https://example.com/icons/arabic1.png',
@@ -263,7 +312,10 @@ export const lessons: LessonModel[] = [
     category: 'Pronunciation',
     contentType: 'PRONUNCIATION_LESSON',
     subscriptionModel: 'FREE',
-    lessonExamples: ['क, ख, ग, घ', 'त, थ, द, ध'],
+    lessonExamples: [
+      { phrase: 'क, ख, ग, घ', translatedPhrase: 'ka, kha, ga, gha', tip: null, translatedTip: null },
+      { phrase: 'त, थ, द, ध', translatedPhrase: 'ta, tha, da, dha', tip: null, translatedTip: null }
+    ],
     status: 'INACTIVE',
     proficiencyLevel: 'A1',
     iconUrl: 'https://example.com/icons/hindi1.png',
@@ -284,7 +336,10 @@ export const lessons: LessonModel[] = [
     category: 'Dialogue',
     contentType: 'DIALOGUE_LESSON',
     subscriptionModel: 'PARTIALLY_FREE',
-    lessonExamples: ['Bir kahve lütfen', 'Hesap ne kadar?'],
+    lessonExamples: [
+      { phrase: 'Bir kahve lütfen', translatedPhrase: 'A coffee please', tip: null, translatedTip: null },
+      { phrase: 'Hesap ne kadar?', translatedPhrase: 'How much is the bill?', tip: null, translatedTip: null }
+    ],
     status: 'ACTIVE',
     proficiencyLevel: 'B1',
     iconUrl: 'https://example.com/icons/turkish1.png',
@@ -305,7 +360,11 @@ export const lessons: LessonModel[] = [
     category: 'Basics',
     contentType: 'COURSE',
     subscriptionModel: 'FREE',
-    lessonExamples: ['Dzień dobry', 'Cześć', 'Jak się masz?'],
+    lessonExamples: [
+      { phrase: 'Dzień dobry', translatedPhrase: 'Good morning', tip: null, translatedTip: null },
+      { phrase: 'Cześć', translatedPhrase: 'Hi', tip: null, translatedTip: null },
+      { phrase: 'Jak się masz?', translatedPhrase: 'How are you?', tip: null, translatedTip: null }
+    ],
     status: 'ACTIVE',
     proficiencyLevel: 'A1',
     iconUrl: 'https://example.com/icons/polish1.png',

@@ -9,8 +9,7 @@ import { NAMESPACE, LessonDetailsState } from './state';
 const createGetter = createGetterFactory<LessonDetailsState, RootState>();
 
 export const getters = {
-  getLessonDetails: createGetter((state) => state.activeLesson),
-  getEditingState: createGetter((state) => state.isEditing)
+  getLessonDetails: createGetter((state) => state.activeLesson)
 };
 
 export const lessonDetailsGetters = createGetterMap<typeof getters, LessonDetailsState, RootState>(NAMESPACE, getters);

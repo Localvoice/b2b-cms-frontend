@@ -323,7 +323,7 @@
       <tr v-for="lesson in lessons" :key="lesson.lessonId">
         <td :style="columnWidths[0] ? { width: columnWidths[0] + 'px' } : {}" :ref="(el) => setColRef(el, 0)">
           <div>
-            <router-link to="/app/lessons/lesson-id" class="d-inline-block">
+            <router-link :to="`/app/lessons/${lesson.lessonId}`" class="d-inline-block">
               <h6 class="table-text">{{ lesson.title }}</h6>
             </router-link>
           </div>

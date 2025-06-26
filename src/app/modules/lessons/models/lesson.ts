@@ -1,3 +1,5 @@
+import LessonExample from './LessonExample';
+
 class LessonModel {
   lessonId: string | undefined = undefined;
 
@@ -17,7 +19,7 @@ class LessonModel {
 
   subscriptionModel: 'FREE' | 'PREMIUM' | 'PARTIALLY_FREE' | undefined = undefined;
 
-  lessonExamples: string[] = [];
+  lessonExamples: LessonExample[] = [];
 
   status: 'ACTIVE' | 'INACTIVE' | undefined = undefined;
 

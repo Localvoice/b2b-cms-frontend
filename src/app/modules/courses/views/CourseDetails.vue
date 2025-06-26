@@ -33,6 +33,9 @@
     <div class="w-full" v-if="activeTab === 'examples'">
       <CourseExamples />
     </div>
+    <div class="w-full" v-if="activeTab === 'statistics'">
+      <CourseStatistics />
+    </div>
     <div class="w-full" v-if="activeTab === 'settings'">
       <CourseSettings />
     </div>
@@ -48,6 +51,7 @@ import { courseDetailsActions, courseDetailsGetters } from '~app/modules/courses
 import CourseContent from '../components/CourseContent.vue';
 import CourseSettings from '../components/CourseSettings.vue';
 import CourseExamples from '../components/CourseExamples.vue';
+import CourseStatistics from '../components/CourseStatistics.vue';
 import CourseModel from '../models/Course';
 
 const route = useRoute();
@@ -96,7 +100,6 @@ watch(selectedLessonId, (newLessonId) => {
 onMounted(() => {
   const courseId = route.params.courseId;
   if (!Array.isArray(courseId)) {
-    console.log(courseId);
     fetchCourseDetails(courseId);
   }
 });
@@ -120,6 +123,7 @@ onUnmounted(() => {
 }
 .course-title {
   color: #161d40;
+  font-size: 20px;
 }
 .tabs {
   border-bottom: 1px solid #f2f0ff;
