@@ -214,7 +214,7 @@ const submitLesson = () => {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .dialog-card {
   background-color: #f9f9fb;
 }

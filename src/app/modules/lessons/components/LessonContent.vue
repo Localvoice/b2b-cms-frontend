@@ -3,18 +3,18 @@
     <v-col cols="12" lg="5">
       <Card>
         <v-card class="pa-4" color="grey-lighten-5" border rounded="lg">
-          <h5 class="muted-text mb-8">INFORMACJE O LEKCJI</h5>
+          <h5 class="mb-8">Informacje o lekcji</h5>
           <v-card v-if="activeLesson" class="mb-8 pa-4" border rounded="lg">
             <v-row class="w-full" align="center">
               <v-col cols="12" lg="3">
-                <img src="/images/placeholder-course-image.png" alt="course-image" />
+                <img class="h-full object-cover" src="/images/placeholder-course-image.png" alt="course-image" />
               </v-col>
               <v-col cols="12" lg="9">
                 <h5 class="mb-3">{{ activeLesson.title }}</h5>
                 <div v-if="activeLesson.status" class="mb-3">
                   <StatusBox :status="activeLesson.status" />
                 </div>
-                <v-chip color="pink">{{ activeLesson.category }}</v-chip>
+                <v-chip class="lesson-chip" color="pink">{{ activeLesson.category }}</v-chip>
               </v-col>
             </v-row>
           </v-card>

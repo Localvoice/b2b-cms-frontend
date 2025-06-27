@@ -13,7 +13,6 @@
         <v-chip class="language-chip mr-4" color="blue" variant="tonal">ENG</v-chip>
         <v-text-field
           type="text"
-          class="textfield"
           density="compact"
           placeholder="ENG"
           hide-details
@@ -26,7 +25,6 @@
         <v-chip class="language-chip mr-4" color="red" variant="tonal">PL</v-chip>
         <v-text-field
           type="text"
-          class="textfield"
           density="compact"
           placeholder="PL"
           hide-details

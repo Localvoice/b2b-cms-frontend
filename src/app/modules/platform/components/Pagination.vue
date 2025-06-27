@@ -105,7 +105,7 @@ onMounted(() => {
   align-items: center;
   font-size: 14px;
   font-weight: 600;
-  color: #3b4471;
+  color: #344054;
   background-color: #f9f9fb;
   border: 1px solid #f2f0ff;
 }

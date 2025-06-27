@@ -5,10 +5,10 @@
         <h5 class="mb-8">Informacje o kursie</h5>
         <v-card class="pa-4 mb-8" border rounded="lg">
           <v-row class="w-full">
-            <v-col cols="12" lg="4">
+            <v-col cols="12" lg="3">
               <img class="h-full object-cover" src="/images/placeholder-course-image.png" alt="course-image" />
             </v-col>
-            <v-col cols="12" lg="8">
+            <v-col cols="12" lg="9">
               <h5 class="course-title mb-3">{{ activeCourse.title }}</h5>
               <p class="muted-text mb-3">W tym kursie nauczysz się słownictwa przydatnego przy podróżowaniu</p>
               <v-chip class="chip" color="pink">{{ activeCourse.categories[0] }}</v-chip>
@@ -16,7 +16,7 @@
           </v-row>
         </v-card>
         <v-row class="w-full mb-4">
-          <v-col cols="12" lg="6">
+          <v-col cols="12" lg="6" class="pr-0">
             <v-card class="pa-4" border rounded="lg">
               <div class="d-flex align-center">
                 <img class="mr-4" src="/images/lessons-icon-block2.png" alt="lesson-icon" />
@@ -27,7 +27,7 @@
               </div>
             </v-card>
           </v-col>
-          <v-col cols="12" lg="6">
+          <v-col cols="12" lg="6" class="pr-0">
             <v-card class="pa-4" border rounded="lg">
               <div class="d-flex align-center">
                 <img class="mr-4" src="/images/students-icon-block.png" alt="students-icon" />
@@ -38,7 +38,7 @@
               </div>
             </v-card>
           </v-col>
-          <v-col cols="12" lg="6">
+          <v-col cols="12" lg="6" class="pr-0">
             <v-card class="pa-4" border rounded="lg">
               <div class="d-flex align-center">
                 <img class="mr-4" src="/images/date-icon-block.png" alt="date-icon" />
@@ -49,7 +49,7 @@
               </div>
             </v-card>
           </v-col>
-          <v-col cols="12" lg="6">
+          <v-col cols="12" lg="6" class="pr-0">
             <v-card class="pa-4" border rounded="lg">
               <div class="d-flex align-center">
                 <img class="mr-4" src="/images/changes-icon-block.png" alt="changes-icon" />

@@ -4,7 +4,7 @@
       <div class="d-flex flex-column align-center">
         <div class="image-wrapper">
           <img class="avatar-image" :src="imageUrl" alt="avatar" />
-          <v-btn @click="triggerFileInput" density="default" class="file-input-btn" icon="mdi-pencil-outline"></v-btn>
+          <v-btn @click="triggerFileInput" density="default" class="avatar-input-btn" icon="mdi-pencil-outline"></v-btn>
           <input type="file" ref="fileInput" accept="image/*" @change="handleFileChange" class="d-none" />
         </div>
       </div>
@@ -152,7 +152,7 @@ const toPasswordDots = (input: string) => {
   height: 100%;
   object-fit: cover;
 }
-.file-input-btn {
+.avatar-input-btn {
   position: absolute;
   right: 5px;
   bottom: -5px;

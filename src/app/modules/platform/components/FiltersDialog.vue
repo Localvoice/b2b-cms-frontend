@@ -237,4 +237,11 @@ const applyFilters = () => {
   color: #fff;
   text-transform: initial;
 }
+.outlined-btn {
+  border-color: #f2f0ff;
+  color: #6b708a;
+  text-transform: initial;
+  font-size: 13px;
+  font-weight: 600;
+}
 </style>
