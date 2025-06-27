@@ -1,24 +1,31 @@
 export const coursesStatistics = [
   {
     id: 1,
-    heading: 'Ilość lekcji',
-    text: '12',
+    heading: 'Dodania do ulubionych',
+    text: '122 uczniów',
     percentageDifference: 40,
-    iconUrl: '/images/courses-icon-block.png'
+    iconUrl: '/images/heart-icon-block.png'
   },
   {
     id: 2,
-    heading: 'Ilość lekcji wymowy',
-    text: '5',
+    heading: 'Aktywne subskrypcje',
+    text: '23',
     percentageDifference: 40,
-    iconUrl: '/images/grammar-icon-block.png'
+    iconUrl: '/images/bell-icon-block.png'
   },
   {
     id: 3,
-    heading: 'Ilość lekcji gramatyki',
-    text: '7',
+    heading: 'Przychody',
+    text: '12 361 zł',
     percentageDifference: 40,
-    iconUrl: '/images/spell-icon-block.png'
+    iconUrl: '/images/money-icon-block.png'
+  },
+  {
+    id: 4,
+    heading: 'Łączna liczba lekcji',
+    text: '51',
+    percentageDifference: 40,
+    iconUrl: '/images/lessons-icon-block.png'
   }
 ];
 

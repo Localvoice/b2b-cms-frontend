@@ -15,7 +15,7 @@
             </v-col>
           </v-row>
         </v-card>
-        <v-row class="w-full">
+        <v-row class="w-full mb-4">
           <v-col cols="12" lg="6">
             <v-card class="pa-4" border rounded="lg">
               <div class="d-flex align-center">
@@ -61,6 +61,8 @@
             </v-card>
           </v-col>
         </v-row>
+        <v-divider class="mb-4"></v-divider>
+        <CourseTestersCard />
       </v-card>
     </v-col>
     <v-col cols="12" lg="7">
@@ -91,6 +93,7 @@ import draggable from 'vuedraggable';
 import { ref, computed, watch } from 'vue';
 import EmptyView from './EmptyView.vue';
 import CourseLessonCard from './CourseLessonCard.vue';
+import CourseTestersCard from './CourseTestersCard.vue';
 import CourseModel from '../models/Course';
 import { useStore } from 'vuex';
 import { courseDetailsGetters } from '../store';

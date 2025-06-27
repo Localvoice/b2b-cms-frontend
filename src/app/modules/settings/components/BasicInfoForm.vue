@@ -2,15 +2,12 @@
   <v-row>
     <v-col cols="auto" lg="3">
       <div class="d-flex flex-column align-center">
-        <img
-          class="profile-image w-full mb-2 cursor-pointer"
-          @click="triggerFileInput"
-          :src="imageUrl"
-          alt="profile-image"
-        />
-        <v-btn v-if="isEditing" variant="text" class="delete-btn"> Usuń </v-btn>
+        <div class="image-wrapper">
+          <img class="avatar-image" :src="imageUrl" alt="avatar" />
+          <v-btn @click="triggerFileInput" density="default" class="file-input-btn" icon="mdi-pencil-outline"></v-btn>
+          <input type="file" ref="fileInput" accept="image/*" @change="handleFileChange" class="d-none" />
+        </div>
       </div>
-      <input type="file" ref="fileInput" accept="image/*" @change="handleFileChange" class="d-none" />
     </v-col>
     <v-col cols="12" lg="9">
       <v-row>
@@ -86,7 +83,6 @@
 </template>
 
 <script setup lang="ts">
-import AvatarPlaceholder from '../../../../assets/images/avatar-placeholder.png';
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
 import { userDataGetters } from '../store';
@@ -94,6 +90,21 @@ import { userDataGetters } from '../store';
 const store = useStore();
 const userData = computed(() => store.getters[userDataGetters.getUserData]);
 const isEditing = computed(() => store.getters[userDataGetters.getEditingState]);
+const fileInput = ref<HTMLInputElement | null>(null);
+const imageUrl = ref<string>('/images/avatar-placeholder.png');
+
+const triggerFileInput = () => {
+  fileInput.value?.click();
+};
+
+const handleFileChange = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  const file = target.files?.[0];
+
+  if (file && file.type.startsWith('image/')) {
+    imageUrl.value = URL.createObjectURL(file);
+  }
+};
 
 const firstNameRules = {
   required: (v: string) => !!v || 'Imię jest wymagane'
@@ -112,32 +123,46 @@ const passwordRules = {
   required: (v: string) => !!v || 'Hasło jest wymagane'
 };
 
-const fileInput = ref<HTMLInputElement | null>(null);
-const imageUrl = ref<string | null>(AvatarPlaceholder);
-
 const toPasswordDots = (input: string) => {
   return '•'.repeat(input.length);
 };
-
-const triggerFileInput = () => {
-  fileInput.value?.click();
-};
-
-const handleFileChange = (event: Event) => {
-  const target = event.target as HTMLInputElement;
-  const file = target.files?.[0];
-
-  if (file && file.type.startsWith('image/')) {
-    imageUrl.value = URL.createObjectURL(file);
-  }
-};
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .delete-btn {
   color: #dd1a43;
   text-transform: initial;
   font-weight: 600;
   font-size: 13px;
+}
+.image-wrapper {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  background-color: #f2f0ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-image {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.file-input-btn {
+  position: absolute;
+  right: 5px;
+  bottom: -5px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #7b62fe;
+  color: #fff;
 }
 </style>

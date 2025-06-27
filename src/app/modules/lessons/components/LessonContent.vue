@@ -19,7 +19,7 @@
             </v-row>
           </v-card>
           <v-row class="w-full mb-4">
-            <v-col cols="12" lg="6">
+            <v-col cols="12" lg="6" class="pr-0">
               <v-card class="pa-4" border rounded="lg">
                 <div class="d-flex align-center">
                   <img class="mr-4" src="/images/money-icon-block.png" alt="money-icon" />
@@ -30,7 +30,7 @@
                 </div>
               </v-card>
             </v-col>
-            <v-col cols="12" lg="6">
+            <v-col cols="12" lg="6" class="pr-0">
               <v-card class="pa-4" border rounded="lg">
                 <div class="d-flex align-center">
                   <img class="mr-4" src="/images/students-icon-block.png" alt="lessons-icon" />
@@ -41,7 +41,7 @@
                 </div>
               </v-card>
             </v-col>
-            <v-col cols="12" lg="6">
+            <v-col cols="12" lg="6" class="pr-0">
               <v-card class="pa-4" border rounded="lg">
                 <div class="d-flex align-center">
                   <img class="mr-4" src="/images/date-icon-block.png" alt="date-icon" />
@@ -52,7 +52,7 @@
                 </div>
               </v-card>
             </v-col>
-            <v-col cols="12" lg="6">
+            <v-col cols="12" lg="6" class="pr-0">
               <v-card class="pa-4" border rounded="lg">
                 <div class="d-flex align-center">
                   <img class="mr-4" src="/images/changes-icon-block.png" alt="last-change-icon" />
@@ -65,11 +65,7 @@
             </v-col>
           </v-row>
           <v-divider class="mb-4"></v-divider>
-          <p class="muted-text mb-2">TESTERZY (5)</p>
-          <p className="muted-text">
-            Do wersji testowej mają dostęp tylko wybrani użytkownicy. Możesz ich edytować
-            <router-link to="/app">tutaj.</router-link>
-          </p>
+          <CourseTestersCard />
         </v-card>
       </Card>
     </v-col>
@@ -113,6 +109,7 @@ import LessonExample from './LessonExample.vue';
 import LessonModel from '../models/Lesson';
 import { useStore } from 'vuex';
 import { lessonDetailsGetters } from '../store';
+import CourseTestersCard from './CourseTestersCard.vue';
 
 const store = useStore();
 const activeLesson = computed<LessonModel | null>(() => store.getters[lessonDetailsGetters.getLessonDetails]);
