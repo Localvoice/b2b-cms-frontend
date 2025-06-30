@@ -405,8 +405,8 @@
 import { useStore } from 'vuex';
 import { platformGetters, platformActions } from '../store';
 import { computed, ref, onMounted, nextTick, ComponentPublicInstance } from 'vue';
-import CourseOptionsDropdown from './CourseOptionsDropdown.vue';
-import LessonOptionsDropdown from './LessonOptionsDropdown.vue';
+import CourseOptionsDropdown from './courses/CourseOptionsDropdown.vue';
+import LessonOptionsDropdown from './lessons/LessonOptionsDropdown.vue';
 import StatusBox from '~app/shared/stats/StatusBox.vue';
 import LessonModel from '../models/Lesson';
 import { ActiveView, CourseWithSingleCategory } from '../store/types';

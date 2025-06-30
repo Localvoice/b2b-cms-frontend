@@ -128,7 +128,7 @@
 import StatsTile from '~app/shared/stats/StatsTile.vue';
 import { coursesStatistics, chartStatistics } from '../dummyData/stats';
 import AreaChart from '~app/modules/stats/components/AreaChart.vue';
-import StudentsTable from './StudentsTable.vue';
+import StudentsTable from '../../../components/StudentsTable.vue';
 </script>
 
 <style lang="scss" scoped>

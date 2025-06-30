@@ -4,7 +4,7 @@
       <v-col cols="auto">
         <div class="d-flex align-center">
           <router-link to="/app/lessons">
-            <v-btn class="outlined-btn mr-4" rounded="lg" variant="outlined" icon="mdi-arrow-left"></v-btn>
+            <v-btn class="go-back-btn mr-4" rounded="lg" variant="outlined" icon="mdi-arrow-left"></v-btn>
           </router-link>
           <h4 v-if="activeLesson" class="course-title mb-0">{{ activeLesson.title }}</h4>
         </div>
@@ -52,7 +52,7 @@ import Card from '~app/shared/base/Card.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { ref, watch, onMounted, computed } from 'vue';
 import { useStore } from 'vuex';
-import { lessonDetailsActions, lessonDetailsGetters } from '~app/modules/lessons/store';
+import { lessonDetailsActions, lessonDetailsGetters } from '../store';
 import LessonSettings from '../components/LessonSettings.vue';
 import LessonContent from '../components/LessonContent.vue';
 import LessonStatistics from '../components/LessonStatistics.vue';
@@ -101,7 +101,7 @@ onMounted(() => {
   color: #fff;
   text-transform: initial;
 }
-.outlined-btn {
+.go-back-btn {
   border-color: #f2f0ff;
   color: #fe5b14;
 }

@@ -65,7 +65,7 @@
             </v-col>
           </v-row>
           <v-divider class="mb-4"></v-divider>
-          <CourseTestersCard />
+          <TestersList />
         </v-card>
       </Card>
     </v-col>
@@ -105,11 +105,11 @@ import draggable from 'vuedraggable';
 import { ref, computed, watch } from 'vue';
 import EmptyView from './EmptyView.vue';
 import StatusBox from '~app/shared/stats/StatusBox.vue';
-import LessonExample from './LessonExample.vue';
+import LessonExample from '../../../components/lessons/LessonExample.vue';
 import LessonModel from '../models/Lesson';
 import { useStore } from 'vuex';
 import { lessonDetailsGetters } from '../store';
-import CourseTestersCard from './CourseTestersCard.vue';
+import TestersList from '../../../components/TestersList.vue';
 
 const store = useStore();
 const activeLesson = computed<LessonModel | null>(() => store.getters[lessonDetailsGetters.getLessonDetails]);
@@ -127,7 +127,7 @@ const onDragEnd = () => {
 
 watch(activeLesson, (newActiveLesson) => {
   if (!newActiveLesson) return;
-  draggableLessonExamples.value = newActiveLesson.lessonExamples;
+  draggableLessonExamples.value = [...newActiveLesson.lessonExamples];
 });
 </script>
 

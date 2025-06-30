@@ -62,7 +62,7 @@
           </v-col>
         </v-row>
         <v-divider class="mb-4"></v-divider>
-        <CourseTestersCard />
+        <TestersList />
       </v-card>
     </v-col>
     <v-col cols="12" lg="7">
@@ -93,7 +93,7 @@ import draggable from 'vuedraggable';
 import { ref, computed, watch } from 'vue';
 import EmptyView from './EmptyView.vue';
 import CourseLessonCard from './CourseLessonCard.vue';
-import CourseTestersCard from './CourseTestersCard.vue';
+import TestersList from '../../../components/TestersList.vue';
 import CourseModel from '../models/Course';
 import { useStore } from 'vuex';
 import { courseDetailsGetters } from '../store';

@@ -13,15 +13,6 @@ export const mutations = {
   }),
   setCourseLessons: createMutation((state, lessons: LessonModel[]) => {
     state.courseLessons = lessons;
-  }),
-  setSelectedLessonId: createMutation((state, lessonId: string | null) => {
-    state.selectedLessonId = lessonId;
-    if (!lessonId) {
-      return (state.lessonExamples = []);
-    }
-    const lesson = state.courseLessons.find((lesson) => lesson.lessonId === lessonId);
-    if (!lesson) return;
-    state.lessonExamples = lesson.lessonExamples;
   })
 };
 

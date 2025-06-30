@@ -49,7 +49,7 @@ import { platformActions } from '../store';
 import { useStore } from 'vuex';
 import { lessonsStatistics } from '../dummyData/stats';
 import { onMounted } from 'vue';
-import AddLessonDialog from '../components/AddLessonDialog.vue';
+import AddLessonDialog from '../components/lessons/AddLessonDialog.vue';
 import Pagination from '../components/Pagination.vue';
 import { ActiveView } from '../store/types';
 

@@ -2,21 +2,15 @@
   <v-card class="pa-4 h-full d-flex flex-column align-center justify-center" color="grey-lighten-5" border rounded="lg">
     <h4 class="header">Jeszcze tu nic nie ma!</h4>
     <p class="description">Dodaj swoją pierwszą lekcję, aby rozpocząć budowanie kursu. To proste i szybkie!</p>
-    <v-btn class="confirm-btn" rounded="xl">Stwórz pierwszy kurs</v-btn>
+    <AddLessonDialog />
   </v-card>
 </template>
 
-<script setup></script>
+<script setup>
+import AddLessonDialog from '~app/modules/platform/components/lessons/AddLessonDialog.vue';
+</script>
 
 <style lang="scss" scoped>
-.confirm-btn {
-  background-color: #fe5b14;
-  font-weight: 700;
-  font-size: 14px;
-  color: #fff;
-  text-transform: initial;
-}
-
 .header {
   color: #161d40;
   margin-bottom: 12px;

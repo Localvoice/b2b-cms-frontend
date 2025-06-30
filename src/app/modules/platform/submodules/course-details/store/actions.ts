@@ -16,16 +16,7 @@ export const actions = {
     commit(coursesListMutations.setActiveCourse.local, courseDetails ? courseDetails : null);
 
     const courseLessons = lessons.filter((lesson) => lesson.courseId === courseId);
-    console.log(courseLessons);
     commit(coursesListMutations.setCourseLessons.local, courseLessons);
-
-    // lessonListApi.getLessonsList().then((data) => {
-    //   console.log('data from chatbots', data);
-    //   commit(lessonListMutations.setLessonList.local, data);
-    // });
-  }),
-  selectLessonId: createAction(({ commit }, { lessonId }) => {
-    commit(coursesListMutations.setSelectedLessonId.local, lessonId);
   })
 };
 

@@ -36,19 +36,29 @@
 
 <script setup lang="ts">
 import draggable from 'vuedraggable';
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue';
 import CourseLessonCard from './CourseLessonCard.vue';
-import LessonExample from '../../lessons/components/LessonExample.vue';
+import LessonExample from '../../../components/lessons/LessonExample.vue';
 import { useStore } from 'vuex';
-import { courseDetailsActions, courseDetailsGetters } from '../store';
+import { courseDetailsGetters } from '../store';
 import LessonModel from '../models/Lesson';
 import LessonExampleModel from '../models/LessonExample';
+import { useRoute, useRouter } from 'vue-router';
 
 const store = useStore();
-const selectLessonId = (lessonId: string) => store.dispatch(courseDetailsActions.selectLessonId, { lessonId });
+const route = useRoute();
+const router = useRouter();
 
 const courseLessons = computed<LessonModel[]>(() => store.getters[courseDetailsGetters.getCourseLessons]);
-const lessonExamples = computed<LessonExampleModel[]>(() => store.getters[courseDetailsGetters.getLessonExamples]);
+const lessonExamples = computed<LessonExampleModel[]>(() => {
+  const lessonId = route.query.lessonId as string;
+  if (!lessonId) return [];
+  const lesson = courseLessons.value.find((lesson) => lesson.lessonId === lessonId);
+  if (lesson) {
+    return lesson.lessonExamples;
+  }
+  return [];
+});
 
 const draggableLessons = ref<LessonModel[]>([...courseLessons.value]);
 const draggableLessonsExamples = ref<LessonExampleModel[]>([...lessonExamples.value]);
@@ -66,10 +76,20 @@ watch(lessonExamples, (newLessonExamples) => {
 });
 
 onMounted(() => {
-  const firstLessonId = courseLessons.value[0].lessonId;
-  if (firstLessonId) {
-    selectLessonId(firstLessonId);
-  }
+  if (route.query.lessonId) return;
+
+  const initialLessonId = courseLessons.value[0].lessonId;
+  router.replace({
+    query: {
+      ...route.query,
+      lessonId: initialLessonId
+    }
+  });
+});
+
+onBeforeUnmount(() => {
+  const { lessonId, tab, ...rest } = route.query;
+  router.replace({ query: rest });
 });
 </script>
 

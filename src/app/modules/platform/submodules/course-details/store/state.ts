@@ -9,8 +9,6 @@ export const NAMESPACE = 'courseDetails';
 export interface CourseDetailsState {
   activeCourse: CourseModel | null;
   courseLessons: LessonModel[];
-  selectedLessonId: string | null;
-  lessonExamples: LessonExample[];
 }
 
 export const CoursesListEntityAdapter: EntityAdapter<CourseModel> = createEntityAdapter<CourseModel>();
@@ -18,8 +16,6 @@ export const CoursesListEntityAdapter: EntityAdapter<CourseModel> = createEntity
 export function initialState(): CourseDetailsState {
   return {
     activeCourse: null,
-    courseLessons: [],
-    selectedLessonId: null,
-    lessonExamples: []
+    courseLessons: []
   };
 }

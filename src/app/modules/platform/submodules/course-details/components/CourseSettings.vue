@@ -188,10 +188,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, reactive } from 'vue';
+import { ref, reactive } from 'vue';
 import { useStore } from 'vuex';
-import CourseImageLarge from '../../../../assets/images/course-image-large.png';
-import { courseDetailsGetters } from '../store';
 
 const form = reactive({
   title: '',
@@ -217,7 +215,7 @@ const versionRules = {
 const store = useStore();
 
 const fileInput = ref<HTMLInputElement | null>(null);
-const imageUrl = ref<string | null>(CourseImageLarge);
+const imageUrl = ref<string>('/images/course-icon-block.png');
 const category = ref('');
 const enteredCategory = ref<string | null>(null);
 
@@ -245,8 +243,6 @@ const addCategory = (e: Event) => {
 const resetCategory = () => {
   enteredCategory.value = null;
 };
-
-const isEditing = computed(() => store.getters[courseDetailsGetters.getEditingState]);
 </script>
 
 <style lang="scss">

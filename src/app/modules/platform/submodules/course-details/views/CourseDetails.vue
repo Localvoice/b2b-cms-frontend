@@ -4,7 +4,7 @@
       <v-col cols="auto">
         <div class="d-flex align-center">
           <router-link to="/app/courses">
-            <v-btn class="outlined-btn mr-4" rounded="lg" variant="outlined" icon="mdi-arrow-left"></v-btn>
+            <v-btn class="go-back-btn mr-4" rounded="lg" variant="outlined" icon="mdi-arrow-left"></v-btn>
           </router-link>
           <h4 class="course-title mb-0">{{ activeCourse.title }}</h4>
         </div>
@@ -45,9 +45,9 @@
 <script setup lang="ts">
 import Card from '~app/shared/base/Card.vue';
 import { useRoute, useRouter } from 'vue-router';
-import { ref, watch, onMounted, computed, onUnmounted } from 'vue';
+import { ref, watch, onMounted, computed } from 'vue';
 import { useStore } from 'vuex';
-import { courseDetailsActions, courseDetailsGetters } from '~app/modules/courses/store';
+import { courseDetailsActions, courseDetailsGetters } from '../store';
 import CourseContent from '../components/CourseContent.vue';
 import CourseSettings from '../components/CourseSettings.vue';
 import CourseExamples from '../components/CourseExamples.vue';
@@ -59,14 +59,12 @@ const router = useRouter();
 const store = useStore();
 
 const fetchCourseDetails = (courseId: string) => store.dispatch(courseDetailsActions.fetchCourseDetails, { courseId });
-const selectLessonId = (lessonId: string | null) => store.dispatch(courseDetailsActions.selectLessonId, { lessonId });
 const activeCourse = computed<CourseModel | null>(() => store.getters[courseDetailsGetters.getCourseDetails]);
-const selectedLessonId = computed<string | null>(() => store.getters[courseDetailsGetters.getSelectedLessonId]);
 
 const activeTab = ref(route.query.tab || 'lessons');
 
 const onTabChange = (newTab: unknown) => {
-  if (typeof newTab === 'string' || typeof newTab === 'number') {
+  if (typeof newTab === 'string') {
     router.replace({
       query: {
         ...route.query,
@@ -85,27 +83,11 @@ watch(
   }
 );
 
-watch(activeTab, (newTab) => {
-  if (newTab !== 'examples') {
-    selectLessonId(null);
-  }
-});
-
-watch(selectedLessonId, (newLessonId) => {
-  if (newLessonId !== null) {
-    activeTab.value = 'examples';
-  }
-});
-
 onMounted(() => {
   const courseId = route.params.courseId;
   if (!Array.isArray(courseId)) {
     fetchCourseDetails(courseId);
   }
-});
-
-onUnmounted(() => {
-  selectLessonId(null);
 });
 </script>
 
@@ -117,7 +99,7 @@ onUnmounted(() => {
   color: #fff;
   text-transform: initial;
 }
-.outlined-btn {
+.go-back-btn {
   border-color: #f2f0ff;
   color: #fe5b14;
 }

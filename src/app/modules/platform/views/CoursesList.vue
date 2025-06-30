@@ -44,7 +44,7 @@ import Card from '~app/shared/base/Card.vue';
 import Search from '~app/shared/base/Search.vue';
 import StatsTile from '~app/shared/stats/StatsTile.vue';
 import FiltersDialog from '../components/FiltersDialog.vue';
-import AddCourseDialog from '../components/AddCourseDialog.vue';
+import AddCourseDialog from '../components/courses/AddCourseDialog.vue';
 import Table from '../components/Table.vue';
 import Pagination from '../components/Pagination.vue';
 import { platformActions } from '../store';

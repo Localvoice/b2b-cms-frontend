@@ -45,14 +45,8 @@
 
 <script setup lang="ts">
 import StatusBox from '~app/shared/stats/StatusBox.vue';
-import { useStore } from 'vuex';
 import { computed } from 'vue';
-import { courseDetailsActions, courseDetailsGetters } from '../store';
-
-const store = useStore();
-
-const selectedLessonId = computed<string | null>(() => store.getters[courseDetailsGetters.getSelectedLessonId]);
-const selectLessonId = (lessonId: string) => store.dispatch(courseDetailsActions.selectLessonId, { lessonId });
+import { useRoute, useRouter } from 'vue-router';
 
 defineProps<{
   lessonId: string;
@@ -60,6 +54,24 @@ defineProps<{
   title: string;
   status: string;
 }>();
+
+const route = useRoute();
+const router = useRouter();
+
+const selectedLessonId = computed<string | null>(() => {
+  const id = route.query.lessonId;
+  return typeof id === 'string' ? id : null;
+});
+
+const selectLessonId = (lessonId: string) => {
+  router.replace({
+    query: {
+      ...route.query,
+      tab: 'examples',
+      lessonId
+    }
+  });
+};
 </script>
 
 <style lang="scss" scoped>
