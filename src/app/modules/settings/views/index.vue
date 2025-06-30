@@ -13,6 +13,7 @@
     <v-tabs class="tabs mb-12 w-full" v-model="activeTab" @update:modelValue="onTabChange">
       <v-tab value="basic-informations">Podstawowe informacje</v-tab>
       <v-tab value="avatar">Awatar</v-tab>
+      <v-tab value="testers">Lista testerów</v-tab>
     </v-tabs>
     <v-row justify="center">
       <v-col cols="12" xl="6">
@@ -28,6 +29,9 @@
             <AvatarForm />
           </v-card>
         </div>
+        <div class="w-full" v-if="activeTab === 'testers'">
+          <TestersForm />
+        </div>
       </v-col>
     </v-row>
   </Card>
@@ -40,6 +44,7 @@ import { useStore } from 'vuex';
 import { userDataActions, userDataGetters } from '../store';
 import BasicInfoForm from '../components/BasicInfoForm.vue';
 import AvatarForm from '../components/AvatarForm.vue';
+import TestersForm from '../components/TestersForm.vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
@@ -59,13 +64,15 @@ const handleEditingClick = () => {
   toggleEditing();
 };
 
-const onTabChange = (newTab: string) => {
-  router.replace({
-    query: {
-      ...route.query,
-      tab: newTab
-    }
-  });
+const onTabChange = (newTab: unknown) => {
+  if (typeof newTab === 'string') {
+    router.replace({
+      query: {
+        ...route.query,
+        tab: newTab
+      }
+    });
+  }
 };
 
 watch(
