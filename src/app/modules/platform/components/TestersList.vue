@@ -1,5 +1,5 @@
 <template>
-  <v-card class="pa-4" border rounded="lg">
+  <v-card elevation="0" class="pa-4" border rounded="lg">
     <v-row align="center" justify="space-between" class="w-full">
       <v-col cols="auto">
         <p class="muted-text">LISTA TESTERÓW</p>

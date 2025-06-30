@@ -23,7 +23,7 @@
     </template>
 
     <template v-slot:default="{ isActive }">
-      <v-card class="dialog-card pa-8">
+      <v-card elevation="0" class="dialog-card pa-8">
         <form @submit.prevent="applyFilters">
           <v-row class="w-full mb-8" justify="space-between" align="center">
             <v-col cols="auto" class="pa-0">

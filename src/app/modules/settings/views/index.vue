@@ -18,13 +18,13 @@
     <v-row justify="center">
       <v-col cols="12" xl="6">
         <div class="w-full" v-if="activeTab === 'basic-informations'">
-          <v-card class="pa-4" color="grey-lighten-5" border rounded="lg">
+          <v-card elevation="0" class="pa-4" color="grey-lighten-5" border rounded="lg">
             <p class="card-label mb-6">PODSTAWOWE INFORMACJE</p>
             <BasicInfoForm />
           </v-card>
         </div>
         <div class="w-full" v-if="activeTab === 'avatar'">
-          <v-card class="pa-4" color="grey-lighten-5" border rounded="lg">
+          <v-card elevation="0" class="pa-4" color="grey-lighten-5" border rounded="lg">
             <p class="card-label mb-6">AWATAR</p>
             <AvatarForm />
           </v-card>

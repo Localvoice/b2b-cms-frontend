@@ -1,5 +1,11 @@
 <template>
-  <v-card class="pa-4 h-full d-flex flex-column align-center justify-center" color="grey-lighten-5" border rounded="lg">
+  <v-card
+    elevation="0"
+    class="pa-4 h-full d-flex flex-column align-center justify-center"
+    color="grey-lighten-5"
+    border
+    rounded="lg"
+  >
     <h4 class="header">Jeszcze tu nic nie ma!</h4>
     <p class="description">Dodaj pierwszy przykład do swojej lekcji.</p>
     <v-btn class="confirm-btn" rounded="xl">Dodaj pierwszy przykład</v-btn>

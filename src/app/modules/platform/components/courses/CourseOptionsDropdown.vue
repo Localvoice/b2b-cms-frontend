@@ -20,7 +20,7 @@
             >
           </template>
           <template v-slot:default="{ isActive }">
-            <v-card class="dialog-card pa-8">
+            <v-card elevation="0" class="dialog-card pa-8">
               <v-row class="w-full mb-4" justify="space-between" align="center">
                 <v-col cols="auto" class="pa-0">
                   <v-card-title class="dialog-title">Czy na pewno?</v-card-title>

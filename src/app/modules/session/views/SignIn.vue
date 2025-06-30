@@ -2,7 +2,7 @@
   <div class="page-wrap">
     <div class="session-form-hold">
       <v-form :submit="loginUser">
-        <v-card class="card">
+        <v-card elevation="0" class="card">
           <v-card-title class="card-title">Zaloguj się</v-card-title>
           <v-text-field
             v-model="email"

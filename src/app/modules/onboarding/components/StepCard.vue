@@ -1,5 +1,5 @@
 <template>
-  <v-card rounded="xl" :class="['step-card pa-4', active && 'active']" @click="onClick">
+  <v-card elevation="0" rounded="xl" :class="['step-card pa-4', active && 'active']" @click="onClick">
     <v-row class="mb-2" align="center" justify="space-between">
       <v-col cols="auto">
         <div class="icon-container">

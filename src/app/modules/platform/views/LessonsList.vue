@@ -11,7 +11,7 @@
         />
       </v-col>
       <v-col cols="12" md="6" lg="3">
-        <v-card class="no-shadow pa-4" border rounded="lg">
+        <v-card elevation="0" class="no-shadow pa-4" border rounded="lg">
           <p class="stat-header mb-4">Najpopularniejsza lekcja</p>
           <div class="d-flex align-center w-full">
             <img class="mr-2" src="/images/course-icon-block.png" alt="course-icon" />

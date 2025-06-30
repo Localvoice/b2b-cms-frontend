@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col cols="12" lg="3">
-      <v-card class="pa-8 h-full" color="grey-lighten-5" border rounded="lg">
+      <v-card class="pa-8 h-full" elevation="0" color="grey-lighten-5" border rounded="lg">
         <h5 class="mb-8">Lekcje w kursie</h5>
         <draggable :list="draggableLessons" handle="#drag-handle-lessons" item-key="lessonId">
           <template #item="{ element }">
@@ -16,7 +16,7 @@
       </v-card>
     </v-col>
     <v-col cols="12" lg="9">
-      <v-card class="pa-8 h-full" color="grey-lighten-5" border rounded="lg">
+      <v-card class="pa-8 h-full" elevation="0" color="grey-lighten-5" border rounded="lg">
         <h5>Przykłady w kursie</h5>
         <p class="muted-text mb-8">{{ draggableLessonsExamples.length }} przykładów</p>
         <draggable :list="draggableLessonsExamples" handle="#drag-handle-examples" item-key="phrase">

@@ -27,7 +27,7 @@
       </v-row>
       <v-row class="w-full mb-8">
         <v-col cols="12" lg="8">
-          <v-card class="pa-4 w-full h-full" border rounded="lg">
+          <v-card elevation="0" class="pa-4 w-full h-full" border rounded="lg">
             <v-row class="w-full mb-8" justify="space-between" align="center">
               <v-col cols="auto">
                 <h5>Statystyki</h5>
@@ -48,7 +48,7 @@
           </v-card>
         </v-col>
         <v-col cols="12" lg="4">
-          <v-card class="pa-4 w-full h-full d-flex flex-column" border rounded="lg">
+          <v-card elevation="0" class="pa-4 w-full h-full d-flex flex-column" border rounded="lg">
             <p class="muted-text mb-4">ROZKŁAD PRZYCHODU</p>
             <h5 class="mb-4">Kursy przynoszą większy przychód niż pojedyncze lekcje</h5>
             <p class="description-text mb-8">

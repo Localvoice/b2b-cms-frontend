@@ -2,9 +2,9 @@
   <v-row>
     <v-col cols="12" lg="5">
       <Card>
-        <v-card class="pa-4" color="grey-lighten-5" border rounded="lg">
+        <v-card elevation="0" class="pa-4" color="grey-lighten-5" border rounded="lg">
           <h5 class="mb-8">Informacje o lekcji</h5>
-          <v-card v-if="activeLesson" class="mb-8 pa-4" border rounded="lg">
+          <v-card elevation="0" v-if="activeLesson" class="mb-8 pa-4" border rounded="lg">
             <v-row class="w-full" align="center">
               <v-col cols="12" lg="3">
                 <img class="h-full object-cover" src="/images/placeholder-course-image.png" alt="course-image" />
@@ -20,7 +20,7 @@
           </v-card>
           <v-row class="w-full mb-4">
             <v-col cols="12" lg="6" class="pr-0">
-              <v-card class="pa-4" border rounded="lg">
+              <v-card elevation="0" class="pa-4" border rounded="lg">
                 <div class="d-flex align-center">
                   <img class="mr-4" src="/images/money-icon-block.png" alt="money-icon" />
                   <div>
@@ -31,7 +31,7 @@
               </v-card>
             </v-col>
             <v-col cols="12" lg="6" class="pr-0">
-              <v-card class="pa-4" border rounded="lg">
+              <v-card elevation="0" class="pa-4" border rounded="lg">
                 <div class="d-flex align-center">
                   <img class="mr-4" src="/images/students-icon-block.png" alt="lessons-icon" />
                   <div>
@@ -42,7 +42,7 @@
               </v-card>
             </v-col>
             <v-col cols="12" lg="6" class="pr-0">
-              <v-card class="pa-4" border rounded="lg">
+              <v-card elevation="0" class="pa-4" border rounded="lg">
                 <div class="d-flex align-center">
                   <img class="mr-4" src="/images/date-icon-block.png" alt="date-icon" />
                   <div>
@@ -53,7 +53,7 @@
               </v-card>
             </v-col>
             <v-col cols="12" lg="6" class="pr-0">
-              <v-card class="pa-4" border rounded="lg">
+              <v-card elevation="0" class="pa-4" border rounded="lg">
                 <div class="d-flex align-center">
                   <img class="mr-4" src="/images/changes-icon-block.png" alt="last-change-icon" />
                   <div>
@@ -71,7 +71,7 @@
     </v-col>
     <v-col cols="12" lg="7">
       <div v-if="activeLesson && activeLesson.lessonExamples.length > 0">
-        <v-card class="pa-4" color="grey-lighten-5" border rounded="lg">
+        <v-card elevation="0" class="pa-4" color="grey-lighten-5" border rounded="lg">
           <v-row class="mb-8" justify="space-between" align="center">
             <v-col cols="auto">
               <h5 class="mb-2">Przykłady w lekcji</h5>

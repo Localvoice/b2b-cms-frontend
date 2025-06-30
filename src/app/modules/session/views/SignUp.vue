@@ -2,7 +2,7 @@
   <div class="page-wrap">
     <div class="session-form-hold">
       <v-form ref="formRef" :submit="submitForm">
-        <v-card class="card">
+        <v-card elevation="0" class="card">
           <v-card-title class="card-title">Zarejestruj się</v-card-title>
           <div v-if="step === 1">
             <v-text-field

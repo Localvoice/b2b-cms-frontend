@@ -1,7 +1,7 @@
 <template>
   <v-row class="w-full">
     <v-col cols="12" md="4" lg="3">
-      <v-card class="pa-8" color="grey-lighten-5" border rounded="lg">
+      <v-card elevation="0" class="pa-8" color="grey-lighten-5" border rounded="lg">
         <p class="card-label mb-4">IKONA KURSU</p>
         <img class="w-full mb-4" :src="imageUrl" alt="course-image" />
         <v-btn @click="triggerFileInput" class="secondary-btn w-full" rounded>Zmień zdjęcie</v-btn>
@@ -9,7 +9,7 @@
       </v-card>
     </v-col>
     <v-col cols="12" md="8" lg="9">
-      <v-card class="pa-8" color="grey-lighten-5" border rounded="lg">
+      <v-card elevation="0" class="pa-8" color="grey-lighten-5" border rounded="lg">
         <v-row class="mb-4" align="center" justify="space-between">
           <v-col cols="auto">
             <p class="card-label">USTAWIENIA KURSU</p>
@@ -50,6 +50,8 @@
                 <v-chip
                   :color="form.difficultyLevel === 'a1' ? 'purple' : 'white'"
                   :variant="form.difficultyLevel === 'a1' ? 'tonal' : 'elevated'"
+                  elevation="0"
+                  border
                 >
                   <v-radio
                     :color="form.difficultyLevel === 'a1' ? 'purple' : 'gray'"
@@ -64,6 +66,8 @@
                 <v-chip
                   :color="form.difficultyLevel === 'a2' ? 'purple' : 'white'"
                   :variant="form.difficultyLevel === 'a2' ? 'tonal' : 'elevated'"
+                  elevation="0"
+                  border
                 >
                   <v-radio
                     :color="form.difficultyLevel === 'a2' ? 'purple' : 'gray'"
@@ -78,6 +82,8 @@
                 <v-chip
                   :color="form.difficultyLevel === 'b1' ? 'purple' : 'white'"
                   :variant="form.difficultyLevel === 'b1' ? 'tonal' : 'elevated'"
+                  elevation="0"
+                  border
                 >
                   <v-radio
                     :color="form.difficultyLevel === 'b1' ? 'purple' : 'gray'"
@@ -92,6 +98,8 @@
                 <v-chip
                   :color="form.difficultyLevel === 'b2' ? 'purple' : 'white'"
                   :variant="form.difficultyLevel === 'b2' ? 'tonal' : 'elevated'"
+                  elevation="0"
+                  border
                 >
                   <v-radio
                     :color="form.difficultyLevel === 'b2' ? 'purple' : 'gray'"
@@ -106,6 +114,8 @@
                 <v-chip
                   :color="form.difficultyLevel === 'c1' ? 'purple' : 'white'"
                   :variant="form.difficultyLevel === 'c1' ? 'tonal' : 'elevated'"
+                  elevation="0"
+                  border
                 >
                   <v-radio
                     :color="form.difficultyLevel === 'c1' ? 'purple' : 'gray'"
@@ -120,6 +130,8 @@
                 <v-chip
                   :color="form.difficultyLevel === 'c2' ? 'purple' : 'white'"
                   :variant="form.difficultyLevel === 'c2' ? 'tonal' : 'elevated'"
+                  elevation="0"
+                  border
                 >
                   <v-radio
                     :color="form.difficultyLevel === 'c2' ? 'purple' : 'gray'"

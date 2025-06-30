@@ -3,6 +3,7 @@
   <v-row class="w-full" v-if="!uploadAvatar">
     <v-col cols="12" md="6" :key="set.id" v-for="set in avatarSets">
       <v-card
+        elevation="0"
         :class="[
           'avatar-set-card d-flex justify-space-between pt-4 px-8',
           set.id === selectedAvatarSet && 'card-active'
@@ -19,7 +20,7 @@
   </v-row>
   <v-row class="w-full" v-if="uploadAvatar">
     <v-col cols="12" md="4">
-      <v-card class="upload-card pa-8" rounded="lg" @click="triggerFileInput('dialogue')">
+      <v-card elevation="0" class="upload-card pa-8" rounded="lg" @click="triggerFileInput('dialogue')">
         <img v-if="uploadImages.dialogue" :src="uploadImages.dialogue" alt="dialogue-avatar" />
         <template v-if="!uploadImages.dialogue">
           <v-icon class="upload-icon" icon="mdi-tray-arrow-up"></v-icon>
@@ -35,7 +36,7 @@
       </v-card>
     </v-col>
     <v-col cols="12" md="4">
-      <v-card class="upload-card pa-8" rounded="lg" @click="triggerFileInput('mistake')">
+      <v-card elevation="0" class="upload-card pa-8" rounded="lg" @click="triggerFileInput('mistake')">
         <img v-if="uploadImages.mistake" :src="uploadImages.mistake" alt="mistake-avatar" />
         <template v-if="!uploadImages.mistake">
           <v-icon class="upload-icon" icon="mdi-tray-arrow-up"></v-icon>
@@ -51,7 +52,7 @@
       </v-card>
     </v-col>
     <v-col cols="12" md="4">
-      <v-card class="upload-card pa-8" rounded="lg" @click="triggerFileInput('congratulations')">
+      <v-card elevation="0" class="upload-card pa-8" rounded="lg" @click="triggerFileInput('congratulations')">
         <img v-if="uploadImages.congratulations" :src="uploadImages.congratulations" alt="congratulations-avatar" />
         <template v-if="!uploadImages.congratulations">
           <v-icon class="upload-icon" icon="mdi-tray-arrow-up"></v-icon>

@@ -1,7 +1,7 @@
 <template>
   <v-row class="w-full">
     <v-col cols="12" md="4" lg="3">
-      <v-card class="pa-8" color="grey-lighten-5" border rounded="lg">
+      <v-card elevation="0" class="pa-8" color="grey-lighten-5" border rounded="lg">
         <p class="card-label mb-4">IKONA LEKCJI</p>
         <img class="w-full mb-4" :src="imageUrl" alt="course-image" />
         <v-btn @click="triggerFileInput" class="secondary-btn w-full" rounded>Zmień zdjęcie</v-btn>
@@ -9,7 +9,7 @@
       </v-card>
     </v-col>
     <v-col cols="12" md="8" lg="9">
-      <v-card class="pa-8" color="grey-lighten-5" border rounded="lg">
+      <v-card elevation="0" class="pa-8" color="grey-lighten-5" border rounded="lg">
         <v-row class="mb-4" align="center" justify="space-between">
           <v-col cols="auto">
             <p class="card-label">USTAWIENIA LEKCJI</p>

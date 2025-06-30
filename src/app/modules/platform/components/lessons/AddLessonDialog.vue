@@ -5,7 +5,7 @@
     </template>
 
     <template v-slot:default="{ isActive }">
-      <v-card class="dialog-card pa-8">
+      <v-card elevation="0" class="dialog-card pa-8">
         <v-row class="w-full mb-8" justify="space-between" align="center">
           <v-col cols="auto" class="pa-0">
             <v-card-title class="dialog-title">Nowa lekcja</v-card-title>
@@ -51,6 +51,8 @@
                 <v-chip
                   :color="difficultyLevel === 'a1' ? 'purple' : 'white'"
                   :variant="difficultyLevel === 'a1' ? 'tonal' : 'elevated'"
+                  border
+                  elevation="0"
                 >
                   <v-radio
                     :color="difficultyLevel === 'a1' ? 'purple' : 'gray'"
@@ -65,6 +67,8 @@
                 <v-chip
                   :color="difficultyLevel === 'a2' ? 'purple' : 'white'"
                   :variant="difficultyLevel === 'a2' ? 'tonal' : 'elevated'"
+                  border
+                  elevation="0"
                 >
                   <v-radio
                     :color="difficultyLevel === 'a2' ? 'purple' : 'gray'"
@@ -79,6 +83,8 @@
                 <v-chip
                   :color="difficultyLevel === 'b1' ? 'purple' : 'white'"
                   :variant="difficultyLevel === 'b1' ? 'tonal' : 'elevated'"
+                  border
+                  elevation="0"
                 >
                   <v-radio
                     :color="difficultyLevel === 'b1' ? 'purple' : 'gray'"
@@ -93,6 +99,8 @@
                 <v-chip
                   :color="difficultyLevel === 'b2' ? 'purple' : 'white'"
                   :variant="difficultyLevel === 'b2' ? 'tonal' : 'elevated'"
+                  border
+                  elevation="0"
                 >
                   <v-radio
                     :color="difficultyLevel === 'b2' ? 'purple' : 'gray'"
@@ -107,6 +115,8 @@
                 <v-chip
                   :color="difficultyLevel === 'c1' ? 'purple' : 'white'"
                   :variant="difficultyLevel === 'c1' ? 'tonal' : 'elevated'"
+                  border
+                  elevation="0"
                 >
                   <v-radio
                     :color="difficultyLevel === 'c1' ? 'purple' : 'gray'"
@@ -121,6 +131,8 @@
                 <v-chip
                   :color="difficultyLevel === 'c2' ? 'purple' : 'white'"
                   :variant="difficultyLevel === 'c2' ? 'tonal' : 'elevated'"
+                  border
+                  elevation="0"
                 >
                   <v-radio
                     :color="difficultyLevel === 'c2' ? 'purple' : 'gray'"

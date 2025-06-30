@@ -1,5 +1,6 @@
 <template>
   <v-card
+    elevation="0"
     :class="[selectedLessonId === lessonId ? 'card-selected' : '', 'cursor-pointer pa-4 mb-4']"
     rounded="lg"
     border

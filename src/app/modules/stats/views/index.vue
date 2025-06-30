@@ -28,7 +28,7 @@
     </v-row>
     <v-row>
       <v-col cols="12" lg="7">
-        <v-card class="pa-4 h-full d-flex flex-column" border rounded="lg">
+        <v-card elevation="0" class="pa-4 h-full d-flex flex-column" border rounded="lg">
           <div class="d-flex align-center justify-space-between">
             <div class="mr-4">
               <p class="muted-text mb-1">Łączny przychód w tym miesiącu</p>
@@ -42,7 +42,7 @@
         </v-card>
       </v-col>
       <v-col cols="12" lg="5">
-        <v-card class="pa-4 w-full mb-4" border rounded="lg">
+        <v-card elevation="0" class="pa-4 w-full mb-4" border rounded="lg">
           <v-row align="center" class="w-full">
             <v-col cols="12" lg="7">
               <p class="muted-text mb-2">Typy lekcji</p>
@@ -68,7 +68,7 @@
             </v-col>
           </v-row>
         </v-card>
-        <v-card class="no-shadow w-full pa-4 mb-4" border rounded="lg">
+        <v-card elevation="0" class="no-shadow w-full pa-4 mb-4" border rounded="lg">
           <v-row align="center" class="w-full">
             <v-col cols="auto" lg="3">
               <img class="mr-4" :src="CourseImage" alt="course-icon" />
@@ -85,7 +85,7 @@
             </v-col>
           </v-row>
         </v-card>
-        <v-card class="no-shadow w-full pa-4" border rounded="lg">
+        <v-card elevation="0" class="no-shadow w-full pa-4" border rounded="lg">
           <v-row align="center" class="w-full">
             <v-col cols="auto" lg="3">
               <img class="mr-4" :src="CourseImage" alt="course-icon" />

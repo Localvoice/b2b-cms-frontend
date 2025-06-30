@@ -11,7 +11,7 @@
   </v-row>
   <v-row class="mb-8">
     <v-col cols="12" lg="8">
-      <v-card class="pa-4 h-full d-flex flex-column" border rounded="lg">
+      <v-card elevation="0" class="pa-4 h-full d-flex flex-column" border rounded="lg">
         <v-row align="center" justify="space-between" class="mb-8">
           <v-col cols="auto">
             <h5>Ilość studentów</h5>
@@ -32,7 +32,7 @@
       </v-card>
     </v-col>
     <v-col cols="12" lg="4">
-      <v-card class="pa-4 h-full d-flex flex-column" border rounded="lg">
+      <v-card elevation="0" class="pa-4 h-full d-flex flex-column" border rounded="lg">
         <p class="muted-text mb-4">NAJPOPULARNIEJSZE LEKCJE W KURSIE</p>
         <div class="d-flex align-start justify-content-between w-full mb-4">
           <v-row>

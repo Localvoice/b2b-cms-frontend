@@ -1,5 +1,5 @@
 <template>
-  <v-card class="pa-4" color="grey-lighten-5" border rounded="lg">
+  <v-card class="pa-4" elevation="0" color="grey-lighten-5" border rounded="lg">
     <v-row>
       <v-col cols="12" sm="6">
         <p class="label mb-1">Nazwa firmy</p>

@@ -9,7 +9,7 @@
       />
     </v-col>
   </v-row>
-  <v-card class="pa-4 h-full d-flex flex-column" border rounded="lg">
+  <v-card elevation="0" class="pa-4 h-full d-flex flex-column" border rounded="lg">
     <v-row align="center" justify="space-between" class="mb-8">
       <v-col cols="auto">
         <h5>Ilość studentów</h5>

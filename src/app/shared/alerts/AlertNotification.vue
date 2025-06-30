@@ -1,5 +1,5 @@
 <template>
-  <v-card rounded="lg" class="mb-8 pa-4 w-full position-relative">
+  <v-card rounded="lg" border elevation="0" class="mb-8 pa-4 w-full position-relative">
     <v-row align="center" justify="space-between">
       <div class="gradient-container"></div>
       <v-col cols="auto" class="column">

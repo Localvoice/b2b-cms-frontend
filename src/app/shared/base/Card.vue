@@ -1,5 +1,6 @@
 <template>
   <v-card
+    elevation="0"
     class="pa-8 ml-auto mr-auto"
     :color="layoutState.layoutMode"
     :dark="layoutState.isDarkMode"

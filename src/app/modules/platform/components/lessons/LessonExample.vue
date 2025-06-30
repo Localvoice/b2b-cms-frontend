@@ -4,7 +4,7 @@
       <v-icon id="drag-handle-examples" icon="mdi-drag-vertical" class="cursor-grab mb-4"></v-icon>
       <v-icon icon="mdi-trash-can-outline" class="cursor-pointer text-error" style="font-size: 18px"></v-icon>
     </div>
-    <v-card class="pa-4 flex-1" rounded="lg" border>
+    <v-card elevation="0" class="pa-4 flex-1" rounded="lg" border>
       <div class="d-flex align-center mb-6">
         <v-chip class="lesson-chip mr-2" color="purple" variant="tonal">{{ index + 1 }}</v-chip>
         <p class="muted-text">Wymów zdanie</p>

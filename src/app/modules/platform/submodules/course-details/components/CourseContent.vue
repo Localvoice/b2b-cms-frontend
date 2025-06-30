@@ -1,9 +1,9 @@
 <template>
   <v-row v-if="activeCourse">
     <v-col cols="12" lg="5">
-      <v-card class="pa-8" color="grey-lighten-5" border rounded="lg">
+      <v-card class="pa-8" elevation="0" color="grey-lighten-5" border rounded="lg">
         <h5 class="mb-8">Informacje o kursie</h5>
-        <v-card class="pa-4 mb-8" border rounded="lg">
+        <v-card class="pa-4 mb-8" elevation="0" border rounded="lg">
           <v-row class="w-full">
             <v-col cols="12" lg="3">
               <img class="h-full object-cover" src="/images/placeholder-course-image.png" alt="course-image" />
@@ -17,7 +17,7 @@
         </v-card>
         <v-row class="w-full mb-4">
           <v-col cols="12" lg="6" class="pr-0">
-            <v-card class="pa-4" border rounded="lg">
+            <v-card class="pa-4" elevation="0" border rounded="lg">
               <div class="d-flex align-center">
                 <img class="mr-4" src="/images/lessons-icon-block2.png" alt="lesson-icon" />
                 <div>
@@ -28,7 +28,7 @@
             </v-card>
           </v-col>
           <v-col cols="12" lg="6" class="pr-0">
-            <v-card class="pa-4" border rounded="lg">
+            <v-card class="pa-4" elevation="0" border rounded="lg">
               <div class="d-flex align-center">
                 <img class="mr-4" src="/images/students-icon-block.png" alt="students-icon" />
                 <div>
@@ -39,7 +39,7 @@
             </v-card>
           </v-col>
           <v-col cols="12" lg="6" class="pr-0">
-            <v-card class="pa-4" border rounded="lg">
+            <v-card class="pa-4" elevation="0" border rounded="lg">
               <div class="d-flex align-center">
                 <img class="mr-4" src="/images/date-icon-block.png" alt="date-icon" />
                 <div>
@@ -50,7 +50,7 @@
             </v-card>
           </v-col>
           <v-col cols="12" lg="6" class="pr-0">
-            <v-card class="pa-4" border rounded="lg">
+            <v-card class="pa-4" elevation="0" border rounded="lg">
               <div class="d-flex align-center">
                 <img class="mr-4" src="/images/changes-icon-block.png" alt="changes-icon" />
                 <div>
@@ -67,7 +67,7 @@
     </v-col>
     <v-col cols="12" lg="7">
       <div v-if="draggableLessons.length > 0">
-        <v-card class="pa-8 h-full" color="grey-lighten-5" border rounded="lg">
+        <v-card class="pa-8 h-full" elevation="0" color="grey-lighten-5" border rounded="lg">
           <h5 class="mb-8">Lekcje w kursie</h5>
           <draggable :list="draggableLessons" handle="#drag-handle-examples" item-key="id" @end="onDragEnd">
             <template #item="{ element }">

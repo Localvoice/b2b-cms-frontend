@@ -1,5 +1,5 @@
 <template>
-  <v-card class="no-shadow pa-4" border rounded="lg">
+  <v-card elevation="0" class="no-shadow pa-4" border rounded="lg">
     <p class="stat-header mb-4">{{ heading }}</p>
     <div class="d-flex align-center justify-space-between w-full">
       <div>
