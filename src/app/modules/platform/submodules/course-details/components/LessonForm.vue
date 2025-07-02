@@ -172,7 +172,17 @@
       :rules="[versionRules.required]"
       placeholder="Wpisz wersje"
       v-model="form.version"
+      class="mb-4"
     ></v-text-field>
+    <p class="card-label mb-4">INNE OPCJE</p>
+    <v-row align="center">
+      <v-col cols="auto">
+        <v-btn class="delete-btn" rounded>Usuń kurs</v-btn>
+      </v-col>
+      <v-col cols="auto">
+        <v-btn class="light-btn" color="purple" variant="tonal" rounded>Odepnij lekcję od kursu</v-btn>
+      </v-col>
+    </v-row>
   </form>
 </template>
 

@@ -49,7 +49,7 @@
           </v-row>
         </v-card>
         <v-row>
-          <v-col cols="12" lg="3">
+          <v-col cols="12" sm="6" xl="3">
             <v-card class="pa-4" elevation="0" border rounded="lg">
               <div class="d-flex align-center">
                 <img class="mr-4" src="/images/lessons-icon-block2.png" alt="lesson-icon" />
@@ -60,7 +60,7 @@
               </div>
             </v-card>
           </v-col>
-          <v-col cols="12" lg="3">
+          <v-col cols="12" sm="6" xl="3">
             <v-card class="pa-4" elevation="0" border rounded="lg">
               <div class="d-flex align-center">
                 <img class="mr-4" src="/images/students-icon-block.png" alt="students-icon" />
@@ -71,7 +71,7 @@
               </div>
             </v-card>
           </v-col>
-          <v-col cols="12" lg="3">
+          <v-col cols="12" sm="6" xl="3">
             <v-card class="pa-4" elevation="0" border rounded="lg">
               <div class="d-flex align-center">
                 <img class="mr-4" src="/images/date-icon-block.png" alt="date-icon" />
@@ -82,7 +82,7 @@
               </div>
             </v-card>
           </v-col>
-          <v-col cols="12" lg="3">
+          <v-col cols="12" sm="6" xl="3">
             <v-card class="pa-4" elevation="0" border rounded="lg">
               <div class="d-flex align-center">
                 <img class="mr-4" src="/images/changes-icon-block.png" alt="changes-icon" />
@@ -140,6 +140,7 @@ import LessonModel from '../models/Lesson';
 import { useStore } from 'vuex';
 import { lessonDetailsGetters } from '../store';
 import TestersList from '../../../components/TestersList.vue';
+import { proficiencyLevelMatcher } from '../../../utilities/constants';
 
 const store = useStore();
 const activeLesson = computed<LessonModel | null>(() => store.getters[lessonDetailsGetters.getLessonDetails]);
@@ -159,15 +160,6 @@ watch(activeLesson, (newActiveLesson) => {
   if (!newActiveLesson) return;
   draggableLessonExamples.value = [...newActiveLesson.lessonExamples];
 });
-
-const proficiencyLevelMatcher = {
-  A1: { label: 'Łatwy (A1)', color: 'success' },
-  A2: { label: 'Łatwy (A2)', color: 'success' },
-  B1: { label: 'Średni (B1)', color: 'warning' },
-  B2: { label: 'Średni (B2)', color: 'warning' },
-  C1: { label: 'Trudny (C1)', color: 'error' },
-  C2: { label: 'Trudny (C2)', color: 'error' }
-};
 </script>
 
 <style lang="scss" scoped>
@@ -189,5 +181,23 @@ const proficiencyLevelMatcher = {
   font-size: 18px;
   box-shadow: none;
   background-color: #fff;
+}
+.proficiency-level-chip {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b708a;
+  border: 1px solid #f2f0ff;
+
+  .proficiency-level-icon {
+    font-size: 15px;
+  }
+}
+
+.options-btn {
+  border-color: #f2f0ff;
+  width: 28px !important;
+  height: 28px !important;
+  font-size: 12px;
+  color: #6b708a;
 }
 </style>

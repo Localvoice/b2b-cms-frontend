@@ -61,4 +61,9 @@
   font-size: 12px;
   font-weight: 600;
 }
+.muted-text {
+  color: #6b708a;
+  font-weight: 600;
+  font-size: 13px;
+}
 </style>

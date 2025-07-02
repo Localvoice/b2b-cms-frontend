@@ -108,6 +108,7 @@ import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import LessonModel from '../../../models/Lesson';
 import LessonForm from './LessonForm.vue';
+import { proficiencyLevelMatcher } from '../../../utilities/constants';
 
 defineProps<{
   lesson: LessonModel;
@@ -149,15 +150,6 @@ const selectLessonId = (lessonId: string) => {
   });
 };
 
-const proficiencyLevelMatcher = {
-  A1: { label: 'Łatwy (A1)', color: 'success' },
-  A2: { label: 'Łatwy (A2)', color: 'success' },
-  B1: { label: 'Średni (B1)', color: 'warning' },
-  B2: { label: 'Średni (B2)', color: 'warning' },
-  C1: { label: 'Trudny (C1)', color: 'error' },
-  C2: { label: 'Trudny (C2)', color: 'error' }
-};
-
 const contentTypeMatcher = {
   GRAMMAR_LESSON: { icon: 'mdi-format-text', backgroundColor: '#2A61D9' },
   COURSE: { icon: 'mdi-format-text', backgroundColor: '#2A61D9' },
@@ -180,6 +172,16 @@ const contentTypeMatcher = {
   font-weight: 700;
   font-size: 14px;
   color: #161d40;
+}
+.proficiency-level-chip {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b708a;
+  border: 1px solid #f2f0ff;
+
+  .proficiency-level-icon {
+    font-size: 15px;
+  }
 }
 .options-btn {
   border-color: #f2f0ff;
@@ -235,5 +237,10 @@ const contentTypeMatcher = {
   border-radius: 50%;
   background-color: #7b62fe;
   color: #fff;
+}
+.muted-text {
+  color: #6b708a;
+  font-weight: 600;
+  font-size: 13px;
 }
 </style>

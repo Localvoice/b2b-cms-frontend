@@ -50,7 +50,7 @@
           </v-row>
         </v-card>
         <v-row>
-          <v-col cols="12" lg="3">
+          <v-col cols="12" sm="6" xl="3">
             <v-card class="pa-4" elevation="0" border rounded="lg">
               <div class="d-flex align-center">
                 <img class="mr-4" src="/images/lessons-icon-block2.png" alt="lesson-icon" />
@@ -61,7 +61,7 @@
               </div>
             </v-card>
           </v-col>
-          <v-col cols="12" lg="3">
+          <v-col cols="12" sm="6" xl="3">
             <v-card class="pa-4" elevation="0" border rounded="lg">
               <div class="d-flex align-center">
                 <img class="mr-4" src="/images/students-icon-block.png" alt="students-icon" />
@@ -72,7 +72,7 @@
               </div>
             </v-card>
           </v-col>
-          <v-col cols="12" lg="3">
+          <v-col cols="12" sm="6" xl="3">
             <v-card class="pa-4" elevation="0" border rounded="lg">
               <div class="d-flex align-center">
                 <img class="mr-4" src="/images/date-icon-block.png" alt="date-icon" />
@@ -83,7 +83,7 @@
               </div>
             </v-card>
           </v-col>
-          <v-col cols="12" lg="3">
+          <v-col cols="12" sm="6" xl="3">
             <v-card class="pa-4" elevation="0" border rounded="lg">
               <div class="d-flex align-center">
                 <img class="mr-4" src="/images/changes-icon-block.png" alt="changes-icon" />
@@ -138,6 +138,7 @@ import { courseDetailsGetters } from '../store';
 import LessonModel from '../models/Lesson';
 import StatusBox from '~app/shared/stats/StatusBox.vue';
 import AddLessonDialog from '../../../components/lessons/AddLessonDialog.vue';
+import { proficiencyLevelMatcher } from '../../../utilities/constants';
 
 const store = useStore();
 
@@ -157,18 +158,9 @@ const onDragEnd = () => {
 watch(courseLessons, (newCourseLessons) => {
   draggableLessons.value = newCourseLessons;
 });
-
-const proficiencyLevelMatcher = {
-  A1: { label: 'Łatwy (A1)', color: 'success' },
-  A2: { label: 'Łatwy (A2)', color: 'success' },
-  B1: { label: 'Średni (B1)', color: 'warning' },
-  B2: { label: 'Średni (B2)', color: 'warning' },
-  C1: { label: 'Trudny (C1)', color: 'error' },
-  C2: { label: 'Trudny (C2)', color: 'error' }
-};
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .course-title {
   color: #161d40;
   font-weight: 700;
