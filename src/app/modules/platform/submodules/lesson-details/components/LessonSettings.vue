@@ -62,8 +62,9 @@
             density="compact"
             v-model="form.subscriptionType"
             bg-color="white"
+            variant="outlined"
             rounded
-            class="select mb-4"
+            class="mb-4"
           >
           </v-select>
           <h6 class="mb-2">Wersja</h6>
@@ -96,7 +97,6 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
 import { useStore } from 'vuex';
-import { lessonDetailsGetters } from '../store';
 
 const form = reactive({
   title: '',
@@ -113,11 +113,8 @@ const versionRules = {
   required: (v: string) => !!v || 'Wersja jest wymagany'
 };
 
-const store = useStore();
-
 const fileInput = ref<HTMLInputElement | null>(null);
-const imageUrl = ref<string>('/images/course-icon-block.png');
-const category = ref('');
+const imageUrl = ref<string>('/images/course-icon-placeholder-large.png');
 const enteredCategory = ref<string | null>(null);
 
 const triggerFileInput = () => {

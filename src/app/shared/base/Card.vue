@@ -22,3 +22,5 @@ const loading = ref(false);
 const store = useStore();
 const layoutState = computed(() => store.getters['layout/getState']);
 </script>
+
+<style lang="scss" scoped></style>

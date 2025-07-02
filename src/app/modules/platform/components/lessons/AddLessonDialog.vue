@@ -40,8 +40,9 @@
             density="compact"
             v-model="lessonType"
             bg-color="white"
+            variant="outlined"
             rounded
-            class="select mb-4"
+            class="mb-4"
           >
           </v-select>
           <h6>Poziom trudności</h6>

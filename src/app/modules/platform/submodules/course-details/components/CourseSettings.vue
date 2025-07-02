@@ -175,8 +175,9 @@
             density="compact"
             v-model="form.subscriptionType"
             bg-color="white"
+            variant="outlined"
             rounded
-            class="select mb-4"
+            class="mb-4"
           >
           </v-select>
           <h6 class="mb-2">Wersja</h6>
@@ -227,7 +228,7 @@ const versionRules = {
 const store = useStore();
 
 const fileInput = ref<HTMLInputElement | null>(null);
-const imageUrl = ref<string>('/images/course-icon-block.png');
+const imageUrl = ref<string>('/images/course-icon-placeholder-large.png');
 const category = ref('');
 const enteredCategory = ref<string | null>(null);
 

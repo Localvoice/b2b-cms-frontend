@@ -16,11 +16,12 @@
       </v-col>
       <v-col cols="auto">
         <v-select
-          class="select"
+          class="date-select"
           :items="['Ten miesiąc', 'Ten rok']"
           :value="'Ten miesiąc'"
           density="compact"
           bg-color="white"
+          variant="outlined"
           rounded
         >
         </v-select>
@@ -42,7 +43,7 @@ import StudentsTable from '../../../components/StudentsTable.vue';
 </script>
 
 <style lang="scss" scoped>
-.select {
+.date-select {
   min-width: 220px;
 }
 </style>

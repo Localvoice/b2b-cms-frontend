@@ -1,9 +1,9 @@
 <template>
   <v-card
     elevation="0"
-    class="pa-4 h-full d-flex flex-column align-center justify-center"
+    class="pa-4 d-flex flex-column align-center justify-center"
     color="grey-lighten-5"
-    border
+    border="none"
     rounded="lg"
   >
     <h4 class="header">Jeszcze tu nic nie ma!</h4>

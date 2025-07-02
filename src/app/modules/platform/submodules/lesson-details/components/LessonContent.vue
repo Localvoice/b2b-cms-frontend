@@ -1,81 +1,109 @@
 <template>
-  <v-row>
-    <v-col cols="12" lg="5">
-      <Card>
-        <v-card elevation="0" class="pa-4" color="grey-lighten-5" border rounded="lg">
-          <h5 class="mb-8">Informacje o lekcji</h5>
-          <v-card elevation="0" v-if="activeLesson" class="mb-8 pa-4" border rounded="lg">
-            <v-row class="w-full" align="center">
-              <v-col cols="12" lg="3">
-                <img class="h-full object-cover" src="/images/placeholder-course-image.png" alt="course-image" />
-              </v-col>
-              <v-col cols="12" lg="9">
-                <h5 class="mb-3">{{ activeLesson.title }}</h5>
-                <div v-if="activeLesson.status" class="mb-3">
-                  <StatusBox :status="activeLesson.status" />
-                </div>
-                <v-chip class="lesson-chip" color="pink">{{ activeLesson.category }}</v-chip>
-              </v-col>
-            </v-row>
-          </v-card>
-          <v-row class="w-full mb-4">
-            <v-col cols="12" lg="6" class="pr-0">
-              <v-card elevation="0" class="pa-4" border rounded="lg">
-                <div class="d-flex align-center">
-                  <img class="mr-4" src="/images/money-icon-block.png" alt="money-icon" />
-                  <div>
-                    <h6 class="mb-1">Darmowa</h6>
-                    <p class="muted-text">Typ subskrypcji</p>
+  <v-row v-if="activeLesson">
+    <v-col cols="12" lg="8">
+      <v-card class="pa-4 mb-8" elevation="0" color="grey-lighten-5" border rounded="lg">
+        <v-row class="mb-8" justify="space-between" align="center">
+          <v-col cols="auto">
+            <h5>Informacje o lekcji</h5>
+          </v-col>
+          <v-col cols="auto">
+            <StatusBox :status="activeLesson.status" v-if="activeLesson.status" />
+          </v-col>
+        </v-row>
+        <v-card class="pa-4 mb-4" elevation="0" border rounded="lg">
+          <v-row justify="space-between" align="end">
+            <v-col cols="auto">
+              <div class="d-flex align-center">
+                <img
+                  class="image-course h-full object-cover mr-4"
+                  src="/images/course-icon-placeholder.png"
+                  alt="course-icon"
+                />
+                <div>
+                  <h5 class="course-title mb-1">{{ activeLesson.title }}</h5>
+                  <p class="muted-text mb-2">W tym kursie nauczysz się słownictwa przydatnego przy podróżowaniu</p>
+                  <div class="d-flex">
+                    <v-chip class="chip mr-3 px-4" color="pink">{{ activeLesson.category }}</v-chip>
+                    <v-chip
+                      class="proficiency-level-chip px-4"
+                      color="light"
+                      variant="outlined"
+                      v-if="activeLesson.proficiencyLevel"
+                    >
+                      <v-icon
+                        :class="`proficiency-level-icon text-${proficiencyLevelMatcher[activeLesson.proficiencyLevel].color} mr-2`"
+                        icon="mdi-poll"
+                        size="x-small"
+                      ></v-icon>
+                      <span>
+                        {{ proficiencyLevelMatcher[activeLesson.proficiencyLevel].label }}
+                      </span>
+                    </v-chip>
                   </div>
                 </div>
-              </v-card>
+              </div>
             </v-col>
-            <v-col cols="12" lg="6" class="pr-0">
-              <v-card elevation="0" class="pa-4" border rounded="lg">
-                <div class="d-flex align-center">
-                  <img class="mr-4" src="/images/students-icon-block.png" alt="lessons-icon" />
-                  <div>
-                    <h6 class="mb-1">33</h6>
-                    <p class="muted-text">Liczba studentów</p>
-                  </div>
-                </div>
-              </v-card>
-            </v-col>
-            <v-col cols="12" lg="6" class="pr-0">
-              <v-card elevation="0" class="pa-4" border rounded="lg">
-                <div class="d-flex align-center">
-                  <img class="mr-4" src="/images/date-icon-block.png" alt="date-icon" />
-                  <div>
-                    <h6 class="mb-1">2024-10-15</h6>
-                    <p class="muted-text">Data utworzenia</p>
-                  </div>
-                </div>
-              </v-card>
-            </v-col>
-            <v-col cols="12" lg="6" class="pr-0">
-              <v-card elevation="0" class="pa-4" border rounded="lg">
-                <div class="d-flex align-center">
-                  <img class="mr-4" src="/images/changes-icon-block.png" alt="last-change-icon" />
-                  <div>
-                    <h6 class="mb-1">2 dni temu</h6>
-                    <p class="muted-text">Ostatnie zmiany</p>
-                  </div>
-                </div>
-              </v-card>
+            <v-col cols="auto">
+              <v-btn class="options-btn" variant="outlined" icon="mdi-dots-horizontal"></v-btn>
             </v-col>
           </v-row>
-          <v-divider class="mb-4"></v-divider>
-          <TestersList />
         </v-card>
-      </Card>
-    </v-col>
-    <v-col cols="12" lg="7">
-      <div v-if="activeLesson && activeLesson.lessonExamples.length > 0">
-        <v-card elevation="0" class="pa-4" color="grey-lighten-5" border rounded="lg">
-          <v-row class="mb-8" justify="space-between" align="center">
+        <v-row>
+          <v-col cols="12" lg="3">
+            <v-card class="pa-4" elevation="0" border rounded="lg">
+              <div class="d-flex align-center">
+                <img class="mr-4" src="/images/lessons-icon-block2.png" alt="lesson-icon" />
+                <div>
+                  <h6 class="mb-1">3</h6>
+                  <p class="muted-text">Liczba lekcji</p>
+                </div>
+              </div>
+            </v-card>
+          </v-col>
+          <v-col cols="12" lg="3">
+            <v-card class="pa-4" elevation="0" border rounded="lg">
+              <div class="d-flex align-center">
+                <img class="mr-4" src="/images/students-icon-block.png" alt="students-icon" />
+                <div>
+                  <h6 class="mb-1">33</h6>
+                  <p class="muted-text">Liczba studentów</p>
+                </div>
+              </div>
+            </v-card>
+          </v-col>
+          <v-col cols="12" lg="3">
+            <v-card class="pa-4" elevation="0" border rounded="lg">
+              <div class="d-flex align-center">
+                <img class="mr-4" src="/images/date-icon-block.png" alt="date-icon" />
+                <div>
+                  <h6 class="mb-1">2024-10-15</h6>
+                  <p class="muted-text">Data utworzenia</p>
+                </div>
+              </div>
+            </v-card>
+          </v-col>
+          <v-col cols="12" lg="3">
+            <v-card class="pa-4" elevation="0" border rounded="lg">
+              <div class="d-flex align-center">
+                <img class="mr-4" src="/images/changes-icon-block.png" alt="changes-icon" />
+                <div>
+                  <h6 class="mb-1">2 dni temu</h6>
+                  <p class="muted-text">Ostatnie zmiany</p>
+                </div>
+              </div>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-card>
+      <v-card class="pa-4" elevation="0" color="grey-lighten-5" border rounded="lg">
+        <div v-if="draggableLessonExamples.length > 0">
+          <v-row align="end" justify="space-between" class="mb-8">
             <v-col cols="auto">
-              <h5 class="mb-2">Przykłady w lekcji</h5>
-              <p class="muted-text">{{ activeLesson.lessonExamples.length }} przykładów</p>
+              <h5>Lekcje w kursie</h5>
+              <p class="muted-text">{{ activeLesson.lessonExamples.length }} lekcje</p>
+            </v-col>
+            <v-col cols="auto">
+              <AddLessonDialog />
             </v-col>
           </v-row>
           <draggable :list="draggableLessonExamples" handle="#drag-handle-examples" item-key="phrase" @end="onDragEnd">
@@ -88,14 +116,16 @@
               />
             </template>
           </draggable>
-          <v-btn class="add-btn w-full d-flex justify-center py-6">
-            <v-icon color="#FE5B14" icon="mdi-plus"></v-icon>
-          </v-btn>
-        </v-card>
-      </div>
-      <div v-else>
-        <EmptyView />
-      </div>
+        </div>
+        <div v-else>
+          <EmptyView />
+        </div>
+      </v-card>
+    </v-col>
+    <v-col cols="12" lg="4">
+      <v-card class="pa-4" elevation="0" color="grey-lighten-5" border rounded="lg">
+        <TestersList />
+      </v-card>
     </v-col>
   </v-row>
 </template>
@@ -129,6 +159,15 @@ watch(activeLesson, (newActiveLesson) => {
   if (!newActiveLesson) return;
   draggableLessonExamples.value = [...newActiveLesson.lessonExamples];
 });
+
+const proficiencyLevelMatcher = {
+  A1: { label: 'Łatwy (A1)', color: 'success' },
+  A2: { label: 'Łatwy (A2)', color: 'success' },
+  B1: { label: 'Średni (B1)', color: 'warning' },
+  B2: { label: 'Średni (B2)', color: 'warning' },
+  C1: { label: 'Trudny (C1)', color: 'error' },
+  C2: { label: 'Trudny (C2)', color: 'error' }
+};
 </script>
 
 <style lang="scss" scoped>
